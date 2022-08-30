@@ -28,9 +28,9 @@ You can also use the GitHub Desktop app to keep a local copy of the repo.
 
 ## Run code
 
-- Python (FAS On Demand): Access Jupyter notebook via the "FAS On Demand" link in the Canvas site. You can create new notebook by clicking "New -> Python 3 (ipykernel)" (and we have pre-installed most modules needed for the course).
+- Python (FAS On Demand): Access Jupyter notebook via the "FAS On Demand" link in the Canvas site. You can create new notebook by clicking "New -> Python 3 (ipykernel)" (and we have pre-installed most modulues needed for the course).
 
-- Python (local machine): Need local Python and Jupyter installation to run notebooks. See [README.md in Python tutorial](https://github.com/sarah1123/SciComp-F22-AM111/blob/main/00_python_tutorial/README.md) for more details.
+- Python (local machine): Need local Python and Jupyter installation to run notebooks. See [README.md in Python tutorial](https://github.com/sarah1123/SciComp-F22-AM111/tree/main/00_python_tutorial#python-installation) for more details.
 
 - Python ([Google Colab](https://colab.research.google.com/notebooks/welcome.ipynb)): Click "Open in Colab" badge on the top of each `.ipynb` notebook to run (no need to install anything for Python to run).
 
@@ -46,5 +46,5 @@ Or else your changes in the playground mode will get lost after you close the pa
 - [Install Git](https://www.atlassian.com/git/tutorials/install-git)
 - [Git cheat sheet](https://education.github.com/git-cheat-sheet-education.pdf) (You will mostly only be using `git pull` to retrieve updated files)
 - [Install Jupyter with pip](https://docs.jupyter.org/en/latest/install/notebook-classic.html#alternative-for-experienced-python-users-installing-jupyter-with-pip) (If you already have Python3 installed and do not want to deal with additional `conda` enviroment, which gives a cleaner setup for future Python3 usage)
-    > See the [README.md in Python tutorial](https://github.com/sarah1123/SciComp-F22-AM111/blob/main/00_python_tutorial#the-proper-way) for more details
+    > See the [README.md in Python tutorial](https://github.com/sarah1123/SciComp-F22-AM111/tree/main/00_python_tutorial#the-proper-way) for more details
 - [Install Jupyter using Anaconda and conda](https://docs.jupyter.org/en/latest/install/notebook-classic.html#installing-jupyter-using-anaconda-and-conda) (The straightforward way, but your libraries are installed in `conda` environment; may encounter path/dependency issues in future)
