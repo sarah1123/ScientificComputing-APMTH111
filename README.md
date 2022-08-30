@@ -19,7 +19,7 @@ We store all code examples on GitHub, which allows us to version control the cod
     git clone https://github.com/sarah1123/SciComp-F22-AM111.git
     ```
 
-3. Update the code examples before each lecture
+3. To access updates to the code examples use
     ```
     git pull
     ```
