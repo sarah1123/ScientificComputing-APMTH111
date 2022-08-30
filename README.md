@@ -28,7 +28,7 @@ You can also use the GitHub Desktop app to keep a local copy of the repo.
 
 ## Run code
 
-- Python (FAS On Demand): Access Jupyter notebook via the "FAS On Demand" link in the Canvas site. You can create new notebook by clicking "New -> Python 3 (ipykernel)" (and we have pre-installed most modulues needed for the course).
+- Python (FAS On Demand): Access Jupyter notebook via the "FAS On Demand" link in the Canvas site. You can create new notebook by clicking "New -> Python 3 (ipykernel)" (and we have pre-installed most modules needed for the course).
 
 - Python (local machine): Need local Python and Jupyter installation to run notebooks. See [README.md in Python tutorial](https://github.com/sarah1123/SciComp-F22-AM111/blob/main/00_python_tutorial/README.md) for more details.
 
