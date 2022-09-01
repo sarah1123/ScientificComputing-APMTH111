@@ -22,7 +22,7 @@ The most straightforward way is to install using `Anaconda` and `conda`. This ap
 
 If you do not want to deal with the Python dependency hell in the near future, I highly recommend installing Python and Jupyter **NOT** using `conda`. This will require some more steps, but it will make your path much cleaner.
 
-> Note that the following commands are only tested on Mac OS Monterey (in January 2022). For Linux users, it should also work (but requires some changes to default Python paths and `Homebrew` installation). For Windows users, you can check out this [link](https://www.python.org/downloads/). If you run into any issues, you can come to the office hours for help. 
+> Note that the following commands are only tested on Mac OS Monterey (in January 2022). For Linux users, it should also work (but requires some changes to default Python paths and `Homebrew` installation). For Windows users, you can check out this [link](https://www.python.org/downloads/). **`Homebrew` approach does not work for Windows.** If you run into any issues, you can come to the office hours for help. 
 >
 > In addition, I recommend installing Python 3.9 even though the latest is 3.10. This is because some libraries only support up to Python 3.9 for now, like `PyTorch`.
 
@@ -65,14 +65,14 @@ If you do not want to deal with the Python dependency hell in the near future, I
     nano ~/.bash
     alias python=python3.9
     ```
-    (Edit the file and save)
+    (Edit the file and save.)
     ```
     source ~/.bash
     export PATH="/usr/local/opt/python/libexec/bin:$PATH"
     which python3
     python3 --version
     ```
-    (Should give 3.9 instead of the default 3.8, and the path is `/opt/homebrew/bin/python3`)
+    (Should give 3.9 instead of the default 3.8, and the path is `/opt/homebrew/bin/python3`.)
 
 7. Install `pip` and Jupyter notebook
     ```
@@ -81,7 +81,7 @@ If you do not want to deal with the Python dependency hell in the near future, I
     export PATH=~/.local/bin:$PATH
     jupyter notebook
     ```
-    (Check if the browser launches the notebook window)
+    (Check if the browser launches the notebook window.)
 
 8. Install Python packages
 
