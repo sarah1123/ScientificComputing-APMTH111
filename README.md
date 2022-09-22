@@ -5,6 +5,8 @@ Repository for AM/ES 111: Introduction to Scientific Computing (Harvard Universi
 ## Code examples
 
 - [Python tutorial](https://github.com/sarah1123/SciComp-F22-AM111/tree/main/00_python_tutorial)
+- [Condition number & floating point](https://github.com/sarah1123/SciComp-F22-AM111/tree/main/01_condition_floatingpoint)
+- [Root finding](https://github.com/sarah1123/SciComp-F22-AM111/tree/main/07_root_finding)
 
 ## How to access the code examples
 
