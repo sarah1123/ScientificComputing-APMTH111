@@ -1,0 +1,390 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 05}{}{Linear least squares, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits underneath in displays
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent 
+
+
+
+\section{Preliminaries}
+\begin{itemize}
+\itemsep0pt
+\item Problem set 02 is due on Friday at 5pm (submit via Gradescope: include pdfs of all code/output on Gradescope.  Upload any source code to Canvas).
+\item Problem set 02 includes some ``time permitting'' problems.  If your time spent on the course outside of class reaches 10 hours in the week then you are encouraged to skip some of these problems.  If you are not in that situation, you are expected to complete the problems.
+\item There will be a skill check in class during Class 06.  The problem info is below.
+\item Find all OH on Canvas.
+%\item Use Ed (find the link on Canvas) for questions about the problem set.
+\end{itemize}
+
+
+
+\noindent\textbf{Big picture}
+
+Today: Using linear least squares data fitting leads to a matrix equation.  Once that is set up, we look for a solution in the least squares sense (the weights for the basis functions that minimize the error).
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check practice}
+\begin{questions}
+\item Write the quadratic form $Q(x_1,x_2,x_3) = x_1^2 + 4x_1x_3 - x_2x_3 + 7x_3^2$ as a matrix equation of the form $\vc{x}^TA\vc{x}$ where $A$ is a $3\times 3$ symmetric matrix.
+\item The skill from the Class 02 handout (Skill Check C03).
+\end{questions}
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+\begin{questions}
+\item The coefficients of $x_j^2$ go on the diagonal (so $1$, $0$, $7$ will be the diagonal).
+
+To fill in $a_{12} = a_{21}$ use the $x_1x_2$ term (coefficient is zero).
+
+To fill in $a_{13} = a_{31}$ use the $x_1x_3$ term (coefficient is $4$ so the matrix entries are each $2$).
+
+To fill in $a_{23} = a_{32}$ use the $x_2x_3$ term (coefficient is $-1$ so the matrix entries are each $-1/2$).
+
+
+$Q(\vc{x}) = \vc{x}^T\left[\begin{array}{r r r} 
+1 & 0 & 2 \\
+0 & 0 & -1/2 \\
+2 & -1/2 & 7
+\end{array}\right] \vc{x}$
+
+We can multiply this out to check:
+
+\begin{align*}
+    Q(\vc{x}) &= \vc{x}^T\left[\begin{array}{c}
+x_1 + 2x_3 \\
+-x_3/2 \\
+2x_1 - x_2/2 + 7x_3
+\end{array}
+\right] \\
+&= x_1^2 + 2x_3x_1 - x_3x_2/2 + 2x_1x_3-x_2x_3/2 + 7x_3^2 \\
+&= x_1^2 + 4x_1x_3 - x_2x_3 + 7x_3^2
+\end{align*}
+
+\item See the past handout.
+\end{questions}
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Teams}
+
+\begin{multicols}{3}
+1) Kevin, Eli, Daniyal, Jessica
+
+2) Caitlin, Julia, Johan
+
+3) Mai, Zachary, Padraig, Ghedion
+
+4) Sophie, Julia, Aidan
+
+5) RJ, Brian, Nina
+
+6) Kevin, Mack, Ray
+
+7) Alex, Jack, Robert
+
+8) Nini, Emma, Benjamin
+
+9) Eletria, Tom, Basil
+
+11) Shang, Esmé, Marissa
+
+12) Eric, Cameron, Dani
+
+13) Alex, Ivonne, Mina
+\end{multicols}
+
+\textbf{Teams 9 and 10}, post photos of your work to the class Google Drive.  Find the link on Canvas.
+
+\noindent See Sauer chapter 4, Heath chapter 3, Greenbaum and Chartier chapter 7, Koumoutsakos notes from ETH lecture 1.
+
+
+\section{Linear least squares}
+
+
+
+\subsection{Deriving the normal equations}
+
+
+ To solve $A\vc{w} \cong \vc{y}$ in the least squares sense, find $\vc{w}$ that minimizes the error function, $E(\vc{w})$.
+ 
+ \emph{I am using $\cong$ here to denote that this equality is not possible, and that this is a least squares problem.}
+    
+  Find $\vc{w}$ such that $\dfrac{dE(\vc{w})}{d\vc{w}} = 0$.
+  
+    \noindent\textbf{Notation}
+  \begin{tcolorbox}
+      \[\dfrac{dE(\vc{w})}{d\vc{w}}=\left[\begin{array}{ccc} \dfrac{\partial E}{\partial w_1} \hdots \dfrac{\partial E}{\partial w_M} \end{array}\right]\] is also denoted $\left[\text{D}E(\vc{w})\right]$, or simply $\left[\text{D}E\right]$.
+      
+      Note: $\left[\text{D}E\right]$ is the transpose of $\nabla E$, the gradient of $E$.
+  \end{tcolorbox}
+  
+
+\noindent\textbf{The normal equations}
+\begin{tcolorbox}
+Setting $\left[\text{D}E(\vc{w})\right] = \vc{0}$ will result in a matrix equation called the \textbf{normal equations}.  Solving the normal equations for $\vc{w}$ will allow us to find $\vc{w}^*$ or $\hat{\vc{w}}$, the vector that minimizes the error function.
+\end{tcolorbox}
+
+\begin{align*}
+        E(\vc{w}) &= \vc{e}^T\vc{e} \\
+        &=(A\vc{w}-\vc{y})^T(A\vc{w}-\vc{y}) \\
+        &=\left((A\vc{w})^T-\vc{y}^T\right)(A\vc{w}-\vc{y}) \\
+        &=\left(\vc{w}^TA^T-\vc{y}^T\right)(A\vc{w}-\vc{y}) \\
+        &=\left(\vc{w}^TA^T-\vc{y}^T\right)(A\vc{w}-\vc{y}) \\
+        &=\vc{w}^TA^TA\vc{w}-\vc{w}^TA^T\vc{y}-\vc{y}^TA\vc{w} + \vc{y}^T\vc{y} \\
+        &=\vc{w}^TA^TA\vc{w}-\vc{w}^TA^T\vc{y}-\vc{y}^TA\vc{w} + \vc{y}^T\vc{y}
+    \end{align*}
+    
+\begin{tcolorbox}
+    $E(\vc{w})$ is a scalar valued function, so $\vc{w}^TA^T\vc{y}$ is a scalar.  $\vc{w}^TA^T\vc{y}=(\vc{y}^TA\vc{w})^T$.  For any scalar, $\alpha$, we have $\alpha^T = \alpha$.  So $\vc{w}^TA^T\vc{y} = \vc{y}^TA\vc{w}$.  Our error equation becomes
+    \[E(\vc{w}) = \vc{w}^TA^TA\vc{w}-2\vc{y}^TA\vc{w} + \vc{y}^T\vc{y}\]
+    
+To find $\left[\text{D}E\right]$ we will need some facts about matrix derivatives.
+\begin{itemize}
+\itemsep0pt
+    \item $\left[\text{D} A\vc{x}\right] = A$.
+    \item (product rule) $\left[\text{D}\left(\vc{u}^T\vc{v}\right)\right]= \vc{u}^T\left[\text{D}\vc{v}\right]+\vc{v}^T\left[\text{D}\vc{u}\right]$
+    
+    Writing this via dot product notation, for vectors $\vc{u}$ and $\vc{v}$, we have $\left[\text{D}\left(\vc{u}\cdot\vc{v}\right)\right]= \vc{u}\cdot\left[\text{D}\vc{v}\right]+\vc{v}\cdot\left[\text{D}\vc{u}\right]$
+\end{itemize}
+\end{tcolorbox}
+
+\begin{enumerate}[resume=classQ]
+    \item Follow the steps below to derive the form of the normal equations.  Take all derivatives of $E(\vc{w})$ with respect to $\vc{w}$.
+    \begin{parts}
+    \item Let $\vc{u} = A\vc{w}$.  Notice that $\left[\text{D} \vc{u}\right] = A$.
+    
+    
+    Rewrite $E(\vc{w})$ in terms of $\vc{u}$.  
+    
+    \emph{$A$, $A^T$, $\vc{w}^T$, and $\vc{w}$ should all be eliminated so that you have a function of $\vc{u}$ and $\vc{y}$.}
+
+\item Use the product rule and show that $\left[\text{D}E\right] = -2\vc{y}^TA + 2\vc{w}^TA^TA$
+    \item Set $\left[\text{D}E\right] = \vc{0}$, take the transpose of both sides, and rearrange to find \[A^TA\vc{w}=A^T\vc{y} \]
+   These are the \textbf{normal equations}.
+    \item Identify the dimensions of $A^TA$, of $\vc{w}$, and of $A^T\vc{y}$.
+    \end{parts}
+\end{enumerate}  
+  \vfill
+ 
+  
+
+    
+   
+    
+
+% Note: $\varphi_k(x)$ linearly independent means the columns of $A$ are also linearly independent.
+
+% https://math.stackexchange.com/questions/834420/prove-that-ata-is-positive-definite
+
+
+% \begin{enumerate}[resume=classQ]
+% \item Let $E(\vc{w}) = w_1^2+4w_1w_2+3w_2^2+w_2$.  
+%  Find $\vc{w}^*$ so that $E(\vc{w}^*)$ is a critical point of the function $E$.
+% %\item Recall: $E(\vc{w}^*)$ may be a local minimum, local maximum, or saddle point.  
+
+
+
+%\end{parts}
+
+
+\noindent\textbf{Classifying a critical point}
+
+Let $\vc{w}^*$ be the solution to the normal equations.  Check that $E(\vc{w}^*)$ is a local minimum.
+  \vspace{0.2cm}
+
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+    \item At a critical point, $\vc{w}^*$, the derivative of the output, $\left[\text{D}E\right]_{\vc{w}^*} = \vc{0}$.  The critical point might be a local minimum, local maximum, or saddle point.
+    \item We are looking for a local minimum, so we want $E(\vc{w}^*) < E(\vc{w}^*+\vc{h})$, where $\vc{h}$ is any small vector so $\vc{w}^*+\vc{h}$ is an input close to $\vc{w}^*$.
+    
+    \item Approximate $E$ at nearby points via Taylor expansion to determine whether $E(\vc{w}^*)$ is a local minimum:
+    \[E(\vc{w}^*+\vc{h}) = E(\vc{w}^*) + \left[\text{D}E\right]_{\vc{w}^*}\vc{h} + \frac{1}{2} \vc{h}^T\left[\text{D}^2E\right]_{\vc{w}^*}\vc{h} + \mathcal{O}(\Vert\vc{h}\Vert^3)\]
+        \end{itemize}
+\end{tcolorbox}
+
+
+    \begin{tcolorbox}
+    \begin{itemize}
+  \item  
+    At the $\vc{w}^*$ the first derivative, $\left[\text{D}E\right]_{\vc{w}^*}$, is $\vc{0}$, so this simplifies to 
+    
+    \[E(\vc{w}^*+\vc{h}) = E(\vc{w}^*) +  \frac{1}{2} \vc{h}^T\left[\text{D}^2E\right]_{\vc{w}^*}\vc{h} + \mathcal{O}(\Vert\vc{h}\Vert^3)\]
+    \item If $ \vc{h}^T\left[\text{D}^2E\right]_{\vc{w}^*}\vc{h}>0$ for any nonzero perturbation $\vc{h}$ then $E(\vc{w}^*)$ will be a local minimum.
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{enumerate}[resume=classQ]
+    \item (from Lay \S 7.2 Example 6) 
+    
+    Let $A = \left[\begin{array}{c c c} 3 & 2 & 0 \\ 2 & 2 & 2 \\ 0 & 2 & 1 \end{array} \right]$. Find $\vc{x}^T A \vc{x}$ for each of the following $\vc{x}$. \begin{parts}
+    \item Let $\vc{x} = \left[\begin{array}{r} x_1 \\ x_2 \\ x_3 \end{array}\right]$.  
+    \item Using $(x_1,x_2,x_3) = (1,-2,2)$ results in a value of $-9$.  Using  $(x_1,x_2,x_3) = (2,-1,-2)$ results in a value of $18$.  If $\vc{x}^TA\vc{x}$ represented the quadratic terms associated with a critical point, what kind of critical point would it be?
+    \end{parts} 
+    
+    
+\end{enumerate}
+\vfill
+
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+    \item A weighted sum of quadratic terms, $Q(\vc{x}) = \sum\limits_{j=1}^n\sum\limits_{k=1}^n q_{jk}x_jx_k$, can be encoded as an expression of the form $\vc{x}^TA\vc{x}$ where $A$ is an $n\times n $ symmetric matrix.
+    \item The function $Q(\vc{x})$ is called a \textbf{quadratic form}.
+    \item 
+The matrix $A$ is called the \textbf{matrix of the quadratic form}.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{enumerate}[resume=classQ]
+    \item (Lay \S 7.2 Q3a) 
+    Find the matrix of the quadratic form $10x_1^2 - 6x_1x_2 - 3x_2^2$ (assume $\vc{x}\in\mathbb{R}^2$).
+    
+    
+\vfill
+\end{enumerate}
+
+
+
+\begin{tcolorbox}
+    \begin{itemize}
+    \item If a change of variables $\vc{x} = P\vc{y}$ is made in the quadratic form $\vc{x}^TA\vc{x}$ then
+    \[\vc{x}^TA\vc{x} = (P\vc{y})^TA(P\vc{y}) = \vc{y}^TP^TAP\vc{y} = \vc{y}^T(P^TAP)\vc{y}\]
+    \item $A$ is a symmetric matrix, so it is orthogonally diagonalizable.  It can be written in the form $A = PDP^T$ where $P$ is an orthogonal matrix (so $P^T=P^{-1}$), and $D$ is a diagonal matrix.  With $\vc{x} = P\vc{y}$, we have $\vc{x}^T A \vc{x} = \vc{y}^T D \vc{y} = \sum\limits_{i=1}^n \lambda_i y_i^2$.
+    
+    \item A symmetric matrix $A$ where $\vc{h}^TA\vc{h}>0$ for all nonzero $\vc{h}$ is called \textbf{positive definite}.
+    
+    A symmetric matrix $A$ is positive definite if and only if the eigenvalues of $A$ are positive.
+ 
+    
+    \item $\left[\text{D}^2E\right]_{\vc{w}^*} = \left[\begin{array}{ccc}
+    \dfrac{\partial^2E}{\partial w_1 \partial w_1} & \hdots & \dfrac{\partial^2E}{\partial w_1 \partial w_M} \\
+    \vdots & \ddots & \vdots \\
+    
+    \dfrac{\partial^2E}{\partial w_M \partial w_1} & \hdots & \dfrac{\partial^2E}{\partial w_M \partial w_M}
+    \end{array}\right]$. This is the \textbf{Hessian} matrix.  The equality of mixed partials means that the Hessian matrix is symmetric.
+    \item $\vc{w}^*$ will be a local minimum if the Hessian matrix, evaluated at $\vc{w}^*$, is positive definite (i.e. has positive eigenvalues).
+\end{itemize}
+\end{tcolorbox}
+\begin{enumerate}[resume=classQ]
+\item Let $f(\vc{w}) = w_1^2+4w_1w_2+3w_2^2+w_2$.  
+ 
+% You found a critical point $(w_1, w_2)^*$ above.  
+ \begin{parts}
+ \item Find a critical point.
+\item  Find the Hessian matrix, evaluated at this critical point.
+\item The product of the eigenvalues, $\text{det}(\left[\text{D} f\right])<0$.  Classify the critical point.
+ \end{parts}
+ \vspace{1.2cm}
+
+
+
+%\end{parts}
+
+\end{enumerate}
+
+
+\section{Condition number in matrix problems}
+
+So far we have assumed all the math is being done exactly (without the approximations intrinsic to floating point representations and calculations).
+
+\vspace{0.2cm}
+
+\noindent\textbf{Conditioning}
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+\item Let $A\vc{x} = \vc{b}$ where $A$ is $n\times n$ and invertible.  $A(\vc{x} + \Delta\vc{x}) = \vc{b} + A\Delta\vc{x}$ (by linearity) so $\Delta\vc{b} = A\Delta\vc{x}$.
+    \item The ratio of \% forward error to \% backward is is $\dfrac{\Vert \Delta \vc{b}\Vert/\Vert\vc{b}\Vert}{\Vert \Delta \vc{x}\Vert/\Vert\vc{x}\Vert} = \dfrac{\Vert \Delta \vc{b}\Vert}{\Vert\Delta\vc{x}\Vert}\dfrac{\Vert \vc{x}\Vert}{\Vert\vc{b}\Vert} = \dfrac{\Vert A\Delta \vc{x}\Vert}{\Vert\Delta\vc{x}\Vert}\dfrac{\Vert A^{-1}\vc{b}\Vert}{\Vert\vc{b}\Vert}$.  
+   
+   \end{itemize} 
+ \end{tcolorbox}   
+ \begin{tcolorbox}
+   \begin{itemize}
+\itemsep0pt
+ \item For a matrix we define $\Vert A\Vert = \max\limits_{\vc{x}}\dfrac{\Vert A\vc{x}\Vert}{\Vert\vc{x}\Vert}$ (the maximum factor by which $A$ stretches any vector).
+   \item  $\dfrac{\Vert \Delta \vc{b}\Vert/\Vert\vc{b}\Vert}{\Vert \Delta \vc{x}\Vert/\Vert\vc{x}\Vert} = \dfrac{\Vert A\Delta \vc{x}\Vert}{\Vert\Delta\vc{x}\Vert}\dfrac{\Vert A^{-1}\vc{b}\Vert}{\Vert\vc{b}\Vert}\leq \Vert A\Vert \Vert A^{-1}\Vert$.
+   \item  Define the \textbf{condition number} of a matrix as $\text{cond}(A) = \kappa(A) =\Vert A\Vert\Vert A^{-1}\Vert$.
+   \item The condition number of a matrix satisfies.  $1\leq \kappa(A) < \infty$, and we'll call a problem \textbf{well conditioned} if $\kappa(A)$ is not too large.
+   \item This condition number is an upper bound on the error ratio (it is not a tight estimate). 
+   \item For an $n\times m$ matrix with $n
+   \neq m$ we need a definition that avoids the $A^{-1}$.  It uses the \textbf{pseudoinverse}, $A^+ = (A^TA)^{-1}A^T$, instead of the $A^{-1}$.  So $\kappa(A) = \Vert A\Vert\Vert A^+\Vert$
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+(from Sauer \S 4.1)
+
+ $\text{cond}(A^TA)$ is approximately the square of the original $\text{cond}(A)$
+\end{tcolorbox}
+
+\begin{enumerate}[resume=classQ]
+\item  Find a bound for $ \dfrac{\Vert \Delta \vc{x}\Vert/\Vert\vc{x}\Vert}{\Vert \Delta \vc{b}\Vert/\Vert\vc{b}\Vert}$ in terms of $\text{cond}(A)$
+\vfill
+
+\item Let $A\vc{w} \cong \vc{y}$ be a least squares problem with $\text{cond}(A)$.  For which method would you expect more numerical error to accumulate: solving via $QR\vc{w} \cong \vc{y}$ or solving via $A^TA\vc{w} =A^T\vc{y}$?
+\vfill
+
+\end{enumerate}
+
+% \begin{enumerate}[resume=classQ]
+% \item Let $A\vc{w} \cong \vc{y}$ be a least squares problem.  Let $\vc{y_a}$ be the component of $\vc{y}$ in $\text{span}(A)$.  Let $\theta$ be the angle between $\vc{y}$ and $\vc{y_a}$.  What does this angle represent in the problem?  What would it mean for the least squares problem if $\theta = 0$?  What if the two vectors are perpendicular? 
+
+% \end{enumerate}
+
+% \begin{tcolorbox}
+% (from Heath \S 3.3)
+% The conditioning of the least squares problem $A\vc{w} \cong\vc{y}$ depends on $\vc{y}$ as well as on $A$.
+
+% For this problem, the conditioning is $\dfrac{\Vert \Delta \vc{x}\Vert/\Vert\vc{x}\Vert}{\Vert \Delta \vc{b}\Vert/\Vert\vc{b}\Vert}\leq \text{cond}(A)\dfrac{1}{\cos\theta}$ where $\theta$ is the angle between $\vc{y}$ and the $\text{span}(A)$.
+% \end{tcolorbox}
+
+% \begin{enumerate}[resume=classQ]
+% \item Let $A\vc{w} \cong \vc{y}$ be a least squares problem. Let $\text{cond}(A) = 10^3$ and $\cos\theta = 0.9$.  
+
+% \end{enumerate}
+\subsubsection{Summary}
+\begin{tcolorbox}
+(from Sauer Chapter 4)
+
+\begin{enumerate}
+    \item Choose a model: identify the parameterized model, $y = w_1\varphi_1(x) + ... + w_N\varphi_M(x)$ which will be used to fit the model
+    \item Assume the model fits the data: for each data point, substitute it into the model to create an equation whose unknowns are the parameters $w_k$.  
+   
+    This results in a system $A\vc{w} \cong \vc{y}$ where $\vc{w}$ is a vector of unknown parameters.
+    
+    $A$ can be referred to as the \textbf{least squares matrix}, the \textbf{regression matrix}, or the \textbf{design matrix}.
+    \item Solve (in the least squares sense): use a $QR$ decomposition of $A$, or use the normal equations.  With the normal equations use a Cholesky factorization of $A^TA$, or directly find $(A^TA)^{-1}A^T$.
+\end{enumerate}
+\end{tcolorbox}
+
+%\section{QR}. 
+
+\end{document}

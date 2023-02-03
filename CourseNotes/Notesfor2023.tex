@@ -1,0 +1,52 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 06}{}{Solving equations, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\def\mbf{\mathbf}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits underneath in displays
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\begin{enumerate}
+    \item least squares deserves more time: introduce the problem / framing, then go on a `linear algebra interlude'.
+    
+    Potential interlude topics
+    \begin{enumerate}
+        \item quadratic forms
+        \item orthogonal
+        \item QR
+        \item SVD ?
+        \item matrix condition number
+        \item maybe more time on the calculus as well?
+    \end{enumerate}
+    
+    \item PSet 02 or 03 (probably 03) need a problem carefully exploring error in least squares.  looking at error based on the conditioning of $A$ and the closeness of $\hat{y}$ to $A\hat{w}$
+    
+    \item Lagrange interpolation deserves a discussion about stability and why the algorithm begins to fail at larger numbers of points (plus exploration of that).  Would be nice to have time for the Chebyshev content and the error of the interpolated polynomial: fits in well for integration topics.
+    
+    \item diff eq problems require a lot of background info to motivate them, so may not make sense without a diff eq prereq on the course
+    
+    \item differentiation is a nice opportunity to discuss rounding error
+    
+    \item Integration should tie in well to interpolation (rework so that this happens more clearly).  Gaussian quadrature would tie conceptually to chebyshev for interpolation so may make sense to include either both or neither?
+    
+    \item DFT and FFT would benefit from one more day to better discuss the structure of the DFT and IDFT matrices and for more of an intro to complex numbers.  This topic ties in well to interpolation and least squares.
+\end{enumerate}  
+
+\end{document}

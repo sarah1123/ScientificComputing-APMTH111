@@ -1,0 +1,295 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 08}{}{Interpolation, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\def\mbf{\mathbf}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\def\dsst{\displaystyle}
+\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits underneath in displays
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent 
+
+\section*{Preliminaries}
+
+\begin{itemize}
+\itemsep0pt
+\item Problem set 04 is due on Friday at 5pm (submit via Gradescope: include pdfs of all code/output on Gradescope.  Upload any source code to Canvas).
+\item Problem set 04 includes some ``time permitting'' problems.  If your total time spent on the course outside of class reaches 10 hours in the week then you are encouraged to skip problems.  If you are not in that situation, you are expected to complete the problems.
+\item There will be a skill check in class during Class 09.  The problem info is below.
+\item Find all OH on Canvas.
+\item Quiz 01 is on Thursday Oct 13.  The info will go onto Canvas soon.
+\end{itemize}
+
+
+
+\noindent\textbf{Big picture}
+
+Today: Algorithms for finding a curve that directly passes through data points.
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check practice}
+\begin{questions}
+\item Consider the data points $(1,7)$, $(3, 5)$, $(4, 9)$.  Construct $L_{3,1}$, the Lagrange basis function of degree $2$ that is $1$ at $x_1 = 1$ and is $0$ at the other input values.
+
+
+\item The skill from the Class 05 handout (Skill Check C06).
+\end{questions}
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+\begin{questions}
+\item For zeros at $3$ and $4$, we have $(x-3)(x-4)$.  For the function to be $1$ at $x = 1$, we have $L_{3,1} = \dfrac{(x-3)(x-4)}{(1-3)(1-4)}$
+
+\item See the past handout.
+\end{questions}
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Teams}
+\begin{multicols}{3}
+1. Eletria, Benjamin, Marissa
+
+2. Cameron, Basil, Emma
+
+3. RH, Eric, Esmé
+
+4. Nini, Ray, Dani
+
+5. Jack, Mina, Ivonne
+
+6. Alex, KevinG, Shang
+
+7. Jessica, Johan, Tom
+
+8. Nina, Robert, Padraig
+
+9. KevinC, Alex, Eli
+
+10.  Aidan, Daniyal, Zachary
+
+11. Ghedion, JuliaK, JuliaM
+
+12. Mack, Brian
+
+13. Caitlin, Sophie
+
+\end{multicols}
+
+\section*{Interpolation}
+\subsection*{Some applications}
+\begin{multicols}{2}
+\begin{itemize}
+\itemsep0pt
+    \item rendering fonts
+    \item approximated a complicated function by a polynomial
+    \item creating a smooth surface given data
+    \item design and manufacturing (aircraft, cars)
+    \item animation / graphics
+    \item spline smoothing methods
+\end{itemize}
+\end{multicols}
+\subsection*{Polynomial interpolation of data}
+\begin{tcolorbox}
+(Sauer \S3.1)
+
+A function $y = P(x)$ \textbf{interpolates} the data points $\{(x_i,y_i)\}_{i=1}^N$ if $P(x_i) = y_i$ for $1\leq i\leq N$.
+\end{tcolorbox}
+\begin{enumerate}[resume=classQ]
+\item Consider the data points $(0,3), (1,2), (2,4)$.  What is the lowest degree polynomial that will interpolate these points?
+\vspace{0.6in}
+
+\item Consider the data points $(0,3), (0,2), (2,4)$.  Is an interpolating function possible?  Why not?
+\vspace{0.6in}
+
+\end{enumerate}
+
+\subsection*{Monomial basis}
+\begin{tcolorbox}
+For $N$ data points, choose $N$ basis functions, $1$, $x$, ..., $x^k$,..., $x^{N-1}$.
+Set up a linear system (similar to least squares):
+\[\left[\begin{array}{c c c c}
+1 & x_1 & \hdots & x_1^{N-1} \\
+\vdots & \vdots & & \vdots \\
+1 & x_N & \hdots & x_N^{N-1}
+\end{array}\right]
+\left[\begin{array}{c}
+w_1 \\
+w_2 \\
+\vdots \\
+w_N
+\end{array}\right] = 
+\left[\begin{array}{c}
+y_1 \\
+y_2 \\
+\vdots \\
+y_N
+\end{array}\right]\]
+\end{tcolorbox}
+\begin{enumerate}[resume=classQ]
+\item Recall that the matrix \[\left[\begin{array}{c c c c}
+1 & x_1 & \hdots & x_1^{N-1} \\
+\vdots & \vdots & & \vdots \\
+1 & x_N & \hdots & x_N^{N-1}
+\end{array}\right]\] is called a \textbf{Vandermonde} matrix.  
+
+\emph{You worked with Vandermonde matrices on problem set 02.} 
+
+\includegraphics[width=0.45\textwidth]{img/Class08vandermonde5.png}
+\includegraphics[width=0.45\textwidth]{img/Class08vandermonde10.png}
+
+\begin{verbatim}
+N = 5
+xlim = 8
+xlist = np.linspace(0,xlim,N)
+A = np.vander(xlist)
+condnum = np.linalg.cond(A)
+\end{verbatim}
+
+What makes the basis $1$, $x$, ..., $x^k$,..., $x^{N-1}$ a poor choice for finding an interpolating polynomial?
+\vspace{1in}
+\end{enumerate}
+
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+    \item (From Heath \S 7.3.1)
+    
+    Solving the system $A\vc{w} = \vc{y}$ to determine $\vc{w}$, where $A$ is the Vandermonde matrix , requires $\mathcal{O}(N^3)$ work.
+    \item (from Heath \S Notation)
+    
+    $\mathcal{O}(N^3)$ is ``big-oh'' notation.  For $N$ large, $f(N) = \mathcal{O}(g(N))$ (said ``$f$ is of the order $g$'' or ``$f$ is big-oh of $g$'' if there is a $C>0$ such that $\vert f(N)\vert \leq C\vert g(n)\vert$ for all $N$ sufficiently large.  For example, $7N^3 + 2N^2 + N = \mathcal{O}(N^3)$.
+    
+    \item `$\mathcal{O}(N^3)$ work' refers to the number of multiplications required to carry out the algorithm.
+\end{itemize}
+\end{tcolorbox}
+
+\noindent\textbf{Advantages of the monomial basis}
+\begin{tcolorbox}
+(From Heath \S 7.3.1)
+\begin{itemize}
+\itemsep0pt
+    \item 
+    
+    The polynomial can be evaluated in $N$ additions and $N$ multiplications.
+    
+    \item differentiation and integration are also straightforward
+   
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsection*{Lagrange interpolation}
+\emph{(questions from Veronica Ciocanel)}
+\begin{enumerate}[resume=classQ]
+
+\item Given two distinct points $(x_0,y_0)$ and $(x_1,y_1)$, find an equation for the
+straight line through both points. 
+
+Call this function $P(x)$.  Is it unique?
+
+\emph{A line is the lowest dimensional interpolating polynomial for two points.}
+
+\vspace{1in}
+
+\item Show that the function $\dsst{L_0(x) = \frac{x-x_1}{x_0-x_1}}$ is $1$
+when $x=x_0$ and $0$ when $x=x_1$.  
+
+Similarly $\dsst{L_1(x) = \frac{x-x_0}{x_1-x_0}}$
+is $0$ when $x=x_0$ and $1$ when $x=x_1$.
+
+\vspace{1in}
+
+\item Consider the function $Q(x) = y_0L_0(x) + y_1L_1(x)$.  Show that it is
+equal to $P(x)$.
+
+\vspace{1in}
+
+\end{enumerate}
+
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+\item (Lagrange interpolation)
+Let $\{(x_k,y_k)\}_{k=1}^N$ be $N$ points in the plane with distinct $x_k$.  There exists a polynomial $P(x)$ of degree at most $N-1$
+with $P(x_k) = y_k$ for all $k$.
+
+This polynomial is given by 
+\[
+P(x) = y_1L_{N,1}(x) + \cdots y_N L_{N,N}(x) = \sum_{k=1}^N y_k L_{N,k}(x)
+\]
+where, for each $k=1,...,N$
+\[
+L_{N,k} = \frac{(x-x_1)(x-x_2)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_N)}
+{(x_k-x_1)(x_k-x_2)\cdots(x_k-x_{k-1})(x_k-x_{k+1})\cdots(x_k-x_N)}
+=\prod_{i\ne k} \frac{x-x_i}{x_k-x_i}
+\]
+
+The $L_{N,k}$ are the \textbf{Lagrange basis functions} for $\mathcal{P}_{N-1}$ (the space of polynomials of degree $N-1$).  They can also be called \textbf{fundamental polynomials} or \textbf{cardinal functions}.  (Heath \S 7.3.2)
+
+\item (Sauer \S 3.1.1 Theorem 3.2: uniqueness of $P$) Let $\{(x_k,y_k)\}_{k=1}^N$ be $N$ points in the plane with distinct $x_k$.  There exists one, and only one, polynomial $P$ of degree $N-1$ or less that satisfies $P(x_k) = y_k$ for $k=1,...,N$.
+
+\item It requires $\mathcal{O}(N^2)$ arithmetic operations to find $P(x)$, and evaluation requires $\mathcal{O}(N)$.
+
+\item To add a new data point and construct a new interpolating polynomial can be done in $\mathcal{O}(N)$ operations.
+\end{itemize}
+
+ 
+\end{tcolorbox}
+
+\begin{enumerate}[resume=classQ]
+
+\item Construct the Lagrange interpolating polynomial that goes through the points $(0,1)$, $(2,2)$, and $(3,4)$.  %Simplify it to the form $P(x) = ax^2 + bx + c$.
+
+\vspace{1in}
+
+\item Consider the Lagrange interpolation problem.  When it is written in the form $A\vc{w} = \vc{y}$, what is the structure of $A$?
+
+\emph{Use your knowledge of the weights, $\vc{w}$.}
+\vspace{0.5in}
+\end{enumerate}
+
+\subsection*{Summary}
+A monomial basis led to an ill-conditioned problem, $A\vc{w} = \vc{y}$.  Reformulating with a different basis led to a diagonal $A$.  Another basis that is sometimes used (Newton basis functions) leads to a triangular $A$.
+
+\section*{Piecewise polynomial interpolation (splines)}
+
+(Koumoutsakos et al lecture 4)
+
+Using a high degree polynomial to interpolate data (as happens in the problems above when $N$ is larger), means the polynomial is likely to be highly oscillatory.  The polynomial may not look like the function being approximated from the sample points.
+
+\includegraphics[width=0.7\textwidth]{img/C08gaussinterp.png}
+
+\begin{tcolorbox}
+Fit a polynomial to the data piecewise (using just a few data points at a time).
+\end{tcolorbox}
+
+\includegraphics[width=0.7\textwidth]{img/C08linearpiece.png}
+
+\includegraphics[width=0.7\textwidth]{img/C08picequad.png}
+
+\end{document}

@@ -1,0 +1,376 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 02}{}{Floating point and binary, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\newcommand{\vc}[1]{\underline{#1}}
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent 
+
+
+
+\section{Preliminaries}
+\begin{itemize}
+\itemsep0pt
+\item Problem set 01 is due on Friday at 5pm (submit via Gradescope and upload any source code to Canvas).
+\item There will be a skill check in class during Class 03.  The problem info is below.
+\item OH Thursdays 1-3pm and 4:30-6:30pm in Pierce G11 (AM Undergraduate Lounge).
+\item Sarah has OH today from 2-3pm in Pierce G11.
+\end{itemize}
+
+\hrule
+\vspace{0.2cm}
+\noindent\textbf{Extra}
+
+Accessing Python via FAS OnDemand
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+
+
+\noindent\textbf{Big picture}
+
+Today: how are numbers represented in computers?  How does this lead to approximation as an intrinsic component of doing math with a computer?
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check practice}
+
+Convert $12.35$ to binary.
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+
+Convert the integer part and the decimal part separately.
+\begin{multicols}{2}
+
+$12/2 = 6 R0$
+
+$6/2 = 3 R0$
+
+$3/2 = 1 R1$
+
+The integer part is $1$ so we keep that $1$ and stop the algorithm.
+
+We have $(12)_{10} = (1100)_2 $
+
+\columnbreak
+
+$0.35 * 2 = 0.7 = 0.7 + 0$
+
+$0.7*2 = 1.4 = 0.4 + 1$
+
+$0.4*2 = 0.8 = 0.8 + 0$
+
+$0.8*2 = 1.6 = 0.6 + 1$
+
+$0.2*2 = 1.2 = 0.2 + 1$
+
+$0.2*2 = 0.4 = 0.4 + 0$
+
+$0.4*2 = 0.8 = 0.8 + 0$
+
+So $(0.35)_{10} = (0.01\overline{0110})_2$
+
+\end{multicols}
+
+Combining, $(12.35)_{10} = (1100.01\overline{0110})_2$
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Teams}
+
+\begin{multicols}{3}
+1) Kevin, Eli, Daniyal
+
+2) Caitlin, Julia, Johan
+
+3) Ibrahima, Nicole, Zachary
+
+4) Sophie, Julia, Aidan
+
+5) RJ, Brian, Nina
+
+6) Kevin, Mack, Ray
+
+7) Alex, Jack, Robert
+
+8) Nini, Emma, Benjamin
+
+9) Eletria, Tom, Basil
+
+10) Serena, Jessica, Isaac
+
+11) Shang, Esmé, Marissa
+
+12) Eric, Cameron, Dani
+\end{multicols}
+
+%\section{Temporary}
+
+%q1: %decimal to binary, 
+%decimal to a binary floating point (with IEEE convention), machine epsilon
+
+%q2: condition number
+
+%q3: machine epsilon, %overflow, 
+%info in the data type
+
+%q4: calculus review (so not in class)
+
+%q5: rounding vs chopping
+
+\section{Floating point}
+
+\begin{tcolorbox}
+\begin{itemize}
+    \item A floating point system can be characterized by four numbers:
+\begin{itemize}
+\itemsep0pt
+    \item $\beta$ (base)
+    \item $p$ (precision)
+    \item $[L,U]$ (range for exponents)
+\end{itemize}
+
+\item A floating point number is of the form \[ \pm \left(d_0 + d_1\beta^{-1} + d_2 \beta^{-2} + ... + d_{p-1}\beta^{-(p-1)}\right) \beta^E\] where $0\leq d_i\leq \beta-1$ and $L\leq E \leq U$ are integers.
+
+In base $10$ you would write $d_0.d_1d_2...d_{p-1} \times 10^E$.
+\item $\pm$ is the sign, $d_0d_1d_2...d_{p-1}$ is the mantissa, $E$ is the exponent, and $p$ is the precision.
+\item In a \textbf{normalized} system we require $d_0\neq 0$. \emph{i.e. There is a single nonzero digit to the left of the decimal point.}
+\end{itemize}
+\end{tcolorbox}
+
+With your team, find space at a whiteboard. \textbf{Teams 1 and 2}, you'll take photos of your whiteboard work to share with the class.  Upload those in the Class 02 folder of the course \href{Google Drive}{}.  Find the link on Canvas.  
+
+\begin{enumerate}
+    \item Consider a normalized floating point system with $\beta = 10$, $p = 4$, $-5\leq E \leq 5$.  To practice with the system:
+    \begin{parts}
+    \item If the system were \textbf{not} normalized, what is the largest number you could write in this system?
+    \item The system is normalized, though.  So find the largest number in the system.  
+    
+    This is called the \textbf{overflow level} (OFL).
+    \item Write $+2.430\times 10^2$ as a decimal number.
+    
+    \emph{Notice that $4$ digits are included as part of the floating point representation.}
+    \item Write $-0.0034$ as a floating point number in this system.  
+    
+    \emph{Note: this is a normalized system, so there is only one way to write this.}
+    
+    \emph{Include the sign, mantissa, and exponent when writing a floating point number}.
+    
+    \item Write $1$ as a floating point number in this system.  
+    \item Write the smallest floating point number greater than $1$.
+    \end{parts}
+    \item Using the same system, we will examine a few more numbers.
+    \begin{parts}
+    \item Use your work above to find the smallest number $\epsilon$ such that $1+\epsilon > 1$.  This number is referred to as machine epsilon, $\epsilon_{\text{mach}}$
+    \item How would you represent $\pi$ in this system?  \emph{If there are multiple options, add a label for your choice.}
+    \item Find the smallest positive number represented in the system.  This is the underflow level (UFL).  How is it different from $\epsilon_{\text{mach}}$?
+    
+
+    
+    \item Can you write $0$ in a normalized system?
+    \end{parts}
+    \item Now try some floating point arithmetic.
+    \begin{parts}
+    \item Compute $+1.000\times 10^{-5}+1.000\times 10^{-5}$
+    \item Compute $1.0\times 10^{-5}+ 1$ within this system.
+    \item Compute $(\num{1.0e-5} + 1) + (\num{1.0e-5}-1)$
+
+\emph{This is called \textbf{catastrophic cancellation}.}
+    \end{parts}
+\end{enumerate}
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+
+\noindent\textbf{Rounding}
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+    \item Let $\text{fl}(x)$ denote the floating point approximation to $x$.
+    \item To convert from $x$ to $\text{fl}(x)$ one option is to \textbf{chop}, taking the first $p$ digits.  
+    
+%    Dropping the $p+1$st digit leads to a relative error of $\left\vert\dfrac{\text{fl}(x) - x}{x}\right\vert\leq \beta^{-(p-1)}$
+    \item Another option is \textbf{rounding to nearest} by taking the floating point number nearest to $x$.  
+    
+ %  This leads to a relative error of $\left\vert\dfrac{\text{fl}(x) - x}{x}\right\vert\leq \frac{1}{2}\beta^{-(p-1)}$
+    
+    Note: If $x$ is equidistant between two floating point numbers (think of $1.5$ when rounding to the nearest integer), then the value of $d_{p-1}$ is used to determine whether to round up or down.  
+    \item The maximum relative error between a number, $x$, and its floating point representation, $\text{fl}(x)}$, gives the accuracy of the floating point system.  One way to define machine epsilon is \[\epsilon_{\text{mach}} = \max\limits_{x\in[\text{UFL,OFL}]} \left\vert\dfrac{\text{fl}(x) - x}{x}\right\vert.\]
+
+    \item An alternative definition is that $\epsilon_{mach}$ is the distance between $1$ and the next larger floating point number.
+\end{itemize}
+\end{tcolorbox}
+\begin{enumerate}
+\setcounter{enumi}{3}
+    \item Practice with chop and round to nearest.  Let $\beta = 10$, $p =2$, $L = -3, U = 4$.
+
+\begin{enumerate}
+    \item 
+\begin{tabular}{c|c|c}
+     & chop & nearest \\
+     \hline
+  2.394   & & \\
+2.251 & & \\
+%2.389 & & \\
+2.250 & & \\
+\end{tabular}
+\end{enumerate}
+\item For $x = 2.394$, set up expressions for the relative error from chopping and from rounding.  
+
+Which is worse in this case?
+
+\end{enumerate}
+
+\section{Binary}
+
+
+
+\begin{tcolorbox}
+\begin{itemize}
+\itemsep0pt
+    \item The floating point systems used in computers typically have $\beta = 2$ (binary), so the digits of the floating point numbers, $d_i = 0$ or $1$.  We will use $b_i$ interchangeably with $d_i$ when we are working in binary.
+    \item A single binary digit is called a \textbf{bit}.
+    \item In double precision, a floating point number has $64$ bits.  \[s e_1e_2...e_{11}b_1b_2...b_{52}\] where $s$ is the sign (1 bit), $e_1...e_{11}$ is the exponent (11 bits), and $b_1b_2...b_{52}$ are bits from the mantissa (52 bits).  Note that $b_1b_2...b_{52}$ are only the bits to the right of the decimal point (aka the binary point or radix point).
+    \item A few exceptional numbers also need to be represented: NaN (not a number, i.e. 0/0), Inf (infinity, i.e. $1/0$), 0 (because $b_0 = 1$ is assumed, $0$ needs a special representation).  
+\end{itemize}
+\end{tcolorbox}
+
+
+
+
+\noindent\textbf{Converting between binary and decimal}
+
+\begin{enumerate}
+\setcounter{enumi}{5}
+    \item Converting from binary to decimal \begin{enumerate}
+        \item $(11)_{10}$ (eleven in base ten) can be thought of as $1*10^1+1*10^0$.  If we are instead in base $2$, $(11)_2 = 1*2^1+1*2^0$. What does $(11)_2$ convert to in base 10?
+        \item Write $(101)_2$ in base $10$.
+        \item Write $(101.1)_2$ in base $10$.
+    \end{enumerate}
+    \item Converting integers from decimal to binary
+    \begin{enumerate}
+        \item $(16)_{10}$ = $(\_ \_ \_ \_ \_)_2$.  Find the base $2$ representation of $16$.
+        \item Find the base $2$ representation for $17$.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{tcolorbox}
+\textbf{Algorithm for base 10 integer to binary:}
+
+In base $10$ when you divide an integer by $10$, the remainder is the right most digit of the integer: $17/10 = 1 R7$ where $7$ is the right most digit.
+
+When you divide an integer by $2$ the remainder is the first digit of the binary representation:
+$17/2 = 8 R1$ where $1$ is the right most bit
+
+$(17)_{10} = (? ? ? ? ?)_2$.
+
+$17/2 = 8 R1$.  $17/2 = (? ? ? ?.1)_2$. The integer part, $(? ? ? ?)_2$, is now $8$.  Repeat:
+
+
+
+$8/2 = 4 R0$.  $17/2^2 = (? ? ?.01)_2$. The integer part, $(? ? ?)_2$, is now $4$.  Repeat:
+
+$4/2 = 2 R0$.  $17/2^3 = (? ?.001)_2$. The integer part, $(? ?)_2$, is now $2$.  Repeat:
+
+$2/2 = 1 R0$.  $17/2^4 = (1 .0001)_2$. When the integer part is $1$, we keep $1$ as the integer part and stop the algorithm.
+
+Using the remainders, we find $17/2^4 = (1.0001)_2$ so $17 = (10001)_2$.
+
+\end{tcolorbox}
+
+\begin{enumerate}
+\setcounter{enumi}{7}
+    \item Use division by $2$ and keep the remainders to find $27$ in binary.
+\end{enumerate}
+
+\begin{tcolorbox}
+\textbf{Algorithm for base 10 fractional or decimal part to binary:}
+
+In base $10$ when you multiply a number $<1$ by $10$, the integer part is the left most digit of its decimal representation: $0.24*10 = 2.4$ where $2$ is the left most digit.
+
+When you multiply a base $10$ fraction or decimal by $2$ the integer part is the first digit of the fractional part of the binary representation:
+
+$\dfrac{1}{3} = (0. ? ? ? ? ?)_2$.
+
+$\dfrac{1}{3}*2 = \dfrac{2}{3}$.  The integer part is $0$.  $\dfrac{1}{3}*2 = (0. ? ? ? ?)_2$. The fractional part is now $2/3$.  Repeat:
+
+$2/3 * 2 = 4/3 = 1 + 1/3$.  $\dfrac{1}{3}*2^2 = (01. ? ? ?)_2$. The fractional part is now $\dfrac{1}{3}$.  Repeat:
+
+Wait... we've already done $1/3$ so we know what happens from here.  This is a repeating binary expansion.  
+
+$\dfrac{1}{3} = 0.\overline{01}$
+
+\end{tcolorbox}
+
+\begin{enumerate}
+\setcounter{enumi}{7}
+    \item Use multiplication by $2$ and keep the integer parts to find $0.3$ in binary.
+    \item Express $27.3$ as a floating point number using double precision and rounding to nearest.
+    \begin{parts}
+    \item First, convert $27.3$ to binary.
+    \item Example notation for expressing the floating point number (have 52 bits in the box):
+\[\text{fl}(\frac{1}{3}) = +1.\ \framebox[11cm][l]{0101010101010101010101010101010101010101010101010101}\times 2^{-2}\]
+
+Follow this notation (and use the round to nearest rule) to write $27.3$.
+    \end{parts}
+    
+    
+    \item 
+
+Use this notation to write $27.3$ as a floating point number (with $\beta = 2$, $p = 53$)
+\end{enumerate}
+
+\eject
+
+\noindent\textbf{Some answers}
+\begin{enumerate}
+    \item a) $+9999\times 10^5$.  b) $+9.999\times 10^5$.  c) $243$.  d) $-3.400\times 10^{-3}$.  e) $+1.000\times 10^0$.  f) $1.001\times 10^0$ 
+    \item a) $1.001\times 10^0$ is the next number, so $\epsilon = 1.000\times10^{-3}$.  b) $\pi = 3.141592...$ so $3.142$ (round) or $3.141$ (truncate) c) $+1.000\times10^{-5}$ so $0.00001$. d) $0 = 0.0000$ but there has to be a nonzero number to the left, so not clear how to, no.
+    \item a) $+2.000\times10^{-5}$ b) $1.000 + 0.00001 = 1.00001$ but we stop at $4$ digits so $+1.000\times 10^0$.  c) $-1.000 + 0.00001$ is $-1.000$ so $0$.
+    \item \begin{tabular}{c|c|c}
+     & chop & nearest \\
+     \hline
+  2.394   & 2.3& 2.4\\
+2.251 & 2.2& 2.3 \\
+2.250 & 2.2 & 2.2 \\
+\end{tabular}
+$2.25$ was between $2.2$ and $2.3$ so look to the $3$ to decide which way to round.
+\item chop: $\vert(2.394-2.3)/2.394\vert = 0.94/2.394$.  round: $\vert(2.394-2.4)/2.394\vert = 0.006/2.394$.  chopping is worse (something like 40\% !?)
+\item a) $(11)_2 = 1+2 = 3$. b) 4+0+1 = 5.  c) $5+ 1*2^{-1} 5.5$.
+\item a) $16 = 2^4$ so $(10000)_2$. b) $17 = 16+1$ so $(10001)_2$.
+\item $27/2 = 13 R1$.  $13/2 = 6 R1$.  $6/2 = 3 R0$.  $3/2 = 1 R1$.  $(11011)_2$.  Check: $16+8+0+2+1 = 27.$
+\item $0.3*2 = 0.6$ so $(0.0...)_2$.  $0.6*2 = 1.2$ so $(0.01...)_2$.  $0.2*2 = 0.4$ so $(0.010...)_2$.  $0.4*2 = 0.8$ so $(0.0100...)_2$.  $0.8*2 =1.6$ so $(0.01001...)_2$.  We have seen $0.6$ onward before so $1001$ will repeat.  $(0.0\overline{1001})_2$.  Check: $x = (0.0\overline{1001})_2$.  $2x = (0.\overline{1001})_2$.  $2*2^4x = (1001.\overline{1001})_2$.  $(1001)_2 = 9$ so $2x + 9 = 32x$.  $30x = 9 \Rightarrow x = 3/10 = 0.3$
+\item a) $27.3 = 27+0.3 = (11011.0\overline{1001})_2$  b) $+1.1011010011001100\times 2^4$ <-- 12 bits after the radix point. $12+8*5 = 52$ so make 5 copies of the last 8:
+
+$+1.10110100110011001100110011001100110011001100110011001100\times 2^4$.  For rounding, the next bits are $11$ so round up
+
+$+1.\framebox[11.7cm][l]{10110100110011001100110011001100110011001100110011001101}\times 2^4$
+\end{enumerate}
+\end{document}
