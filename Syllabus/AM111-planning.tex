@@ -1,0 +1,344 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{AM 111 Planning}
+\chead{Updated on \today.}
+\rhead{{\color{ForestGreen} Fall 2022}}
+
+\usepackage{color}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{termcal}
+
+%\usepackage{color}
+%\setlength{\belowcaptionskip}{-10pt}
+%\setlength{\headheight}{15.2pt}
+%\setlength{\parindent}{.5 in}
+%\evensidemargin -0.23in
+% \oddsidemargin -0.23in
+% \setlength\textheight{10in}
+% \setlength\textwidth{6.75in}
+% %\setlength\columnsep{0.25in}
+% \setlength\headheight{0pt}
+% \setlength\headsep{0pt}
+% \addtolength{\topmargin}{-60pt}
+
+\definecolor{c00}{HTML}{FFBBFF}
+\definecolor{c01}{HTML}{FFBBDD}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\definecolor{c04}{HTML}{FFDDBB}
+%\definecolor{c04}{HTML}{DDFFDD}
+\definecolor{c05}{HTML}{FFFFBB}
+%\definecolor{c04}{HTML}{FFFFBB}
+\definecolor{c06}{HTML}{DDFFBB}
+\definecolor{c07}{HTML}{BBFFBB}
+\definecolor{c08}{HTML}{BBFFFF}
+\definecolor{c09}{HTML}{BBDDFF}
+\definecolor{c10}{HTML}{BBBBFF}
+\definecolor{c11}{HTML}{DDBBFF}
+\definecolor{c12}{HTML}{BBBBDD}
+
+
+\newcommand{\claa}[1] {\colorbox{c00}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\cla}[1] {\colorbox{c01}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clb}[1] {\colorbox{c02}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clc}[1] {\colorbox{c03}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\cld}[1] {\colorbox{c04}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\cle}[1] {\colorbox{c05}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clf}[1] {\colorbox{c06}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clg}[1] {\colorbox{c07}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clh}[1] {\colorbox{c08}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\cli}[1] {\colorbox{c09}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clj}[1] {\colorbox{c10}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\clk}[1] {\colorbox{c11}{\makebox[2.3cm][l]{#1} } \\}
+\newcommand{\cll}[1] {\colorbox{c12}{\makebox[2.3cm][l]{#1} } \\}
+%\newcommand{\exam}[1] {\colorbox{c03}{\makebox[0.8cm][l]{#1}} \colorbox{c04}{\makebox[0.8cm][l]{ }} \colorbox{c05}{\makebox[0.8cm][l]{}} \colorbox{c06}{\makebox[0.8cm][l]{} } \\}
+
+\newcommand{\TuThClass}{\skipday
+\calday[Tuesday]{\classday}
+\skipday % Wednesday
+\calday[Thursday]{\classday}
+\skipday %
+\skipday\skipday % weekend (no class)
+}
+\newcommand{\MWClass}{% don't start on a skipday.
+\calday[Monday]{\classday}
+\skipday
+%\calday[Tuesday]{\noclassday}
+\calday[Wednesday]{\classday}
+\skipday%\calday[Thursday]{\noclassday}
+\calday[Friday]{\classday}
+\skipday
+\skipday}
+
+\newcommand{\calnext}[2]
+{\caltextnext{\textbf{#1} #2}}
+
+\newcommand{\Holiday}[2]{%
+\options{#1}{\noclassday}
+\caltext{#1}{#2}
+}
+
+
+\begin{document}
+
+\section{Timeline}
+\subsection{Project brief}
+
+\noindent Goals:
+\begin{itemize}
+\itemsep0pt
+    \item internal: examples of interest to engineering and applied math students
+    \item internal: student learning of using computers to approach math problems and limits/challenges
+    \item external: materials others can use for a similar course
+\end{itemize}
+
+\noindent Stakeholders:
+\begin{itemize}
+\itemsep0pt
+    \item students
+    \item course staff
+    \item other faculty in AM/SEAS
+    \item faculty at other universities
+\end{itemize}
+
+\noindent Timeframe:
+
+\begin{itemize}
+\itemsep0pt
+    \item between August 16th and December 16th, every part of this project will happen.
+\end{itemize}
+
+\noindent Key milestones:
+\begin{itemize}
+\itemsep0pt
+    \item syllabus
+    \item progress assessments
+    \item final assignment
+\end{itemize}
+
+
+\noindent Due dates:
+\begin{enumerate}
+    \item Aug 16: syllabus and basic Canvas site \href{https://teaching.berkeley.edu/sites/default/files/syllabus_components.pdf}{(Syllabus parts reference - Berkeley)}
+    \begin{enumerate}
+        \item topic list and calendar (both subject to change)
+        \item list of all assignments (pre-class?  or just in-class?)
+        \item dates for assessments
+        \item grading information
+        \item learning objectives
+        \item overview of content of the course
+    \end{enumerate}
+    \item Sept 1: full Canvas site, PSet 01, classes 01-03
+    \item Weekly
+\end{enumerate}
+
+Timeline:
+
+
+\section{Other courses}
+\subsection{AM205}
+\href{https://people.math.wisc.edu/~chr/am205/}{AM205 website}
+
+After taking this course, students should be able to:
+\begin{enumerate}
+\itemsep0pt
+    \item Apply standard techniques to analyze key properties of numerical algorithms, such as stability and convergence.
+    \item Understand and analyze common pitfalls in numerical computing such as ill-conditioning and instability.
+    \item Perform data analysis efficiently and accurately using data fitting methods.
+    \item Derive and analyze numerical methods for ODEs and PDEs.
+\item Perform optimization using well-established algorithms.
+\item Implement a range of numerical algorithms efficiently in a modern scientific computing programming language.
+\end{enumerate}
+
+\section{Topics}
+\subsection{floating point}
+\begin{itemize}
+\itemsep0pt
+    \item condition number vs stability of an algorithm
+    \item continuous vs discrete and number representation in computers
+\end{itemize}
+
+\subsection{linear least squares}
+\subsection{root finding}
+\subsection{interpolation}
+
+\subsection{differentiation}
+\subsection{integration}
+\subsection{ODEs}
+\subsection{fourier}
+\subsection{neural nets}
+
+\section{Calendar}
+
+%Topics and meeting dates.
+
+%A few to-do items:  
+
+%Surface past math knowledge (mention we'll need x topic.  Give an example.  Give an exercise or two for them to work on.)
+
+%Find an initial state for all students in the course using Susan Ambrose's assessment...
+
+\begin{center}
+\begin{calendar}{8/29/2022}{15} % Class starts on Thurs Sept 1st and lasts for 
+% 13 weeks + finals weeks
+\setlength{\calboxdepth}{.3in}
+\setlength{\calwidth}{6.75in}
+\TuThClass
+
+
+\caltexton{1}{Modeling data: linear least squares}
+\calnext{}{Modeling data: More least squares}
+\calnext{}{Nonlinear systems: root finding with secant and bisection}
+\calnext{}{Nonlinear systems: Newton's method}
+% video assignment 
+%\caltext{9/11/2016}{\S 12.5 Functions of three variables}
+\calnext{}{Nonlinear systems: Root finding in systems}
+\calnext{}{Nonlinear systems: Newton's method in systems}
+\calnext{}{Interpolation: Lagrange interpolation}
+\calnext{}{Interpolation: Cubic splines}
+\calnext{}{Integration: rectangle and trapezoidal}
+\calnext{}{Integration: Simpson's}
+\calnext{}{Integration: Quadrature 2}
+\calnext{}{Integration: Quadrature 3} 
+\calnext{}{Integration: Adaptive quadrature}
+\calnext{}{Quiz}
+\calnext{}{Integration: Adaptive quadrature}
+\calnext{}{Integration: Probability 1}
+\calnext{}{Integration: Probability 2}
+\calnext{}{Integration: Monte Carlo 1}
+\calnext{}{Integration: Monte Carlo 2}
+\calnext{}{Neural nets (NN): single layer 1}
+\calnext{}{NN: single layer 2}
+\calnext{}{NN: PCA}
+\calnext{}{NN: autoencoders}
+\calnext{}{NN: deep learning 1}
+\calnext{}{NN: deep learning 2}
+\calnext{}{Quiz}
+
+% Reading week
+\Holiday{5/8/2019}{\color{ForestGreen} Reading period}
+\Holiday{5/6/2019}{\color{ForestGreen} Reading period}
+\Holiday{5/10/2019}{\color{ForestGreen} Final Exams.  Final presentation on Saturday May 11th, 2-5pm}
+\Holiday{5/3/2019}{\color{ForestGreen} Reading period}
+\Holiday{2/1/2019}{\color{ForestGreen} No class}
+\Holiday{2/15/2019}{\color{ForestGreen} No class}
+\Holiday{2/18/2019}{\color{ForestGreen} University Holiday}
+\Holiday{3/1/2019}{\color{ForestGreen} No Class (Practice Quiz)}
+\Holiday{3/15/2019}{\color{ForestGreen} No class}
+\Holiday{3/18/2019}{\color{ForestGreen} Spring Break}
+\Holiday{3/20/2019}{\color{ForestGreen} Spring Break}
+\Holiday{3/22/2019}{\color{ForestGreen} Spring Break}
+\Holiday{3/29/2019}{\color{ForestGreen} No Class (Practice Quiz)}
+\Holiday{4/19/2019}{\color{ForestGreen} No class}
+%\Holiday{3/16/2016}{\color{ForestGreen} Spring Break}
+% ... and so on
+
+\caltext{2/1/2019}{{\color{blue} Study cards due}}
+\caltext{4/17/2019}{{\color{blue} Evening Exam}}
+%\caltext{2/18/2019}{\color{blue} University Holiday}
+%\caltext{3/18/2019}{\color{blue} University Holiday}
+%\caltext{3/20/2019}{\color{blue} University Holiday}
+
+\options{8/30/2022}{\noclassday} 
+\options{9/5/2022}{\noclassday}
+%\options{10/10/2022}{\noclassday} 
+\options{11/23/2022}{\noclassday}
+\options{11/24/2022}{\noclassday}
+\options{11/25/2022}{\noclassday}
+\options{12/6/2022}{\noclassday}
+\options{12/8/2022}{\noclassday}
+
+
+\caltext{9/6/2022}{\color{blue} Last day to add}
+\caltext{9/29/2022}{\color{blue} Last class before drop}
+\caltext{11/22/2022}{\color{blue} Class may be held online}
+\caltext{11/24/2022}{\color{blue} Thanksgiving (no class)}
+\caltext{12/6/2022}{\color{blue} Reading period}
+\caltext{12/8/2022}{\color{blue} Exams begin}
+
+
+%
+\caltext{2/21/2022}{\color{blue} Presidents' day}
+\options{3/4/2022}{\noclassday} %
+\caltext{3/4/2022}{\color{blue} No class}
+% Friday before President's Day
+% Friday before spring break
+\options{3/11/2022}{\noclassday} %
+\caltext{3/11/2022}{\color{blue} No class}
+\options{3/14/2022}{\noclassday} %
+\caltext{3/14/2022}{\color{blue} Spring break}
+\options{3/16/2022}{\noclassday} %
+\caltext{3/16/2022}{\color{blue} Spring break}
+\options{3/18/2022}{\noclassday} %
+\caltext{3/18/2022}{\color{blue} Spring break}
+
+
+
+\end{calendar}
+\end{center}
+
+\eject
+\noindent\textbf{Calendar of topics:} (subject to adjustment)
+
+\begin{tabular}{| l | l | p{10cm} | l  |}
+\hline
+Date & Due &  Class & Text \\
+\hline
+\hline
+   Thurs 09/01 & &  C01: Base 10, binary, numbers in computers &  \\
+     \hline
+   Tues 09/06  & &  C02: linear least squares & \\
+  Thurs 09/08 & & C03: & \\
+  \hline
+    Tues 09/13  & &  C04: & \\
+  Thurs 09/15 & & C05: & \\
+  \hline
+     Tues 09/20  & &  C06: & \\
+  Thurs 09/22 & & C07: & \\
+  \hline
+     Tues 09/27  & &  C08: & \\
+  Thurs 09/29 & & C09: & \\
+  \hline
+     Tues 10/04  & &  C10: & \\
+  Thurs 10/06 & & C11: & \\
+  \hline
+     Tues 10/11  & &  C12: & \\
+  Thurs 10/13 & & C13: & \\
+  \hline
+     Tues 10/18  & &  C14: & \\
+  Thurs 10/20 & & C15: & \\
+  \hline
+     Tues 10/25  & &  C16: & \\
+  Thurs 10/27 & & C17: & \\
+  \hline
+     Tues 11/01  & &  C18: & \\
+  Thurs 11/03 & & C19: & \\
+  \hline
+     Tues 11/08  & &  C20: & \\
+  Thurs 11/10 & & C21: & \\
+  \hline
+     Tues 11/15  & &  C22: & \\
+  Thurs 11/17 & & C23: & \\
+  \hline
+     Tues 11/22  & &  C24: & \\
+  \hline
+     Tues 11/29  & &  C25: & \\
+  Thurs 12/01 & & C26: & \\
+  \hline
+ 
+\hline
+Mon 04/27 &  & C36: more diff eqs & \\
+Wed 04/29 &  & C37: semester review & \\
+Fri 05/01 & PSet 10 & & no class \\
+\hline
+May 05/08 &  & Final exam from 2-5pm & \\
+\hline
+\end{tabular}
+\end{document}

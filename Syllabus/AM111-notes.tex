@@ -1,0 +1,80 @@
+\documentclass[12pt,letterpaper]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.7in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\definecolor{c01}{HTML}{FFBBDD}
+\header{AM 111 Notes}{Intro to Scientific Computing - F22}{\today.}{}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} 
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{syllabus.bib}
+
+%\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
+\usepackage{sectsty}  % Make section fonts 12 point
+% make a task list:
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% Adds a vertical column separator.
+\setlength{\columnseprule}{1pt}
+\def\columnseprulecolor{\color{black}}
+
+\sectionfont{\fontsize{12}{15}\selectfont}
+\usepackage{tcolorbox} % Nice boxes
+
+\begin{document}
+\pdfpageheight 11in 
+\pdfpagewidth 8.5in
+
+\section{Planning}
+\begin{enumerate}
+\itemsep0pt
+    \item outline for a course based on Petros' course
+\end{enumerate}
+
+\section{Resources}
+\subsection{People I might contact}
+Python support: Tim, Eli, Petros, active learning labs
+
+
+\subsection{Textbooks}
+
+Dina used Numerical Methods in Engineering with Python3 \url{https://www-cambridge-org.ezp-prod1.hul.harvard.edu/core/books/numerical-methods-in-engineering-with-python-3/95151C37C2F427F30DC90FA619FE79F9}
+
+Cengiz used Greenberg and Chartier
+
+Petros has a list of 4 (grab those)
+
+Chris uses Scientific Computing: An Introductory Survey, by Michael T. Heath for AM205
+
+\section{Content}
+\subsection{}
+
+\section{AM 205}
+\subsection{Topics/Problems}
+\begin{enumerate}
+\itemsep0pt
+    \item intro + error (continuous processes become discrete and computers are finite precision so need to round) + idea of a condition number (change in output over output divided by change in input over input: how sensitive is the output to small changes in the input) + IEEE floating point standards
+\end{enumerate}
+
+\subsection{Ed notes}
+PSet 01: Q1. Lagrangian polynomail; Vandermonde matrix and inversion.  Is the Vandermonde illconditioned (lecture notes say these are a bad idea).  Is there a threshold for the condition number? TF says: Error rule of thumb: one decimal digit of accuracy in $x$ (for $Ax = b$ for each power of $10$ in the condition number of $A$.   \url{http://www.ece.northwestern.edu/local-apps/matlabhelp/toolbox/control/numerical/relcomp2.html}
+
+PSet 01 Q2: Chebyshev vs other cubic polynomials (find something lower error than the Chebyshev)
+
+
+
+\end{document}
