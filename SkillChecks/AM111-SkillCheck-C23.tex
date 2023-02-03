@@ -1,0 +1,144 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{tikz}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Class 23}{}{Skill Check}
+\runningheadrule
+\headrule
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Name: \rule{2.5in}{0.5pt}
+
+\noindent Put away any notes or other materials, and work on this activity alone.
+
+\noindent You'll receive feedback on your work and will complete a similar question on a future skill check.
+
+
+\begin{questions}
+\item 
+For the neural network below, how many inputs does it have?  How many units in the second hidden layer?  What is the depth of the network?
+
+\newcommand{\inputnum}{4} 
+% Hidden layer neurons'number
+\newcommand{\hiddennum}{8} 
+% Hidden layer neurons'number
+\newcommand{\hiddennumk}{2} 
+% Hidden layer neurons'number
+\newcommand{\hiddennumm}{6}  
+% Output layer neurons'number
+\newcommand{\outputnum}{3} 
+\begin{tikzpicture}
+% Input Layer
+\foreach \i in {1,...,\inputnum}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=orange!30] (Input-\i) at (0,-\i) {};
+}
+% Hidden Layer
+\foreach \i in {1,...,\hiddennum}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=teal!50,
+        yshift=(\hiddennum-\inputnum)*5 mm
+    ] (Hidden-\i) at (2.5,-\i) {};
+}
+\foreach \i in {1,...,\hiddennumk}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=teal!50,
+        yshift=(\hiddennumk-\inputnum)*5 mm
+    ] (Hiddenk-\i) at (5,-\i) {};
+}
+\foreach \i in {1,...,\hiddennumm}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=teal!50,
+        yshift=(\hiddennumm-\inputnum)*5 mm
+    ] (Hiddenm-\i) at (7.5,-\i) {};
+}
+% Output Layer
+\foreach \i in {1,...,\outputnum}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=purple!50,
+        yshift=(\outputnum-\inputnum)*5 mm
+    ] (Output-\i) at (10,-\i) {};
+}
+% Connect neurons In-Hidden
+\foreach \i in {1,...,\inputnum}
+{
+    \foreach \j in {1,...,\hiddennum}
+    {
+        \draw[->, shorten >=1pt] (Input-\i) -- (Hidden-\j);   
+    }
+}
+% Connect neurons Hidden-Out
+\foreach \i in {1,...,\hiddennum}
+{
+    \foreach \j in {1,...,\hiddennumk}
+    {
+        \draw[->, shorten >=1pt] (Hidden-\i) -- (Hiddenk-\j);
+    }
+}
+\foreach \i in {1,...,\hiddennumk}
+{
+    \foreach \j in {1,...,\hiddennumm}
+    {
+        \draw[->, shorten >=1pt] (Hiddenk-\i) -- (Hiddenm-\j);
+    }
+}
+\foreach \i in {1,...,\hiddennumm}
+{
+    \foreach \j in {1,...,\outputnum}
+    {
+        \draw[->, shorten >=1pt] (Hiddenm-\i) -- (Output-\j);
+    }
+}
+% Inputs
+\foreach \i in {1,...,\inputnum}
+{     
+    \draw (Input-\i) node {$x_{\i}$};
+    % \draw[<-, shorten <=1pt] (Input-\i) -- ++(-0.5,0)
+    %     node[left]{$x_{\i}$};
+}
+% Outputs
+\foreach \i in {1,...,\outputnum}
+{            
+\draw (Output-\i) node {$y_{\i}$};
+    % \draw[->, shorten <=1pt] (Output-\i) -- ++(0.5,0)
+    %     node[right]{$y_{\i}$};
+}
+\end{tikzpicture}
+
+\vspace{2cm}
+
+\item (Retake for Class 20)
+
+Use Taylor expansion to first order to write $f(t_k+h/2,y_k+hf(t_k,y_k)/2)$ in terms of $f(t_k, y_k)$,$\dfrac{\partial f}{\partial t}(t_k,y_k)$, $\dfrac{\partial f}{\partial y}(t_k,y_k)$, and $\mathcal{O}(h^2)$.
+
+\vspace{3cm}
+
+\item (Retake for Class 21)
+
+There are $s = 132300$ data points in a data set with $6$ seconds of data.  Find the frequency associated with the $24$rd Fourier mode ($c_{24}$) in units of $1/$seconds (Hertz).
+
+\end{questions}
+
+\end{document}

@@ -1,0 +1,48 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Class 19}{}{Skill Check}
+\runningheadrule
+\headrule
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Name: \rule{2.5in}{0.5pt}
+
+\noindent Put away any notes or other materials, and work on this activity alone.
+
+\noindent You'll receive feedback on your work and will complete a similar question on a future skill check.
+
+
+\begin{questions}
+\item Consider the initial value problem $\left\{\begin{array}{l}
+y' = \exp(y) \\
+y(0) = 1
+\end{array}
+\right.$
+
+Set $h = 0.1$ and provide an expression for $y(0.1)$, as approximated using improved Euler.
+
+\emph{Hint: $\exp(1)\approx2.718$, $\exp(1+\exp(1))\approx3.567$, $\dfrac{2.718+3.567}{2}=3.1425$}
+
+
+\vspace{8.5cm}
+
+\item (Retake for Class 16)
+
+The error from using the Simpson's rule to approximate $\int_a^b f(x)dx$ with a single panel is given by $-\frac{1}{90}h^5f^{(4)}(c)$, where $h$ is the panel size.  What is the error for the composite rule?
+
+\end{questions}
+
+\end{document}

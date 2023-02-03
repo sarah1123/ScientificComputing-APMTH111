@@ -1,0 +1,547 @@
+\documentclass[12pt,letterpaper,answers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{tikz}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111}{}{Skill Checks (Retakes)}
+\runningheadrule
+\headrule
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item (for Class 02)
+
+Let $f(x) = \exp(x)$.  Find the condition number as a function of $x$.  Use relative error to construct your expression.
+
+\begin{solution}
+Using Taylor expansion to first order about $x$, $f(x+\Delta x)\approx f(x) + \Delta x \left.\dfrac{df}{dx}\right\vert_x$.
+
+Working with a general $f(x)$:
+$\text{cond }\# = \left\vert\dfrac{\hat{y}-y}{y} \right\vert / \left\vert\dfrac{\hat{x}-x}{x} \right\vert \approx \left\vert \dfrac{\Delta xf'(x)}{f(x)} \right\vert / \dfrac{\Delta x}{x} = \left\vert x\dfrac{f'(x)}{f(x)}\right\vert$
+
+For $f(x) = \exp(x)$, we have $f'(x) = \exp(x)$, and
+
+$\text{cond }\# \approx \left\vert x \dfrac{\exp(x)}{\exp(x)} \right\vert  = \left\vert x \right\vert$
+
+\end{solution}
+
+\item (for Class 03)
+
+Convert the decimal number 34.25 into a binary number.
+
+\begin{solution}
+    Convert the integer part and the decimal part separately.
+    \begin{multicols}{2}
+    
+    $34 = 17*2 + 0$
+    
+    $17 = 8*2 + 1$
+    
+    $8 = 4*2 + 0$
+
+    $4 = 2*2 + 0$
+
+    $2 = 1*2 + 0$
+
+    $1 = 0*2 + 1$
+    
+    So $(34)_{10} = (100010)_2 $
+    
+    \columnbreak
+    
+    $0.25 * 2 = 0.5 = 0.5 + 0$
+
+    $0.5 * 2 = 1.0 = 0.0 + 1$
+    
+    So $(0.25)_{10} = (0.01)_2$
+    
+    \end{multicols}
+    
+    Combining, $(34.25)_{10} = (100010.01)_2$
+\end{solution}
+
+\item (for Class 04)
+
+Using $\left\{(x_i,y_i)\right\}_{i=1}^2 = \left\{(1,1), (2,4)\right\}$ as your data, and $f(x) = x^2-x$ as your model, 
+\begin{parts}
+\item construct the error vector $\vc{e}$, and
+\item find the $\infty$-norm of $\vc{e}$
+\end{parts}
+
+
+\begin{solution}
+
+$f(x_1) = 1^2-1 = 0$, $f(x_2) = 2^2-2 = 2$.  $\vc{e} = (1-0, 4-2) = (1,2)$.
+
+The $\infty$-norm is $\max\{ \vert 1\vert, \vert 2 \vert\} = 2.$
+
+\end{solution}
+
+\item (for Class 05) 
+
+\begin{questions}
+\item Given $A\vc{w} = \vc{y}$, with the system overdetermined, construct the normal equations for this system.
+
+Let $A = \left[\begin{array}{r r}
+1 & -1 \\
+0 & 2 \\
+2 & 0
+\end{array}\right]$ and $\vc{y} =  \left[\begin{array}{r}
+6 \\ 1 \\ 4 \end{array}\right]$.  
+
+\emph{You do not need to complete the matrix multiplications.}
+\item The skill from the Class 01 handout (Skill Check C02).
+\end{questions}
+
+
+\begin{solution}
+\begin{questions}
+\item The normal equations are $A^TA\vc{w} = A^T\vc{y}$.  The solution, $\vc{w} = \vc{w}^*$, will be the closest solution to the original system under a least-squares error measurement.
+
+The equations are
+
+\[\left[\begin{array}{c c c}
+1 & 0 & 2 \\
+-1 & 2 & 0
+\end{array}\right]\left[\begin{array}{r r}
+1 & -1 \\
+0 & 2 \\
+2 & 0
+\end{array}\right] \vc{w}^* = \left[\begin{array}{c c c}
+1 & 0 & 2 \\
+-1 & 2 & 0
+\end{array}\right] \left[\begin{array}{ r}
+6 \\ 1 \\ 4\end{array}\right]\]
+
+\item See the Class 01 handout for the example.
+\end{questions}
+\end{solution}
+
+
+\item (for Class 06)
+
+Write the quadratic form $Q(x_1,x_2,x_3) = x_3^2 - 4x_1x_2 + 4x_2x_3$ as a matrix equation of the form $\vc{x}^TA\vc{x}$ where $A$ is a $3\times 3$ symmetric matrix.
+
+\begin{solution}
+The coefficients of $x_j^2$ go on the diagonal (so $0$, $0$, $1$ will be the diagonal).
+
+To fill in $a_{12} = a_{21}$ use the $x_1x_2$ term (coefficient is $-4$ so the matrix entries are each $-2$).
+
+To fill in $a_{13} = a_{31}$ use the $x_1x_3$ term (coefficient is $0$ so the matrix entries are each $0$).
+
+To fill in $a_{23} = a_{32}$ use the $x_2x_3$ term (coefficient is $4$ so the matrix entries are each $2$).
+
+
+$Q(\vc{x}) = \vc{x}^T\left[\begin{array}{r r r} 
+0 & -2 & 0 \\
+-2 & 0 & 2 \\
+0 & 2 & 1
+\end{array}\right] \vc{x}$
+
+We can multiply this out to check:
+
+\begin{align*}
+    Q(\vc{x}) &= \vc{x}^T\left[\begin{array}{c}
+-2x_2 \\
+-2x_1 + 2x_3 \\
+2x_2 + x_3
+\end{array}
+\right] \\
+&= -2x_1x_2 - 2x_2x_1 + 2x_2x_3 + 2x_3x_2 + x_3^2 \\
+&= x_3^2 - 4x_1x_2 + 4x_2x_3
+\end{align*}
+\end{solution}
+
+
+\item (for Class 07)
+
+% Let $f(x) = x^2 + \dfrac{1}{2}x - 1$ and $x_0 = -\dfrac{1}{2}$.  Apply one step of Newton's method.
+
+% \emph{Hint: $\dfrac{29}{18}\approx1.61$}
+
+% \begin{solution}
+% $x_1 = x_0 - \dfrac{f(x_0)}{f'(x_0)}, f'(x) = 2x+\dfrac{1}{2}$  
+
+% $f(-\dfrac{1}{2}) = -1$, $f'(-\dfrac{1}{2}) = -\dfrac{1}{2}$ $\Longrightarrow$  $x_1 = -\dfrac{1}{2} - \dfrac{-1}{-1/2} = -\dfrac{5}{2}$
+
+% $f(-\dfrac{5}{2}) = 4$, $f'(-\dfrac{5}{2}) = -\dfrac{9}{2}$ $\Longrightarrow$  $x_2 = -\dfrac{5}{2} - \dfrac{4}{-9/2} = -\dfrac{29}{18} \approx-1.61$
+% \end{solution}
+
+Let $f(x) = x^2 + x - 1$ and $x_0 = -1$.  Apply one step of Newton's method.
+
+\emph{Hint: $\dfrac{2}{3}\approx0.67$}
+
+\begin{solution}
+$x_1 = x_0 - \dfrac{f(x_0)}{f'(x_0)}, f'(x) = 2x+1$  
+
+$f(-1) = -1$, $f'(-1) = -1$ $\Longrightarrow$  $x_1 = -1 - \dfrac{-1}{-1} = -2$
+
+$f(-2) = 1$, $f'(-2) = -3$ $\Longrightarrow$  $x_2 = -2 - \dfrac{1}{-3} = -\dfrac{5}{3} \approx-1.67$
+\end{solution}
+
+\item (for Class 08)
+
+For sufficiently large $k$, $\dfrac{\vert e_{k+1}\vert}{\vert e_k\vert^r} \approx C$
+
+$C$ and $r$ are estimated from successive steps of a numerical algorithm below.
+
+\begin{verbatim}
+0.282347088755958 2.409420839653209
+0.5 1.0
+0.5 1.0
+0.5 1.0
+0.5 1.0
+0.5 1.0
+0.5 1.0
+0.5 1.0
+0.5 1.0
+\end{verbatim}
+
+Assuming a simple root, is this sequence generated by the bisection method, Newton's method, or the secant method?
+
+\emph{These sequences were generated via the Python code that we used in class during Class07}
+
+\begin{solution}
+In the later steps, $r\approx 1.0$, i.e. it is linear convergence.  This is the bisection method.
+\end{solution}
+
+\item (for Class 09)
+
+Consider the data points $(1,1)$, $(-2, 5)$, $(-3, 7)$.  Construct $L_{3,3}$, the Lagrange basis function of degree $2$ that is $1$ at $x_3 = -3$ and is $0$ at the other input values.
+
+\begin{solution}
+For zeros at $1$ and $-2$, we have $(x-1)(x+2)$.  For the function to be $1$ at $x_3 = -3$, we have $L_{3,3} = \dfrac{(x-1)(x+2)}{(-3-1)(-3+2)}$
+
+\end{solution}
+
+
+\item (for Class 10)
+
+Use Lagrange interpolation to construct an approximation to $f(x) = x^3$ based on the following data points: $(1,1)$, $(2,8)$, $(3,27)$, $(4,64)$.
+
+Identify the degree of your interpolating polynomial.
+
+\begin{solution}
+First construct the basis functions:
+
+$l_1(x) = \dfrac{(x-2)(x-3)(x-4)}{(1-2)(1-3)(1-4)}$
+
+$l_2(x) = \dfrac{(x-1)(x-3)(x-4)}{(2-1)(2-3)(2-4)}$
+
+$l_3(x) = \dfrac{(x-1)(x-2)(x-4)}{(3-1)(3-2)(3-4)}$
+
+$l_4(x) = \dfrac{(x-1)(x-2)(x-3)}{(4-1)(4-2)(4-3)}$
+
+Then construct the polynomial interpolant:
+
+$P(x) = 1l_1(x) + 8l_2(x) + 27l_3(x) + 64l_4(x)=x^3$
+
+This polynomial is degree $3$.
+
+\end{solution}
+
+
+\item (for Class 11)
+
+Decide whether the equations form a cubic spline.
+
+\[S(x) = \left\{\begin{array}{l l}
+4x^3 + 3x^2 + 2x + 1 & \text{on }[0,1] \\
+4(x-1)^3 + 15(x-1)^2 + 20(x-1) + 10 & \text{on }[1,2] \\
+\end{array}\right.\]
+
+\begin{solution} The derivatives are
+\begin{equation*}
+\begin{aligned}
+    S_1^{'}(x) &= 12x^2 + 6x + 2 \\
+    S_1^{''}(x) &= 24x + 6 \\
+    S_2^{1}(x) &= 12(x-1)^2 + 30(x-1) + 20 \\
+    S_2^{''}(x) &= 24(x-1) + 30
+\end{aligned}
+\end{equation*}
+Calculating $S_1(1)=10, S_1^{'}(1)=20, S_1^{''}(1)=30$ and $S_2(1)=10, S_2^{'}(1)=20, S_2^{''}(1)=30$, we conclude that $S(x)$ is a cubic spline.
+\end{solution}
+
+\item (for Class 12)
+
+Let $f(x) = e^x+2x$.  Write an expression for $f'(x)$ approximated using backward differences at $x_0 = 0$ with $h = 0.01$.
+
+\begin{solution}
+ The formula is $(f(x) - f(x-h)/h$ so $\dfrac{e^0 -e^{0-h}+2h}{h}=\dfrac{1-e^{-0.01}+0.02}{0.01}$.
+ 
+\end{solution}
+
+\item (for Class 13)
+
+The center difference formula can be written as \[f'(x) = \dfrac{f(x+h)-f(x-h)}{2h} - \dfrac{1}{6}h^2 f'''(x) + \mathcal{O}(h^4).\]  
+
+Identify the order of the method if 
+\[f'(x) \approx  \dfrac{f(x+h)-f(x-h)}{2h}\]
+is used to approximate the first derivative.
+
+\begin{solution}
+The order of the method comes from the first error term, which is $\dfrac{1}{6}h^2 f'''(x)$, so this is a second order method.
+\end{solution}
+
+
+\setcounter{enumi}{14}
+\item (for Class 15)
+
+Find the degree of precision of the following approximation for $\displaystyle\int_{-1}^1 f(x)dx$:
+
+$\displaystyle\int_{-1}^1 f(x)dx\approx f\left(-\frac{\sqrt{3}}{3}\right)+f\left(\frac{\sqrt{3}}{3}\right)$.
+
+\emph{The following information may be helpful}
+\[\int_{-1}^1 1\ dx = 2, \int_{-1}^1 x\ dx = 0, \int_{-1}^1 x^2\ dx = \frac{2}{3}, \int_{-1}^1 x^3\ dx =0, \int_{-1}^1 x^4\ dx = \frac{2}{5}\]
+
+\begin{solution}
+For $f(x) = 1$, $f\left(-\frac{\sqrt{3}}{3}\right)+f\left(\frac{\sqrt{3}}{3}\right) = 2$ so this is exact for $f$ constant.
+
+For $f(x) = x$, $f\left(-\frac{\sqrt{3}}{3}\right)+f\left(\frac{\sqrt{3}}{3}\right) = -\frac{\sqrt{3}}{3}+\frac{\sqrt{3}}{3}=0$ so this is exact for $f$ linear.
+
+For $f(x) = x^2$, $f\left(-\frac{\sqrt{3}}{3}\right)+f\left(\frac{\sqrt{3}}{3}\right) = \frac{1}{3}+\frac{1}{3}=\frac{2}{3}$ so this is exact for $f$ quadratic.
+
+For $f(x) = x^3$, $f\left(-\frac{\sqrt{3}}{3}\right)+f\left(\frac{\sqrt{3}}{3}\right) = -\frac{\sqrt{3}}{9}+\frac{\sqrt{3}}{9}=0$ so this is exact for $f$ cubic.
+
+For $f(x) = x^4$, $f\left(-\frac{\sqrt{3}}{3}\right)+f\left(\frac{\sqrt{3}}{3}\right) = \frac{1}{9}+\frac{1}{9}=\frac{2}{9}\neq\frac{2}{5}$, which does not match.
+
+The degree of precision is $3$.
+\end{solution}
+
+\item (for Class 16)
+
+The error from using the Simpson's rule to approximate $\int_a^b f(x)dx$ with a single panel is given by $-\frac{1}{90}h^5f^{(4)}(c)$, where $h$ is the panel size.  What is the error for the composite rule?
+
+\begin{solution}
+$-\frac{1}{90}(b-a)h^4f^{(4)}(c)$.  
+
+Explanation:
+For $m$ panels evenly splitting $[a,b]$, this comes from $\sum\limits_{k=1}^m -\frac{1}{90}h^5f^{(4)}(c) = -\frac{1}{90}mh^5f^{(4)}(c) = -\frac{1}{90}(b-a)h^4f^{(4)}(c)$ (from the generalized intermediate value theorem and noting $mh = (b-a)$).
+
+In general for error $\alpha h^nf''(c_1)$ on a single panel, the error will be $\alpha (b-a)h^{n-1}f''(c)$ for the composite rule.
+\end{solution}
+
+\item (for Class 17)
+
+A quadrature rule can be written in the form $\sum\limits_{k=1}^n a_k f(x_k)$. For the composite Simpson's rule on two panels, given by $( b-a)\frac{1}{6}\left(f(a)+4f(\frac{a+b}{2})+f(b)\right)$, identify $n$ and $a_k, x_k$ for $k=1,...,n$.
+
+%Trapezoid rule: $(b-a)\frac{1}{2}(f(a)+f(b)$
+%Simpson's rule
+% Gauss quadrature 
+
+\begin{solution}
+There are three points in the calculation so $n = 3$.
+$a_1, a_3 = \frac{1}{6}(b-a)$ for both points. $a_2= \frac{2}{3}(b-a)$ $x_1 = a$. $x_2 = \frac{a+b}{2}, x_3=b$.
+\end{solution}
+
+
+
+\item (for Class 18)
+
+A particular quadrature rule for $\displaystyle\int_{-2}^2f(x)dx$ is given by:
+
+fitting a parabola to $(-2,f(-2)), (-1.5,f(-1.5)), (-1,f(-1))$, fitting a second parabola to $(-1,f(-1)), (-0.5,f(-0.5)), (0,f(0))$, 
+fitting a third parabola to $(0,f(0)), (0.5,f(0.5)), (1,f(1))$, a fourth to $(1,f(1)), (1.5,f(1.5)), (2,f(2))$, and integrating the fitted curves.
+
+This is a composite (or adaptive) method:
+\begin{oneparchoices}
+\choice yes \choice no
+\end{oneparchoices}
+
+This is a Newton-Cotes method:
+\begin{oneparchoices}
+\choice yes \choice no
+\end{oneparchoices}
+
+How do you know?
+
+\begin{solution}
+For a composite or adaptive method we would see multiple panels.  A parabola is being fit separately to four sub-regions, so this is a composite method.  
+
+For a Newton-Cotes method, the quadrature points are evenly spaced on the interval, as they are here.
+
+Yes and yes.
+\end{solution}
+
+
+\item (for Class 19)
+
+Consider the initial value problem $\left\{\begin{array}{l}
+y' = 3y \\
+y(0) = 1
+\end{array}
+\right.$
+
+Set $h = 0.2$.  Provide an expression for $y(0.2)$, as approximated using improved Euler.
+
+\begin{solution}
+In Euler's method, $w_0 = 1$, $w_1 = 1 + 0.2f(0,1)$.
+
+$f(0,1) = 3$ so $w_1 = 1 + 0.2(3) = 1.6$  
+
+$f(0.2,1.6) = 4.8$
+
+For improved Euler, use $w_0 + 0.1 \frac{1}{2}(f(0,1) +f(0.2,1.6)) = 1+0.2(3+4.8)/2$.
+
+\emph{Improved Euler gives $1.78$ while Euler gives $1.6$.}
+\end{solution}
+
+\item (for Class 20)
+
+Use Taylor expansion to first order to write $f(t_k+h/2,y_k+hf(t_k,y_k)/2)$ in terms of $f(t_k, y_k)$,$\dfrac{\partial f}{\partial t}(t_k,y_k)$, $\dfrac{\partial f}{\partial y}(t_k,y_k)$, and $\mathcal{O}(h^2)$.
+
+\begin{solution}
+Taylor expanding about $f(t_k, y_k)$, the displacement in time is $\Delta t = h/2$ and the displacement in $y$ is $\Delta y = hf(t_k,y_k)/2$.
+
+In general, $f(t+\Delta t, y+\Delta y) = f(t,y) + \Delta t \dfrac{\partial f}{\partial t}(t,y) +  \Delta y \dfrac{\partial f}{\partial y}(t,y) + \text{higher order terms}$
+
+
+Applying this:
+
+$f(t_k+h/2,y_k+hf(t_k,y_k)/2) = f(t_k,y_k) + \dfrac{h}{2}\dfrac{\partial f}{\partial t}(t_k,f_k) + \dfrac{h}{2}f(t_k,y_k) \dfrac{\partial f}{\partial x}(t_k,f_k) + \mathcal{O}(h^2)$
+
+\end{solution}
+
+
+\item (for Class 21)
+
+There are $s = 132300$ data points in a data set with $6$ seconds of data.  Find the frequency associated with the $24$rd Fourier mode ($c_{24}$) in units of $1/$seconds (Hertz).
+
+\begin{solution}
+This is the frequency associated with $24$ cycles (cosine or sine waves) in time $6$ seconds, which is $4$ cycles per second, or $4$ Hertz $(24/6)$.
+\end{solution}
+
+
+\item (for Class 22)
+
+Match the signal to its DFT amplitude.  Provide reasoning.
+
+Signal:
+
+\includegraphics[width=0.3\linewidth]{img/C21skill-2.png}
+
+Frequency options:
+
+\includegraphics[width=0.7\linewidth]{img/C21skill2-2.png}
+
+\begin{solution}
+The options for frequency are at 4 Hz or a 3 Hz.  Four sinusoid periods is about right for this signal (definitely not 3 periods).  So option A.
+\end{solution}
+
+
+\item (for Class 23)
+
+For the neural network below, how many inputs does it have?  How many units in the first hidden layer?  What is the depth of the network?
+
+\newcommand{\inputnum}{3} 
+% Hidden layer neurons'number
+\newcommand{\hiddennum}{6} 
+% Hidden layer neurons'number
+\newcommand{\hiddennumk}{4}
+% Output layer neurons'number
+\newcommand{\outputnum}{2} 
+\begin{tikzpicture}
+% Input Layer
+\foreach \i in {1,...,\inputnum}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=orange!30] (Input-\i) at (0,-\i) {};
+}
+% Hidden Layer
+\foreach \i in {1,...,\hiddennum}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=teal!50,
+        yshift=(\hiddennum-\inputnum)*5 mm
+    ] (Hidden-\i) at (2.5,-\i) {};
+}
+\foreach \i in {1,...,\hiddennumk}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=teal!50,
+        yshift=(\hiddennumk-\inputnum)*5 mm
+    ] (Hiddenk-\i) at (5,-\i) {};
+}
+% \foreach \i in {1,...,\hiddennumm}
+% {
+%     \node[circle, 
+%         minimum size = 6mm,
+%         fill=teal!50,
+%         yshift=(\hiddennumm-\inputnum)*5 mm
+%     ] (Hiddenm-\i) at (7.5,-\i) {};
+% }
+% Output Layer
+\foreach \i in {1,...,\outputnum}
+{
+    \node[circle, 
+        minimum size = 6mm,
+        fill=purple!50,
+        yshift=(\outputnum-\inputnum)*5 mm
+    ] (Output-\i) at (7.5,-\i) {};
+}
+% Connect neurons In-Hidden
+\foreach \i in {1,...,\inputnum}
+{
+    \foreach \j in {1,...,\hiddennum}
+    {
+        \draw[->, shorten >=1pt] (Input-\i) -- (Hidden-\j);   
+    }
+}
+% Connect neurons Hidden-Out
+\foreach \i in {1,...,\hiddennum}
+{
+    \foreach \j in {1,...,\hiddennumk}
+    {
+        \draw[->, shorten >=1pt] (Hidden-\i) -- (Hiddenk-\j);
+    }
+}
+% \foreach \i in {1,...,\hiddennumk}
+% {
+%     \foreach \j in {1,...,\hiddennumm}
+%     {
+%         \draw[->, shorten >=1pt] (Hiddenk-\i) -- (Hiddenm-\j);
+%     }
+% }
+\foreach \i in {1,...,\hiddennumk}
+{
+    \foreach \j in {1,...,\outputnum}
+    {
+        \draw[->, shorten >=1pt] (Hiddenk-\i) -- (Output-\j);
+    }
+}
+% Inputs
+\foreach \i in {1,...,\inputnum}
+{     
+    \draw (Input-\i) node {$x_{\i}$};
+    % \draw[<-, shorten <=1pt] (Input-\i) -- ++(-0.5,0)
+    %     node[left]{$x_{\i}$};
+}
+% Outputs
+\foreach \i in {1,...,\outputnum}
+{            
+\draw (Output-\i) node {$y_{\i}$};
+    % \draw[->, shorten <=1pt] (Output-\i) -- ++(0.5,0)
+    %     node[right]{$y_{\i}$};
+}
+\end{tikzpicture}
+
+\begin{solution}
+Three inputs ($x_1, x_2, x_3$), six units in the first hidden layer, and a depth of three (the input layer isn't counted in the depth).
+\end{solution}
+
+\end{enumerate}
+\end{document}

@@ -1,0 +1,42 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Class 20}{}{Skill Check}
+\runningheadrule
+\headrule
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Name: \rule{2.5in}{0.5pt}
+
+\noindent Put away any notes or other materials, and work on this activity alone.
+
+\noindent You'll receive feedback on your work and will complete a similar question on a future skill check.
+
+
+\begin{questions}
+\item 
+The improved Euler method is given by $y_{k+1} = y_k + h\psi(t_k,y_k,h)$ where $\psi(t_k,y_k,h) = f(t_k,y_k)/2+f(t_k+h,y_k+hf(t_k,y_k))/2$.
+
+Use Taylor expansion to first order to write $f(t_k+h,y_k+hf(t_k,y_k))$ in terms of $f(t_k, y_k)$,$\dfrac{\partial f}{\partial t}(t_k,y_k)$, $\dfrac{\partial f}{\partial y}(t_k,y_k)$, and $\mathcal{O}(h^2)$.
+
+\vspace{8.5cm}
+
+\item (Retake for Class 17)
+
+A quadrature rule can be written in the form $\sum\limits_{k=1}^n a_k f(x_k)$. For the composite Simpson's rule on two panels, given by $( b-a)\frac{1}{6}\left(f(a)+4f(\frac{a+b}{2})+f(b)\right)$, identify $n$ and $a_k, x_k$ for $k=1,...,n$.
+
+\end{questions}
+
+\end{document}
