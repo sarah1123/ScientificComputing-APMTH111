@@ -1,0 +1,171 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{natbib}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 07}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Oct 28}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Extensions beyond 5am on Saturday require contacting Danyun \textbf{in advance} of 5pm on Friday.
+
+\begin{itemize}
+\item Submit your work on this problems 2-4 via Gradescope (find the link on Canvas).
+\item Individual written work for this class (including any programming) should be your own.  
+\item Post to Ed for advice and information about any aspect of the assignment.
+\item You are encouraged to discuss the mathematics or pseudocode, working on the problem together.  \textbf{Put away or erase any joint work before writing up your solution yourself.}
+
+If you believe your work is incorrect, please do show it to your classmates and the teaching staff.  If you believe your work to be correct (or substantially correct), I encourage you to discuss or describe your solution.  However, do not show your work to others.
+
+\item As part of completing the assignment, fill out the online cover sheet on Canvas to name your collaborators, list resources you consulted, and estimate the time you spent on the assignment.
+
+For coding related resources (looking up Python commands, or syntax, etc), include the references as comments within your code instead of adding them to the cover sheet.
+
+You may copy snippets of code from other sources so long as there is a comment indicating the source of the code.
+\end{itemize}
+
+\begin{questions}
+\item This question is \textbf{due Thursday Oct 27 by 8pm}.  If each team member is submitting individually, submit via the "Short Project Proposal" assignment on Gradescope.  If you prefer to submit as a team, submit via the "Short Project Proposal" assignment on Canvas.
+
+The goal of the final project is for you to apply numerical analysis or scientific computing techniques to an applied or theoretical problem, or to conduct an investigation into a method not discussed in class.
+
+{\large You are encouraged to talk with the course staff as you work to develop your initial project ideas.}
+
+\begin{enumerate}
+\itemsep0pt
+    \item The (short) preliminary project proposals are due on Thursday at 8pm (note change from 5pm).
+    \item Each individual group member is responsible for submitting a different one, so your group will propose as many projects as the group has members.
+    \item Because these two papers are popular, your group can propose a project based on either the flight reconstruction paper or on the deep learning paper, but not both.
+    \item Each team will work on a different project (with only one team per paper or resource).
+\end{enumerate}
+
+
+\noindent For each preliminary project, answer the following questions:
+\begin{itemize}
+\itemsep0pt
+\item What will be the aim or purpose of the project?
+\item What paper(s) or resource(s) would you like to base your project work around?
+\item How does the intended project incorporate mathematical topics related to this course?
+\item What method or methods do you intend to implement as part of the project?
+\item What do you think you will you need to learn to be able to complete your project?
+\end{itemize}
+
+
+
+\item (Richardson extrapolation and Romberg integration)
+
+Romberg integration is a method where Richardson extrapolation is applied multiple times to develop a higher order (lower error) integration method.
+
+Use the composite trapezoid rule, \[\displaystyle\int_a^b f(x) dx \approx \frac{h}{2}\left(y_0 + 2\sum\limits_{k=1}^{m-1}y_k  + y_m\right).\]
+
+An exact expression for the integral is given by 
+\[\displaystyle\int_a^b f(x) dx = \frac{h}{2}\left(y_0 + 2\sum\limits_{k=1}^{m-1}y_k  + y_m\right) + c_2h^2+c_4h^4+c_6h^6+...\] where $c_k$ depend on higher derivatives of $f$ at $a$ and $b$, but not on $h$.
+
+\begin{parts}
+\item Let $h_1 = b-a$ and $h_2 = h_1/2$.
+
+Let $R_{11}$ be the trapezoid rule with $h = h_1$ and $R_{21}$ be the composite trapezoid rule with $h = h_2$.
+
+We have 
+\[\int_a^b f(x) dx = R_{11} + c_2h_1^2 + c_4h_1^4 + c_6h_1^6+...\]
+\[\int_a^b f(x) dx = R_{21} + c_2h_2^2 + c_4h_2^4 + c_6h_2^6+...\]
+
+Use Richardson extrapolation to combine $R_{11}$ and $R_{21}$ to form a new method.  Call this new method $R_{22}$.
+\item Show that $R_{22}$ is Simpson's rule (with step size $h_2$).
+\item Using $h_2$ and $h_3 = h_2/2$ you can similarly construct $R_{31}$ (the composite trapezoid rule with $h = h_3$) and $R_{32}$ (a combination of $R_{21}$ and $R_{31}$).
+
+Use extrapolation on $R_{22}$ and $R_{32}$ to form a new method.  Call this new method $R_{33}$.
+
+\item $R_{21} = \frac{1}{2}R_{11}+h_2 f(a+h_2)$.  Find an analogous formula relating $R_{31}$ and $R_{21}$.
+\end{parts}
+
+\item (based on Koumoutsakos et al notebook 7.1)
+
+Jet engines produce contrails (the thin white clouds that are left behind as a plane passes through the sky).
+
+It is possible to model the velocity profile across the contrail. Assume the velocity of exhaust leaving the engine is $v_{\text{exhaust}} = 1200$ km/h (at the center of the engine).  Assume the velocity of the air surrounding the jet is $v_{\text{freestream}} = 800$ km/h.
+
+Let the jet engine have radius $R$ and set $r$ to be the distance to the center.  
+
+As it leaves the jet, the velocity profile in a circular cross section of the contrail can be modeled by $v(r) = v_{\text{exhaust}} + (v_{\text{freestream}}-v_{\text{exhaust}})\text{erf}(2r/R)$
+
+$\text{erf}(x)$ is the error function, given by $\displaystyle\text{erf}(x) = \frac{2}{\sqrt{\pi}}\int_0^x e^{-t^2}dt$
+
+Following the steps below, use Romberg integration to find the velocity profile.
+\begin{parts}
+
+
+\item Create two functions: \texttt{def f(x):}, the function you will integrate, and \texttt{def romberg(a,b,f):}, a function that will perform Romberg integration of a function $f$ on the interval $[a,b]$.
+
+The output of \texttt{romberg} should be a list or matrix of approximations to the integral, $R_{11}, R_{21}, R_{31}, R_{22}, R_{32}, R_{33}$.
+
+\emph{To the extent possible reuse your function evaluations from generating $R_{11}$ to create $R_{21}$ and from $R_{21}$ to create $R_{31}$.}
+
+\item To test your code, compute the approximation $R_{33}$ for the integral $f(t) = \frac{2}{\sqrt{\pi}}e^{-t^2}$ on the interval $[0,0.5]$.  Output all of the $R_{jk}$ calculated on the way, along with the associated error.  Use \texttt{erf\_true= 0.52049987781304653} as your exact value.  
+
+\item Define a function \texttt{def v(x):} that takes in a value of $r/R$, uses \texttt{romberg} for integration, and returns the velocity given by the model.
+
+Create and plot the velocity profile along the radial direction, $v(r)$, with $r/R \in[0,1]$ used as the horizontal axis.  
+
+Comment on whether the profile makes sense physically, especially at $\frac{r}{R} = 0$ and $\frac{r}{R} = 1$.
+\end{parts}
+
+% \item applied problem: brakes?  corrugation?
+
+\item (adaptive quadrature) %(Batman curve area)
+
+%You'll use Simpson's rule to find the area of the Batman logo.  
+
+Let $S_{[a,b]}$ denote Simpson's rule on the interval $[a,b]$.  \[\displaystyle\int_a^b f(x)dx = S_{[a,b]}-\frac{1}{90}h^5f^{(iv)}(c_0),\] where $E_{[a,b]}=-\frac{1}{90}h^5f^{(iv)}(c_0)$ is the error when Simpson's rule on $[a,b]$ is used to approximate the integral.
+
+\begin{parts}
+% \item (optional) Provide a short back story for how finding the area of the Batman logo will allow you to save Gotham City.
+\item Let $c = (a+b)/2$.  Find $E_{[a,c]+[c,b]}$, the error when when $S_{[a,c]} + S_{[c,b]}$ is used to approximate the integral.
+
+You'll initially find two contributions to the error and can combine them into a single term via the intermediate value theorem (stated just below).
+
+\emph{The intermediate value theorem}: for $g$ a continuous function on $[a,b]$, $x_1, x_2$ points in $[a,b]$, and $a_1, a_2>0$, there exists a number $c$ between $a$ and $b$ such that $a_1g(x_1) + a_2g(x_2) = (a_1+a_2)g(c)$.
+
+
+\item $S_{[a,b]}$ and $S_{[a,c]}+S_{[c,b]}$ are both approximations for the same integral.  \[S_{[a,b]}-\left(S_{[a,c]}+S_{[c,b]}\right) \approx \frac{15}{16}\frac{1}{90}h^5f^{(iv)}(c) \approx k\vert E_{[a,c]+[c,b]}\vert\] for some constant $k$.  Find $k$.
+
+\item Create a function \texttt{simpson(a,b,f):} that takes in an interval $[a,b]$ and a function $f$ and applies Simpson's rule on the interval.  \emph{This is not the composite rule, but Simpson's rule applied to a single panel.}
+
+\item Using your python function, approximate $\displaystyle\int_1^3 \frac{1}{x} dx$ using $S_{[a,c]}+S_{[c,b]}$ and provide an estimate of the absolute value of the error.  Use $k = 10$ for your estimate.
+
+\emph{$k=10$ is more conservative than the $k$ you found in $b$.}
+\end{parts}
+\end{questions}
+
+\end{document}

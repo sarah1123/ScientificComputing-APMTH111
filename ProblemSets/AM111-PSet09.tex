@@ -1,0 +1,169 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{natbib}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 09}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Nov 18th}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Extensions beyond 5am on Saturday require contacting Danyun \textbf{in advance} of 5pm on Friday.
+
+\begin{itemize}
+\item Submit your work on this problems 2-4 via Gradescope (find the link on Canvas).
+\item Individual written work for this class (including any programming) should be your own.  
+\item Post to Ed for advice and information about any aspect of the assignment.
+\item You are encouraged to discuss the mathematics or pseudocode, working on the problem together.  \textbf{Put away or erase any joint work before writing up your solution yourself.}
+
+If you believe your work is incorrect, please do show it to your classmates and the teaching staff.  If you believe your work to be correct (or substantially correct), I encourage you to discuss or describe your solution.  However, do not show your work to others.
+
+\item As part of completing the assignment, fill out the online cover sheet on Canvas to name your collaborators, list resources you consulted, and estimate the time you spent on the assignment.
+
+For coding related resources (looking up Python commands, or syntax, etc), include the references as comments within your code instead of adding them to the cover sheet.
+
+You may copy snippets of code from other sources so long as there is a comment indicating the source of the code.
+\end{itemize}
+
+\begin{enumerate}
+\setcounter{enumi}{-1}
+    \item Project work:
+    
+    Submit your weekly project log on Canvas.
+    
+    Components of the weekly project log (every week):
+\begin{enumerate}
+\item For the project log, answer the following questions:
+\begin{parts}
+\item What was the main purpose of your project work this week?
+\item What resources or references did you consult this week?
+\item What did you accomplish on the project this week?
+\end{parts}
+\item With the project log, submit the following info:
+\begin{itemize}
+    \item log when you worked (date and times)
+\item with whom you were working (if anyone)
+\item what you were doing on the project during that time period
+\end{itemize}
+\item Upload all of your project work from the week: any code you've worked on, and any notes you've made. If the work is joint and you were involved, go ahead an upload it.  Do \textbf{not} re-submit notes from a prior week.
+\end{enumerate}
+
+In addition, submit draft presentation slides (on Canvas).  The goal of the presentation is to introduce your project topic to the class.  Minimum of 1 slide per team member, maximum of 2 slides per team member.  (individual or group submission)
+
+\item (Fourier transform, problem from Robin Wordsworth)
+
+Load the *.wav file \texttt{handelmat.wav} using \texttt{scipy.io.wavfile.read} 
+
+See \texttt{ProblemSet09.ipynb} for the syntax.
+
+You can play the sound file using \texttt{IPython.display.Audio}.
+\begin{parts}
+\item Perform a Fourier transform on the sound data using \texttt{scipy.fft.fft}.
+
+Also try computing the Fourier transform via the matrix product $F_n\vc{x}$.  You can find $F_n$ using \texttt{DFTmatrix(N)}.  What happens?  For what range of $n$ (by using only part of the sample) does this calculation still run smoothly?  \emph{You can be approximate for the range.}
+
+\item Assume the sound sample is 1 second long.  Identify the frequencies (in Hz) associated with the Fourier weights, $\vc{y}$.  \emph{Provide the minimum frequency, maximum frequency, and interval}.
+
+Find the actual length of the snippet, $d$, in seconds, by combining the sample rate (in data points/second) and the number of data points in the sample.
+
+Now adjust your frequencies for a sound sample of $d$ seconds: assume that $y_1$ is associated with a single period of cosine or sine over the length of the sample, and identify the list of frequencies associated with the weights $\vc{y}$.
+
+Finally, create a plot of the sound data vs time and of the Fourier power spectrum as a function of frequency (in Hz).
+
+\item Create a low-pass filter function, \texttt{def lowpass(y,y1freq,cutoff\_freq):} that takes in the Fourier weights, the frequency associated with $y_1$, and the cutoff frequency for the filter, and returns a new $\vc{y}$ where the sound data weights associated with frequencies above \texttt{cutoff\_freq} set to zero.
+
+\emph{If you keep $y_0$ and $y_1,y_2,...y_k$ you'll also want to keep $y_{N-k},...,y_{N-1}$.}
+
+Do this for a high-pass filter, as well, removing all information below a given frequency.
+
+\emph{If you remove $y_0, y_1,...y_k$ you'll also want to remove $y_{N-k},...,y_{N-1}$}
+
+
+\item Run your low-pass filter for $700$ Hz, and your high-pass filter for $1200$ Hz.  Plot your power spectrum results in both cases.
+
+Use \texttt{scipy.fft.ifft} to perform and inverse Fourier transform on the filtered data.  Save the resulting sounds and play them.  What do you hear?
+
+\item Repeat (d) for another sample of music of your choice.
+\end{parts}
+
+\item (ODEs, also from Robin Wordsworth)
+
+A spacecraft re-enters Earth's atmosphere with vertical acceleration of $\ddot{z} = -g + \alpha(t)/m$ where $\ddot{z}$ denotes $\dfrac{d^2 z}{dt^2}$.  $z$ is altitude, $g$ is Earth's gravity ($9.81$ m/s$^2$), $m$ is the spacecraft mass ($10000$ kg) and $\alpha(t)$ is the friction force from air.  Write $\alpha(t)$ as $\alpha = Ke^{-z/H}\dot{z}^2$ with $K = 2.0$ kg/m, and $H = 10$ km $= 10000$ m.  The exponential term accounts for the atmosphere becoming denser closer to the surface, and $\dot{z}$ is the velocity, so the friction is proportional to the square of the velocity.
+
+In free fall, $\ddot{z} = 0$ so $-g + \alpha(t)/m = 0$.  You can rearrange to see that the free fall speed, $v_f = \dot z$, is $v_f = \sqrt{\dfrac{gm}{K}e^{z/H}}$.  At the surface, $z = 0$, this is approximately $221$ m/s.  
+
+\begin{parts}
+\item To solve this equation numerically, it needs to be converted into a first order system.  Set $ v = \dot{z}$, so $\ddot{z} = \dot v = -g + \alpha(t)/m$.  The system is
+$\left\{\begin{array}{l}
+dz/dt = v \\
+dv/dt = -g + \alpha(t)/m
+\end{array}
+\right.$
+
+Solve using RK4 (see \texttt{ProblemSet09.ipynb} for sample RK4 code), with initial conditions of $z(0) = 100$ km and $v(0) = 0$ m/s over the time interval from $0$ to $500$ seconds.
+
+Plot the spacecraft altitude and velocity as a function of time.
+
+Using a method or approach of your choice, determine the time at which the spacecraft hits the surface, $t_{\text{impact}}$.
+
+\item The spacecraft speed at impact is too high for astronaut survival, so add a parachute.  After the parachute opens, $K = 200$.  Find the free fall velocity, $v_f$, associated with this $K$.
+
+Use trial and error, or a more sophisticated method, to estimate the altitude at which the parachute should open in order to minimize the time spent descending, while having an impact speed lower than $30$ m/s.
+
+Do you think that opening the parachute at this altitude would be a good idea, in practice?
+\end{parts}
+
+\item (ODEs: Greenbaum and Chartier \S 11.6 Q 16)
+
+The following simple model describes the switching behavior for a muscle that controls a valve in the heart.  Let $x(t)$ denote the position of the muscle at time $t$ and let $\alpha(t)$ denote the concentration at time $t$ of a chemical stimulus.  Suppose that the dynamics of $x$ and $\alpha$ are controlled by the system of differential equations \begin{align*} dx/dt &= -x^3/3 + x + \alpha \\ d\alpha/dt &= -\epsilon x \end{align*}
+$\epsilon > 0$ is a parameter.  Its inverse is a rough estimate of the time $x$ spends near one of its rest positions.
+\begin{parts}
+\item Set $\epsilon = 0.01, x(0) = 2, \alpha(0) = 2/3$, solve using an explicit method of your choice.  Integrate out to $t = 400$ and produce plots of $x(t)$ and $\alpha(t)$.
+
+How accurate do you think your computed solution is?  Why?
+
+Did you seem to need restrictions on step size for stability, or was accuracy the only consideration in choosing the step size?
+
+\item Solve the same problem using backward Euler (see \texttt{ProblemSet09.ipynb} for sample code):
+\begin{align*}
+x_{k+1} &= x_k + hf(x_{k+1},\alpha_{k+1}) \\
+\alpha_{k+1} &= \alpha_k + hg(x_{k+1},\alpha_{k+1}) \\
+\end{align*}
+where $dx/dt = f(x,\alpha)$ and $d\alpha/dt = g(x,\alpha)$.  Explain what initial guess you will use.  Are you able to take a longer time step using backward Euler than you can with the explicit method used in part (a)?
+\end{parts}
+
+
+    
+\end{enumerate}
+
+\end{document}

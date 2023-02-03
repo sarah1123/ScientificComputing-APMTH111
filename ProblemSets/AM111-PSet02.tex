@@ -1,0 +1,356 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 02}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Sept 16}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+  
+% NOTE FOR 2023: students need a lot of linear algebra review.  span, column space, eigenvalues.  introduce quadratic form.
+  
+\noindent There are some problems that will require programming.  For other problems, you are welcome to do them by hand or to write a program to complete them. \\
+
+\noindent Use a single python notebook or file for all programming work on the problem set.  Submit that source file on Canvas (in case the source is needed during grading).  Print to pdf and submit the pdf on Gradescope.  Use Gradescope's problem tagging to tag the locations in the pdf that correspond to particular problems.
+
+
+\begin{itemize}
+\item As part of completing the assignment, fill out the online cover sheet on Canvas to name your collaborators, list resources you consulted, and estimate the time you spent on the assignment.
+
+For coding related resources (looking up Python commands, or syntax, etc), include the references as comments within your code instead of adding them to the cover sheet.
+
+You may copy snippets of code from other sources so long as there is a comment indicating the source of the code.
+\item Submit your work on this problem set via Gradescope (find the link on Canvas).
+\item Collaboration is encouraged on all assignments.  Individual written work for this class should be your own.  You are encouraged to discuss the mathematics and to work out the math together, then put away or erase joint work before writing up your solution.  
+
+If you believe your work is incorrect, please do show it to your classmates and the teaching staff.  If you believe your solution to be correct, I encourage you to discuss or describe your solution, \textbf{without actually showing your written work to others.}
+\end{itemize}
+
+The late work policy for problem sets is available in the syllabus.
+ 
+ \vspace{0.2cm}
+\hrule
+ \vspace{0.2cm}
+\begin{questions}
+\question (linear algebra)
+\begin{parts}
+\item (Lay 6.5 Q1). Let $A\vc{w} = \vc{y}$.
+
+Set $A = \left[\begin{array}{r r} -1 & 2 \\ 2 & -3 \\ -1 & 3\end{array}  \right]$, $\vc{y}= \left[\begin{array}{r} 4 \\ 1 \\ 2 \end{array} \right]$.  Construct the normal equations for $\hat{\vc{w}}$, the least squares solution to the system.
+
+\item (Lay 6.5 Q13) Let $A = \left[\begin{array}{r r} 3 & 4 \\ -2 & 1 \\ 3 & 4\end{array}  \right]$, $\vc{y}= \left[\begin{array}{r} 11 \\ -9 \\ 5 \end{array} \right]$, $\vc{u}= \left[\begin{array}{r} 5 \\ -1 \end{array} \right]$, $\vc{v}= \left[\begin{array}{r} 5 \\ -2 \end{array} \right]$.  Compute $A\vc{u}$ and $A\vc{v}$ and compare them with $\vc{y}$.  Could $\vc{u}$ possibly be a least squares solution of $A\vc{w} = \vc{y}$?  Provide your reasoning.
+
+\emph{Answer without computing a least-squares solution.}
+
+\item Let $\vc{a_1} = \left[\begin{array}{r} 3 \\ 0 \\-1 \end{array}\right]$ and $\vc{a_2} = \left[\begin{array}{r} 8 \\ 5 \\-6 \end{array}\right]$
+
+Assume $\left\{\vc{a_1},\vc{a_2}\right\}$ is a basis for a subspace $W$.
+\begin{subparts}
+\item (Lay 6.4 1)
+
+  Show that $\vc{a_1}$ and $\vc{a_2}$ are not orthogonal.
+
+Construct an orthogonal basis, $\{\vc{v_1},\vc{v_2}\}$ by using the Gram-Schmidt process.  Set
+
+$\vc{v_1} = \vc{a_1}$ and $\vc{v_2} = \vc{a_2} - \dfrac{\vc{a_2}\cdot \vc{v_1}}{\vc{v_1}\cdot\vc{v_1}}\vc{v_1}$.
+
+Explicitly confirm that your new basis is orthogonal.
+
+How do you know that $\text{Span}\{\vc{a_1},\vc{a_2}\} = \text{Span}\{\vc{v_1},\vc{v_2}\}$?
+
+\item Let $Q = \left[ \vc{v_1}/\Vert\vc{v_1}\Vert,\ \vc{v_2}/\Vert\vc{v_2}\Vert\right]$.  You can write $\vc{a_j} = r_{1j}\vc{v_1} + r_{2j}\vc{v_2}$.
+
+If $r_{jj}<0$, multiply both $r_{jj}$ and $\vc{v_j}$ by $-1$.
+
+%You have $\vc{x_j} = Q\vc{r_j}$.  Let $R = [\vc{r_1]\ \vc{r_2}]$.
+
+Construct a matrix $R$ so that $A = QR$.  Note that $Q^TA = Q^T(QR) = I_n R = R$
+
+Without calculation, identify the eigenvalues of $R$.
+
+\emph{This is a $QR$ factorization of $A$}
+\end{subparts}
+
+
+\end{parts}
+\question (Applying linear least squares to data) 
+
+(Problem content from Sauer 4.2: Q10; problem workflow from ETH Notebook 1.1) 
+
+For presidential election years from 1952 to 2008, Sauer combines the year-over-year percent change in mean disposable personal income (collected by the U.S. Bureau of Economic Analysis) with the proportion of the U.S. electorate that voted for the incumbent party's candidate.  
+
+\begin{verbatim}
+import numpy as np
+year = np.arange(1952,2009,4)
+income_change = [1.49, 3.03, 0.57, 5.74, 3.51, 3.73, 2.98, \
+                 -0.18, 6.23, 3.38, 2.15, 2.10, 3.93, 2.47, -0.41]
+incumbent_vote = [44.6, 57.8, 49.9, 61.3, 49.6, 61.8, 49.0, \
+                  44.7, 59.2, 53.9, 46.5, 54.7, 50.3, 51.2, 45.7]
+\end{verbatim}
+
+For example, from 1951 to 1952, income increased by 1.49\% and 44.6\% of the electorate voted for Adlai Stevenson (incumbent Democratic party candidate).
+
+Follow the steps below.  You'll use a linear model, $V = w_1 + w_2 I$ for incumbent party vote as a function of income change, where $V$ is \% incumbent vote and $I$ is \% income change.
+
+
+
+\begin{parts}
+\item \texttt{import matplotlib.pyplot as plt} and use \texttt{plt.plot} to plot the data.  Include axis labels.  If there is more than one curve on the plot, include a legend.
+
+Make two different plots: (1) \% income change and \% incumbent vote vs time and (2) \% incumbent vote vs \% income change.  
+
+\emph{For this second plot, use the \texttt{'.'} option in \texttt{plt.plot} to plot points and not lines, or make a scatter plot.}
+
+\item We want to determine $w_1$ and $w_2$ using linear least squares.  Start by setting up the least squares problem, $A \vc{w} = \vc{y}$.  What are the dimensions of $A$?
+
+\texttt{importy numpy as np} and use \texttt{np.zeros([?,?])} to initialize $A$ and $\vc{y}$.  Fill the matrix $A$ and vector $\vc{y}$ with the correct data.
+
+\item To find the least squares solution $\vc{w}$ to $A\vc{w} = \vc{y}$ there are various solution options (the normal equations, using $QR$ decomposition, using singular value decomposition).  Use the normal equations, taking the inverse directly, to find $\vc{w}$.
+
+\emph{Potentially useful commands:} \texttt{np.dot()}, \texttt{np.transpose()}, \texttt{np.linalg.inv()}
+
+\item Visualize your results by plotting your line or curve of fit along with the data.
+
+\emph{To create an evenly spaced vector of points on the interval $[a,b]$ with spacing $dx$, one option is }\texttt{np.arange(a,b,dx)}.
+
+\item Under this linear model, for each additional percent of change in personal income, how many percentage points of vote can the incumbent party expect?
+\end{parts}
+
+\question (Sensitivity of fit to data quality / noise: synthetic data)
+
+(from ETH Notebook 2.1)
+
+We'll examine the sensitivity of the least squares fit to noise and to an outlier.  Use synthetic data for this, so that you know the exact parameter set that generated the data.
+
+ 
+\begin{parts}
+\item Let $V = w_1 + w_2I$ with $w_1 = 45$ and $w_2 = 2.1$. 
+
+Evaluate $V$ for $I = (-1, 0.5, 0, ..., 3.5)$ (ten data points).  Perform a least squares fit to your synthetic data and plot the results.
+
+\emph{The fit should be perfect because the 'data' is truly linear.}
+
+\item Add random noise to the output values.  Let $V_i = 45 + 2.1 I + k U_{[-1,1]}$ where $U_{[-1,1]}$ is a number generated uniformly at random (\texttt{np.random.uniform(-1,1,N)} where $N$ is the number of values you'd like to generate) and $k = 0.5,1,2$ is setting the noise level.  Again use linear least squares.  Run this a few times for each value of $k$ to get a sense of the fit.  Compare to the example parameter values: how is the fit?
+
+\emph{Because the random numbers are different on each evaluation, for each $k$ you'll see different values of $w_1$, $w_2$ if you do multiple runs.}
+
+\item Next, instead of exploring the impact of noise, examine the impact of an outlier.  Change one of the data points: $V[7] = 0.8*V[7]$.  
+
+Estimate the least squares solution and visualize the line of fit and the data.  How is this fit?
+
+\item Did noise or an outlier have a bigger impact on your estimate of the slope?
+\end{parts}
+
+% \question (3D data) 
+
+% (from ETH Notebook 2.1)
+
+% Next perform a least squares fit using 3D data, $\{(x_i,y_i,z_i)\}_{i=1}^N$.  Think of $z$ as the output and $(x,y)$ as the input.  Choose a model architecture of $f(x,y) = w_1 x + w_2 y + w_3$.
+
+% We will look at the impact of noise, and of the amount of data, on the fit.
+
+% \begin{parts}
+% \item Modify your previous least squares code to work for this 3D data.
+
+% Generate synthetic data by choosing your three parameters.  Create $100$ datapoints, using a $10\times 10$ grid of $(x,y)$ values.  Add noise to the 3D data as in 2b, and solve the least squares problem using the normal equation.
+
+% \emph{Note: you'll want your $x$ values and $y$ values to be vectors of length $100$ rather than shaped into a $10\times 10$ grid.  You might use \texttt{np.meshgrid} and \texttt{np.reshape} to generate those vectors.  You could instead use a pair of nested for loops.}
+
+% \url{https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html}
+
+% \url{https://numpy.org/doc/stable/reference/generated/numpy.reshape.html}
+
+% \item For this 3D data you used $100$ data points, while for the 2D data you used $10$.
+
+% Now use just $10$ points for the 3D estimation.  Randomly generate ten pairs of $(x,y)$ values within the range $0$ to $1$.
+
+% How does the reduction in the amount of data appear to impact your parameter estimation?
+% \end{parts}
+
+
+\question (variation on Health 3.8)
+
+In this problem you'll compare the results of a least squares calculation using the normal equations with using $QR$ factorization.
+
+%where you find the inverse of $A^TA$ in the normal equations either directly or via Cholesky factorization, with using $QR$ factorization.
+
+The data, $\{(t_i,y_i)\}_{i=1}^21$ will be constructed so that the least-squares problem is ill-conditioned (so is sensitive to small changes in input), and with only a small residual left after fitting.
+
+We'll use the polynomial \[p_{11}(t) = w_1+w_2t+w_3t^2 + ... + w_{12}t^{11} \] with time points $t_i$ evenly spaced from $0$ to $1$.  To generate your data, set $w_i = 1$ for all $w_i$.
+
+\begin{parts}
+\item Identify the basis functions, $\varphi_k$, for this model architecture.
+
+\emph{There are $12$.}
+
+\item Create your 'data'.  Use $21$ time points (including the endpoints).
+
+Let $y_i = p_{11}(t_i) + (2u_i-1)*\epsilon$ where $u_i$ is a random number uniformly distributed on $[0,1)$.  Set $\epsilon = 10^{-10}$.
+
+\item 
+Create the $A$ matrix
+\[
+    \left[\begin{array}{c c c}
+    \varphi_1(\vc{t}) & \hdots & \varphi_M(\vc{t})
+    \end{array}\right].
+\]
+
+This kind of matrix, where the columns are successive powers of an input vector, is called a \textbf{Vandermonde matrix}.  It can be generated using $\texttt{np.vander}$.
+
+Find the condition number of matrix $A$ using $\texttt{np.linalg.cond}$.  Write it in scientific notation (using base $10$).  
+
+It should be large: Vandermonde matrices are typically ill conditioned.
+
+\url{https://numpy.org/doc/stable/reference/generated/numpy.ma.vander.html?highlight=vander%20monde}
+
+For more on Vandermonde matrices, Nick Higham has a \href{https://nhigham.com/2021/06/15/what-is-a-vandermonde-matrix/}{`What is' post}.
+\item Find the coefficients $\vc{w}$ four ways.  
+
+For each method, find the error function for your fit to the data.
+
+Use the $2$-norm to find the distance between the values $\vc{w}$ you used to generate your data and the coefficients returned by the algorithm.
+
+\begin{subparts}
+\item First use the built-in: \texttt{np.linalg.lstsq}.
+
+\item Next use the normal equations, $A^TA\vc{w} = A^T\vc{y}$ and direct inversion with \texttt{np.linalg.inv} so that $\hat{\vc{w}} = \left(A^TA\right)^{-1}A^T\vc{y}$.
+
+\item Third: use $QR$ factorization, so $A\vc{w} = \vc{y}$ becomes $QR\vc{w}=\vc{y}$.  The least squares solution, $\hat{\vc{w}}$, satisfies $R\hat{\vc{w}} = Q^T\vc{y}$.  $R$ is upper triangular, so this can be solved for $\hat{\vc{w}}$ using \texttt{from scipy.linalg import solve\_triangular} (or $R$ can be inverted).
+
+\emph{Generating $QR$ using \texttt{scipy} there are multiple modes; you want the mode where $R$ is square.}
+
+\url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.solve_triangular.html}
+
+\emph{Be careful to specify that $R$ is upper triangular for \textt{solve\_triangular}.}
+
+\item \emph{[Time Permitting]} Last one: use the normal equations with Cholesky factorization instead of direct inversion.
+
+Cholesky factorization is a decomposition so that $A^TA = LL^T$ where $L$ is lower triangular (and $L^T$ is upper triangular).  \texttt{scipy} has built-in methods for doing the factorization and for solving the factorized system (\texttt{from scipy.linalg import cho\_factor, cho\_solve})
+
+
+
+
+\url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.cho_solve.html}
+
+
+\end{subparts}
+
+Briefly summarize your results.  Which methods had more/less error?
+
+
+\end{parts}
+
+\question \emph{[Time Permitting]} (Greenbaum and Chartier 7.7: 16)
+
+
+Consider a least squares approach for ranking sports teams.  Suppose you have four teams that play with the following outcomes:
+\begin{itemize}
+\itemsep0pt
+    \item $T1$ beats $T2$ by $4$ points ($21$ to $17$)
+    \item $T1$ beats $T4$ by $6$ points ($16$ to $10$)
+    \item $T2$ beats $T4$ by $7$ points ($17$ to $10$)
+    \item $T3$ beats $T1$ by $9$ points ($27$ to $18$)
+    \item $T3$ beats $T4$ by $3$ points ($10$ to $7$)
+\end{itemize}
+
+Treat this as an overdetermined system:
+\[\begin{array}{c}
+r1-r_2=4 \\
+r1    -r4  = 6 \\
+ r2   -r4 =7\\
+r3-r1=9\\
+  r3 -r4 =3
+\end{array}
+\]
+
+There's not a unique least squares solution.  Show that if $\hat{\vc{w}}$ solves the least squares problem then so does $\hat{\vc{w}} + (c,c,c,c)^T$.
+
+Make the solution unique by fixing $r1+r2+r3+r4 = 20$, so there are $20$ ranking points in the system.
+%PSet 06
+
+Use linear least squares to rank the four teams.
+
+\emph{This method is a simplification of one introduced by Ken Massey in 1997.  According to Greenbaum and Chartier, it is part of the Bowl Championship Series model for ranking college football teams.}
+%7: 11, 13, 14, 16, 17
+
+\item \emph{[Time permitting]} (Lay 2.3 Q 43)
+
+% Let \[M = \left[\begin{array}{r r r r}
+% 4 & 0 & -3 & -7 \\
+% -6 & 9 & 9 & 9 \\
+% 7 & -5 & 10 & 19 \\
+% -1 & 2 & 4 & -1
+% \end{array}\right]\]
+
+Let \[M = \left[\begin{array}{r r r r r }
+5 &3& 1& 7& 9 \\
+6 &4 &2 &8 &-8 \\
+7&5&3&10&9 \\
+9&6&4&-9&-5 \\
+8&5&2&11&4
+\end{array}\right]\]
+\begin{parts}
+\item Find the condition number of $M$.
+
+\item % The matrix condition number is the condition number associated with the problem of matrix inversion.  It is $\dfrac{\Vert\Delta \vc{x}\Vert/\Vert \vc{x}\Vert}{\Vert\Delta \vc{b}\Vert/\Vert \vc{b}\Vert} \leq \text{cond \#}(A)$.
+
+As a rule of thumb, if the entries in $A$ and $\vc{b}$ are accurate to about $r$ digits, and the condition number is approximately $10^k$ ($k\in\mathbb{Z}^+$), then the computed solution to $A\vc{x} = \vc{b}$ will usually be accurate to at least $r-k$ digits.
+
+Based on your condition number, and $\epsilon_{\text{mach}}$, approximately how many digits of accuracy do you expect for $\vc{x}$?
+
+%\emph{Use \texttt{np.float32} for this.}
+
+\item Construct a random vector $\vc{x}$ in $\mathbb{R}^5$ and let $\vc{b} = A\vc{x}$.  Then use Python to compute the solution, $\vc{x_1}$, of $A\vc{x} = \vc{b}$ (see \texttt{np.linalg.solve}).
+
+To how many digits do $\vc{x}$ and $\vc{x_1}$ agree?
+
+%\emph{You might use \texttt{np.float32} for this.}
+
+\item Use $\vc{x_1}$ in place of $\vc{x}$ to compute $A\vc{x}$.  To how many digits does it agree with $\vc{b}$?
+
+%\emph{You might use \texttt{np.float32} for this.}
+
+\end{parts}
+
+
+
+
+
+\emph{Cleve Moler has a blog post on matrix condition number} \url{https://blogs.mathworks.com/cleve/2017/07/17/what-is-the-condition-number-of-a-matrix/}
+\end{questions}
+
+
+
+% \bibliographystyle{plain}
+% \bibliography{references.bib}
+\end{document}

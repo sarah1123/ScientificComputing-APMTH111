@@ -1,0 +1,195 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{natbib}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 04}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Sept 30}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+  
+\noindent There are some problems that will require programming.  For other problems, you are welcome to do them by hand or to write a program to complete them. \\
+
+\noindent Use a single python notebook or file for all programming work on the problem set.  Submit that source file on Canvas (in case the source is needed during grading).  Print to pdf and submit the pdf on Gradescope.  Use Gradescope's problem tagging to tag the locations in the pdf that correspond to particular problems.
+
+
+\begin{itemize}
+\item As part of completing the assignment, fill out the online cover sheet on Canvas to name your collaborators, list resources you consulted, and estimate the time you spent on the assignment.
+
+For coding related resources (looking up Python commands, or syntax, etc), include the references as comments within your code instead of adding them to the cover sheet.
+
+You may copy snippets of code from other sources so long as there is a comment indicating the source of the code.
+\item Submit your work on this problem set via Gradescope (find the link on Canvas).
+\item Collaboration is encouraged on all assignments.  Individual written work for this class should be your own.  You are encouraged to discuss the mathematics and to work out the math together, then put away or erase joint work before writing up your solution.  
+
+If you believe your work is incorrect, please do show it to your classmates and the teaching staff.  If you believe your solution to be correct, I encourage you to discuss or describe your solution, \textbf{without actually showing your written work to others.}
+\end{itemize}
+
+The late work policy for problem sets is available in the syllabus.
+ 
+
+\begin{questions}
+\item (Greenbaum and Chartier \S 4.7 1)
+\begin{parts}
+\item Write down the equation for the tangent line to $y = f(x)$ at the point $x = p$.  Then solve for the $x$-intercept of your line.  What formula have you derived, with what roles for $p$ and $x$?
+\item Construct the equation of a line that intersects the curve $y = f(x)$ at $x = p$ and $x = q$.  Solve for the $x$-intercept of the line.  What formula have you derived, with what roles for $p$, $q$, and $x$?
+\end{parts}
+
+\item (Koumoutsakos et al Notebook 3.1). 
+
+\emph{This code will be similar to our work in Class 07, but is not quite the same.  You can use and modify that code if it is helpful to you.}
+
+You'll estimate $\sqrt{34}$ using Newton's method and compare your results with the secant method.
+\begin{parts}
+\item Define your function and its derivative as Python functions.  Plot them (choosing an appropriate $x$ interval).
+\item Implement Newton's method and run your code until the accuracy reaches $10^{-15}$.  
+
+Make a plot in the $xy$-plane of $(x_k,f(x_k))$ for your successive estimates of the root.
+
+Also make a plot of $(k,x_k)$ to show your successive estimates.
+\item Implement the secant method and use it to estimate $\sqrt{34}$.
+
+Do this by writing a new Python function to approximate the derivative.  Replace the call to a derivative function in your Newton method's code with your new function.
+
+Plot your results and compare them to Newton's method.
+
+\item Make a numerical estimate of the order of convergence.
+
+Do this slightly differently than we did in class: use the last value of your iterations as  your $x^*$, and let $e_k = x_k-x^*$.
+
+For both methods compute an estimate of the order $r$ for each step $k$. 
+\end{parts}
+\item (Koumoutsakos et al Notebook 3.2 and \citep{burden2010numerical} \S10.2 12)
+
+
+For a single equation in one unknown, $f(x) = 0$, Newton's method is given by \[x_{k+1} = x_k - \frac{1}{f'(x_k)}f(x_k).\]
+
+For a system of equations and a vector of unknowns, $\vc{f}(\vc{x})= \vc{0}$, Newton's method is given by
+\[\vc{x}_{k+1} = \vc{x}_k - \left[\text{D}\vc{f}\right]^{-1}\vc{f}(\vc{x}_k)\] where the inverse of the Jacobian matrix replaces $\frac{1}{f'(x_k)}$ from the 1D case.
+
+In practice, the matrix inversion is avoided:
+\[\left\{\begin{array}{c}
+\left[\text{D}\vc{f}\right]\vc{z}_k = \vc{f}(\vc{x}_k) \\
+\vc{x}_{k+1} = \vc{x}_k - \vc{z}_k
+\end{array}\right.\]
+
+The goal in this problem is to formulate and solve a system of nonlinear equations to estimate the size of the bridge-foundations such that, under a given load, the bridge will not sink more than a certain depth.
+
+According to \cite{burden2010numerical}, the amount of pressure, $p$, needed to sink a circular plate of radius $r$ a distance $d$ into soft soil (where there is a hard base of soil a distance $D>d$ below the surface) is approximated by $p = x_1 e^{x_2 r} + x_3 r$.  The constants $x_j$ are depend on $d$ and soil properties.
+
+\begin{parts}
+\item 
+
+A plate of radius $0.1$ m requires a pressure of $100$ N/m$^2$ to sink $1$ m, while a plate of radius $0.2$ m requires a pressure of $120$ N/m$^2$ to sink the same distance, and a plate of radius $0.3$ m requires a pressure of $150$ N/m$^2$ to sink the distance.
+
+\emph{Note: these pressures are low by a couple of orders of magnitude but are chosen for ease of the problem.}
+
+Use these values to formulate the system of three equations with unknowns $x_1, x_2, x_3$ and find $[\text{D}\vc{f}]$, the Jacobian (also denoted $\frac{\partial\vc{f}}{\partial\vc{x}}$).
+\part In Python, implement Newton's method to find $x_1, x_2, x_3$.  Set a convergence tolerance for $\Vert \vc{x}_{k+1}-\vc{x}_k \Vert = \Vert \vc{z}_{k} \Vert < 10^{-5}.$
+
+As part of your work, define three functions: a function to evaluate $\vc{f}(\vc{x}_k)$, a function to find the Jacobian, $J(\vc{x}_k)$, and a function to solve $J(\vc{x}_k)\vc{z}_k = \vc{f}(\vc{x}_k)$.
+
+\emph{Use a builtin command within \texttt{scipy.linalg} to solve the system within your third function.}
+
+\part You have found the coefficients in the pressure equation, $p = x_1e^{x_2 r} + x_3 r$ for sinking $1$ m in this soil
+
+The foundations of your bridge need to each support a load of $50000$ N.
+
+Find the radius of foundation that should prevent the bridge from sinking more than $1$ m.
+
+\emph{The load is $50000$ N, but pressure is load per m$^2$, so you will need to use the cross-sectional area of your foundation to convert from load to pressure.}
+\item Check your work from part (c) graphically: plot the pressure due to a load of $50000$ N as a function of $r$.  Also plot the pressure to sink a circular plate $1$ m as a function of $r$.
+
+\emph{Include a legend labeling your two curves.}
+\end{parts}
+
+
+\item (Sauer \S1.5 4) (approximation from limited data)
+
+A commercial fisher wants to set the net at a water depth where the temperature is 10 C. By dropping a line with a thermometer attached, she finds that the temperature is 8 C at a depth of 9 m, and 15 C at a depth of 5 m. Use the secant method to determine an estimate for the depth at which the temperature is 10 C.  Show your reasoning and setup.
+
+\item  (Greenbaum and Chartier \S14.7 3) (reciprocals without division)
+
+Newton's method can be used to compute reciprocals, $1/R$, while avoiding division.  To compute $1/R$, let $f(x) = \dfrac{1}{x} -R$.  Write down and simplify the Newton iteration for this problem, $x_{k+1} = g(x_k)$.
+
+Compute the first few Newton iterates for approximating $1/3$ starting from $x_0 = 0.5$.
+
+Identify the set of starting values $x_0$ such that $\vert x_1 - x^*\vert < \vert x_0 - x^*\vert$ (i.e. the error decreases between the first and second step).  Will Newton iteration converge to $1/3$ for all of the $x_0$ you've identified?  Provide a brief explanation.
+
+\item \emph{Time Permitting} (Heath \S5 Computer Problems 5.14)
+
+The van der Waals equation of state, \[\left(p+a/v^2\right)(v-b) = RT,\]
+relates the pressure $p$, specific volume $v$, and temperature $T$ of a gas.  $R$ is a universal constant and $a$ and $b$ are constant, but depend on the particular gas.
+
+For carbon dioxide, in appropriate units, $R = 0.082054$, $a = 3.592$, $b = 0.04267$.  Find the specific volume, $v$, for a temperature of $300$ K for pressures of 
+\begin{parts}
+\item 1 atm
+\item 10 atm
+\item 100 atm
+\end{parts}
+Compare your results to those from the ideal gas law, $pv = RT$ (you can use the latter as a starting guess when solving the van der Waals equation).
+
+\item \emph{Time Permitting} (from Sauer) (root finding practice)
+\begin{parts}
+\item (\S1.5 computer 1) Use the secant method to approximate a solution to 
+
+(i) $x^3=2x+2$
+
+(ii)$e^x +\sin x=4$
+
+Try initial guesses of $x_0=1$ and $x_1=2$.
+
+\emph{Each equation has one root.}
+
+\item (\S1.4 computer 2) Use Newton's method to approximate the root to eight correct decimal places.
+
+(i) $x^5 + x = 1$
+
+(ii) $\ln x + x^2 = 3$
+
+\emph{Each equation has one real root.}
+
+\item (\S 1.1 computer 1) Use the bisection method to find the root to six correct decimal places.
+
+(i) $x^3 = 9$
+
+(ii) $\cos^2 x + 6 = x$
+\end{parts}
+
+
+\end{questions}
+
+\bibliographystyle{plain}
+\bibliography{references.bib}
+\end{document}

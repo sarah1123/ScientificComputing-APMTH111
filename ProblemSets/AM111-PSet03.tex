@@ -1,0 +1,267 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 03}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Sept 23}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\begin{questions}
+\item (linear algebra) (from Lay)
+\begin{parts}
+  \part (Lay \S 6.4 19)
+  
+  Suppose $A = QR$ where $Q$ is $n\times m$ and $R$ is $m\times m$.  Show that if the columns of $A$ are linearly independent, then $R$ must be invertible.
+  
+  To do this, consider the equation $R\vc{x} = \vc{0}$ and use the fact that $A = QR$.
+  
+  Specifically consider the set of $\vc{x}$ such that $R\vc{x} = \vc{0}$.
+  
+  \emph{Two pages of Lay on the invertible matrix theorem are posted in the additional materials folder of the Files on Canvas.}
+  
+  \part (Lay \S 6.5 19)
+  
+  Let $A$ be an $n\times m$ matrix.  Show that $\text{Nul } A$ (the space of vectors, $\vc{x}$, such that $A\vc{x} = \vc{0}$) is equal to $\text{Nul } A^TA$.  To do this:
+    
+  \begin{subparts}
+  \item Show that if $A\vc{x} = \vc{0}$ then $A^TA\vc{x} = \vc{0}$.
+  \item Suppose that $A^TA\vc{x} = \vc{0}$.  Explain why $\vc{x}^TA^TA\vc{x} = \vc{0}$ and use this to show that $A\vc{x} = \vc{0}$.
+  \end{subparts}
+  
+  \part (Lay \S 6.5 22)
+  
+  Use the fact that $\text{Nul } A = \text{Nul } A^TA$ to show that $\text{rank } A^TA = \text{rank } A$.
+  
+  \emph{How many columns does $A^TA$ have?} 
+  
+\begin{tcolorbox}
+The \textbf{rank} of $A$ is the dimension of the column space of $A$.
+
+For an $n \times m$ matrix, $A$, the rank theorem or \textbf{rank-nullity theorem} states that $\text{rank } A + \text{dim Nul } A = m$.
+\end{tcolorbox}
+
+\item (Lay \S 6.5 23)
+
+Suppose $A$ is $n\times m$ with linearly independent columns and $\vc{y}\in\mathbb{R}^n$.  Let $A\vc{w} = \vc{y}$ be the equations for a least squares problem.  Use the normal equations to produce a formula for $\vc{y}^*$, the projection of $\vc{y}$ onto $\text{Col }A$.  To do this, find $\vc{w}^*$ first.
+
+\emph{In the least squares problem, notice that the weights $\vc{w}^*$ of the columns of $A$ are chosen so that $A\vc{w}^*$ is closest to $\vc{y}$.}
+
+Note: the formula will not require an orthogonal basis for $\text{Col }A$.
+\end{parts}
+
+\question (linear algebra) (from Heath)
+\begin{parts}
+\part (Heath \S 3 3.2)
+
+Mark the following statement true or false and provide a brief explanation
+
+Fitting a straight line to a set of data points is a linear least squares problem, whereas fitting a quadratic polynomial to the data is a nonlinear least squares problem
+
+\part (Heath \S 3 3.3)
+
+Mark the following statement true or false and provide a brief explanation
+
+At the solution to a linear least squares problem $A
+\vc{w} \cong \vc{y}$, the residual vector $\vc{e} = \vc{y}-A\vc{w}$ is orthogonal to span$(A)$.
+
+\part (Heath \S 3 3.5)
+
+Mark the following statement true or false and provide a brief explanation
+
+In solving a linear least squares problem $A\vc{w} \cong \vc{y}$, if the vector $\vc{y}$ lies in span$(A)$, then the residual is $\vc{0}$.
+
+
+
+\part (Heath \S 3 3.17)
+
+Which of the following properties of an $n\times m$ matrix $A$ with $n>m$ indicate that the minimum residual solution of the least squares problem $A\vc{w}\cong\vc{y}$ is \emph{not} unique?
+
+(i) The columns of $A$ are linearly dependent.
+
+(ii) The rows of $A$ are linearly dependent.
+
+(iii) The matrix $A^TA$ is singular.
+
+
+
+
+\end{parts}
+
+\question (conditioning) (Heath 3.13)
+
+THIS FIRST Q NEEDS TO BECOME PART A 
+
+What is the exact solution $\vc{w}$ to the linear least squares problem 
+\[\left[\begin{array}{c c c} 
+1 & 1& 1\\
+\epsilon & 0 & 0 \\
+ 0 & \epsilon &0 \\
+ 0 & 0 & \epsilon \\
+\end{array}\right]
+\left[\begin{array}{c} 
+w_1 \\ w_2 \\ w_3
+\end{array}\right] = \left[\begin{array}{c} 
+1 \\ 0 \\ 0 \\ 0
+\end{array}\right]\]
+
+as a function of $\epsilon$?
+
+\emph{Show your calculation steps.}
+
+
+Solve the least squares problem using each of the following methods.  For each method, experiment with the value of the parameter $\epsilon$ to see how small you can take it and still obtain an accurate solution.  Pay particular attention to values around $\epsilon \approx \sqrt{\epsilon_{\text{mach}}}$ and $\epsilon \approx \epsilon_{\text{mach}}$.
+
+You might compare $\Vert A\vc{w}^* - \vc{y}\Vert$ to $\Vert A\vc{w}_{\text{exact}} - \vc{y}\Vert$ where $\vc{w}^*$ is your calculated value and $\vc{w}_{\text{exact}}$ is the actual solution.
+
+\begin{parts}
+
+
+\item Normal equations and use the matrix inverse
+
+\item Normal equations and use Cholesky factorization
+
+\item $QR$ factorization via the buildin \texttt{scipy} or \texttt{numpy} routine \emph{Use the \texttt{reduced} or \texttt{economic} mode}.
+
+\emph{Note: there are multiply ways to create a $QR$ factorization, and each algorithm may have different error properties.  We are only exploring the built-in algorithm}.
+
+\item \texttt{scipy.linalg.lstsq}
+
+Is \texttt{scipy} using a $QR$ decomposition?  If not, what is it using?  To determine that, read the documentation about the method it is using \href{https://netlib.org/lapack/explore-html/d7/d3b/group__double_g_esolve_ga94bd4a63a6dacf523e25ff617719f752.html#ga94bd4a63a6dacf523e25ff617719f752}{here}.
+
+
+\end{parts}
+
+
+
+\question Find the HumpherysJarvisBYU-ACME-LabsVolume1.pdf in the Additional Materials folder in the Files on Canvas.
+
+In the Least Squares and Computing Eigenvalues section, find `Fitting a Circle' (p. 46).  Complete problem 4 (fitting an ellipse to data).
+
+\texttt{circle.npy}, \texttt{ellipse.npy}, \texttt{housing.npy} (that last one included only in case you are curious) are available in the Problem Sets folder on Canvas
+
+
+
+% \question (rank deficient example)
+
+% Consider an overdetermined linear least squares problem with model function $f(x,\vc{w}) = w_1\varphi_1(x) + w_2\varphi_2(x) + w_3\varphi_3(x)$, where $\varphi_1(x) = 1$, $\varphi_2(x) = x$, and $\varphi_3(x) = 1-x$.
+
+% \begin{parts}
+% \item Create a vector $x$ with $20$ random points to use with this model.  What will be the rank of the resulting least squares matrix, $A$?  Include your reasoning.
+% \item Use weights $\vc{w} = [1,2,1]^T$ to produce synthetic data, $\vc{y}$.  
+% \item 20 data points.  cholesky, qr, normal eqautions with inverse.  rank A.  rank AtA.  is AtA invertible?  does python notice?
+% \end{parts}
+
+
+
+
+\question (Cleve Moler condition number example)
+
+In a \href{https://blogs.mathworks.com/cleve/2017/07/17/what-is-the-condition-number-of-a-matrix/}{blog post} on condition number, \href{https://en.wikipedia.org/wiki/Cleve_Moler}{Cleve Moler} provides a $2\times 2$ example where the solution is sensitive to a perturbation $\vc{b}$.
+
+\begin{parts}
+\item Following his work, implement this example in \textbf{Python} (not Matlab), using code that is exactly analogous to his.  Compare the percent change in $\vc{x}$ divided by the percent change in $\vc{b}$ to the condition number.  \emph{Use matrix norms as needed to compute these changes}.
+
+You might use \texttt{numpy.ndarray.copy} when creating \texttt{b} from a column of \texttt{A}.  Note that the indexing is slightly different in Python and Matlab.
+
+\emph{The example ends when the section ``close to singular'' begins.}
+
+\item Instead of using the value of $\vc{b}$ he provided, generate an arbitrary $\vc{b}$.  How does the percent change in $\vc{x}$ divided by the percent change in $\vc{b}$ compare to your work in part a?
+
+\item Let $\vc{a}_1$ and $\vc{a}_2$ denote the columns of $A$.  What is the angle between these vectors?  Provide a geometric explanation for why letting $\vc{b} = \vc{a}_1$ and then perturbing slightly caused a large change in $\vc{x}$.  Also provide an explanation for the degree of change you saw in $\vc{x}$ when you perturbed an arbitrary $\vc{b}$.
+
+\emph{Recall that $\vc{a}_1\cdot\vc{a}_2 = \Vert \vc{a}_1\Vert\Vert\vc{a}_2\Vert\cos\theta$.}
+\end{parts}
+
+
+
+This is not a least squares example, but rather a matrix equation $A\vc{x} = \vc{b}$ where an exact solution exists.
+
+%try to add impact of closeness of $\vc{y}$ to span$(A)$ as well...
+
+\question \emph{Time permitting} 
+
+(Sauer \S4.2 7)
+
+Load the windmill data, \texttt{windmill.txt}.  It is the monthly megawatt-hours generated from Jan 2005 to Dec 2009 by a wind turbine near Valley City, ND (owned by the Minnkota Power Cooperative).  The data used to be available on their website, \url{http://www.minnkota.com}.  For reference, a typical home uses around 1 MWh per month.
+\begin{parts}
+\item Find a rough model of power output as a yearly periodic function.  Fit the data to $f(t) = w_1 + w_2\cos 2\pi t + c_3 \sin 2\pi t + c_4 \cos 4 \pi t$ where the units of $t$ are years, $0\leq t\leq 5$.
+
+\emph{Use \texttt{numpy.loadtxt}} to load the data.
+
+\item Plot the data and the model function for $0\leq t\leq 5$.  What features of the data are captured by the model?
+\end{parts}
+
+
+\question \emph{Time permitting}
+
+(3D data) 
+
+(from ETH Notebook 2.1)
+
+Perform a least squares fit using 3D data, $\{(x_i,y_i,z_i)\}_{i=1}^N$.  Think of $z$ as the output and $(x,y)$ as the input.  Choose a model architecture of $f(x,y) = w_1 x + w_2 y + w_3$.
+
+We will look at the impact of noise, and of the amount of data, on the fit.
+
+\begin{parts}
+\item Generate synthetic data by choosing your three parameters.  Create $100$ datapoints, using a $10\times 10$ grid of $(x,y)$ values.  Add noise to the 3D data as in 2b, and solve the least squares problem using the normal equation.
+
+\emph{Note: you'll want your $x$ values and $y$ values to be vectors of length $100$ rather than shaped into a $10\times 10$ grid.  You might use \texttt{np.meshgrid} and \texttt{np.reshape} to generate those vectors, but there are other options}  % could instead use a pair of nested for loops.}
+
+\url{https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html}
+
+\url{https://numpy.org/doc/stable/reference/generated/numpy.reshape.html}
+
+\item For this 3D data you used $100$ data points, while for the 2D data on PSet 02 you used $10$.
+
+Now use just $10$ points for the 3D estimation.  Randomly generate ten pairs of $(x,y)$ values within the range $0$ to $1$.
+
+How does the reduction in the amount of data appear to impact your parameter estimation?
+\end{parts}
+
+
+
+% \question \emph{Time permitting}
+
+% (Greenbaum and Chartier \S 7.7 10)
+
+% Show that for all $n$-vectors, $\vc{v}$: 
+
+% (i) $\Vert\vc{v}\Vert_{\infty}| \leq \Vert \vc{v}\Vert_2 \leq \sqrt{n}\Vert\vc{v}\Vert_{\infty}$, 
+
+% (ii) $\Vert \vc{v}\Vert_2 \leq \Vert \vc{v}\Vert_1$. 
+
+% (ii) $\Vert \vc{v}\Vert_1 \leq n \Vert \vc{v}\Vert_{\infty}$
+
+\end{questions}
+  \end{document}
