@@ -29,6 +29,5 @@
 |26         | 13          | Tuesday     | Dec 5      |              |
 
 
-
 chat-gpt created the markdown table:
 create markdown code for a course calendar with class meetings on Tuesdays and Thursdays that starts on September 5th and ends on December 5th.  Have a holiday on Thanksgiving.  make columns for class day, week number, day of week, date, course topic
