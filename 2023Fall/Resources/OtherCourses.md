@@ -1,7 +1,7 @@
 # Notes on other scientific computing courses
 ## APMA 0160 at Brown University
 ### description
-[source website](https://www.dam.brown.edu/courses/)
+[link to source website](https://www.dam.brown.edu/courses/)
 
 For students in any discipline that may involve numerical computations. 
 Includes instruction for programming in MATLAB. 
@@ -27,6 +27,8 @@ They had 40 class meetings (50 minutes each).
 Our course has ~25 class meetings of 75 minutes (equivalent to 37 meetings) so would have 1 week less of material.
 
 ## BYU-ACME Python labs at Brigham Young University
+
+[link to source materials](https://foundations-of-applied-mathematics.github.io)
 ### description
 10 Python Essentials labs:
 1. intro to python
@@ -40,7 +42,7 @@ Our course has ~25 class meetings of 75 minutes (equivalent to 37 meetings) so w
 9. profiling
 10. intro to sympy
 
-17 labs in volume 1:
+17 labs in volume 1 (mathematical analysis):
 1. linear transformations
 2. linear systems
 3. QR decomposition
@@ -54,7 +56,26 @@ Our course has ~25 class meetings of 75 minutes (equivalent to 37 meetings) so w
 11. Monte Carlo integration
 12. visualizing complx valued functions
 13. pagerank
-14. Drazin inverse
-15. iterative solvesr
-16. Arnolidi iteration
-17. GMRES ()
+14. Drazin inverse (pseuodinverse)
+15. iterative solvers (solving large systems)
+16. Arnolidi iteration (eigenvalues)
+17. GMRES (solving linear systems)
+
+17 labs in volume 2 (algorithm design and optimization):
+1. linked lists
+2. binary search trees
+3. nearest neighbor search
+4. breadth-first search
+5. Markov chains
+6. discrete Fourier transform
+7. convolution and filtering
+8. intro to wavelets
+9. polynomial interpolation
+10. Gaussian quadrature
+11. one-dimensional optimization
+12. gradient descent methods
+13. opengym AI
+14. simplex method
+15. CVXPY (convex optimization in python)
+16. interior point 1: linear programs
+17. interior point 2: quadratic programs
