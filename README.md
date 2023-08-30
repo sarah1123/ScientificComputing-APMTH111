@@ -1,5 +1,5 @@
 # SciComp-F22-AM111
-Repository for AM/ES 111: Introduction to Scientific Computing (Harvard University, Fall 2022)
+Repository for AM/ES 111: Introduction to Scientific Computing (Harvard University, Fall 2022, Fall 2023)
 
 
 ## Code examples
