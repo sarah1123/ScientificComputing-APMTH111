@@ -1,0 +1,321 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 01}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Sept 15}}}\\at 12pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+\newcommand{\note}[1]{\textcolor{red}{[#1]}} % show notes in red
+\renewcommand{\note}[1]{} % don't display notes
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\note{
+\begin{enumerate}
+\item numbers in computers
+\begin{enumerate}
+    \item convert integer or fraction or decimal to binary
+    \item use the round to nearest rule
+    \item truncation vs rounding
+    \item do addition / subtraction with binary numbers
+    \item identify the largest number (overflow)
+    \item identify machine error
+    \item what is machine error?
+\end{enumerate}
+\item condition number and numerical error: revisit this problem and look around a bit.
+\item calculus review: taylor expansion?
+\item python
+\begin{enumerate}
+    \item for loop example
+    \item while loop example
+    \item lists
+    \item appending to lists
+    \item numpy
+    \item having a counter
+    \item defining a function
+    \item numpy arrays
+    \item creating lists of random numbers
+    \item plotting
+\end{enumerate}
+\end{enumerate}
+}
+\begin{itemize}
+    \itemsep0pt
+    \item Find the \href{https://github.com/sarah1123/ScientificComputing-APMTH111/tree/main/2023Fall/PythonFiles/01_floatingpoint}{ProblemSet01 Python template} via this link.
+    \item Use this python notebook for all programming work on the problem set.  Submit the notebook to the PSet01 Python assignment on Gradescope.
+    \item Submit the other problems to the PSet01 pdf assignment on Gradescope.
+    \item Late work: Problem sets are due at noon on Fridays.  They are accepted until 5pm for all students without penalty.  In addition, you have three 29-hour late days that allow you to submit until 5pm on Saturday.  You don't need to ask to use your late days, just keep track of them for yourself.
+\end{itemize}
+\noindent 
+  
+
+\noindent 
+
+\noindent 
+ 
+ \vspace{0.2cm}
+\hrule
+ \vspace{0.2cm}
+\begin{questions}
+\question (binary and floating point)
+\begin{parts}
+\part (Sauer \S0.2: 1ac, 2ac): Work by hand to find the binary representation of the base $10$ numbers:
+\begin{subparts}
+\item $64$
+\item $79$
+\item $1/8$
+\item $35/16$
+\end{subparts}
+\part (Sauer \S0.3: 2ac): Express the following base $10$ numbers as floating point numbers.  Use the Rounding to Nearest Rule.  
+
+% https://www.tutorialandexample.com/different-kinds-of-boxes-in-latex
+Example notation for expressing the floating point number (have 52 bits in the box):
+\[\text{fl}(\frac{1}{3}) = +1.\ \framebox[11cm][l]{0101010101010101010101010101010101010101010101010101}\times 2^{-2}\]
+\begin{subparts}
+\item $9.5$
+\item $100.2$
+\end{subparts}
+
+\part (Sauer \S0.3: 9)
+
+Explain why you can determine machine epsilon on a computer using floating point numbers with rounding to nearest by calculating $(7/3 - 4/3) - 1$.
+
+Does $(4/3 - 1/3) - 1$ also give $\epsilon_{\text{mach}}$?
+
+To provide your explanation, work by hand to convert to floating point numbers and carry out the machine arithmetic.
+
+
+\end{parts}
+
+% \question (condition number) (based on Greenbaum and Chartier \S6.3: 5)
+
+% \note{Add motivation / framing to the start of this problem}
+
+% Suppose $a_0$ dollars are deposited in a bank paying $5\%$ interest per year.  When the interest compounds $n$ times per year, the amount in the account after the first compounding will be $a_0\left(1+\dfrac{0.05}{n}\right)$.
+
+% At the next compounding, the interest is paid on $a_0\left(1+\dfrac{0.05}{n}\right)$ so the amount will be \[\left(a_0\left(1+\dfrac{0.05}{n}\right)\right)\left(1+\dfrac{0.05}{n}\right) = a_0\left(1+\dfrac{0.05}{n}\right)^2.\]  After one year ($n$ compoundings), the amount will be $a_0\left(1+\dfrac{0.05}{n}\right)^n$.
+
+% Let $\mathcal{I}_n(x) = \left(1+\dfrac{x}{n}\right)^n$, the \emph{compound interest formula}.
+% \begin{parts}
+% \item Find an expression for the relative condition number, $\kappa_{\mathcal{I}_n}(x)$, for $\mathcal{I}_n(x)$.
+
+% For $x = 0.05$ would you consider the problem to be well conditioned?  Ill conditioned?  Does your assessment vary with $n$?  Provide a brief justification/explanation.
+
+% \item For fixed $x$, $\lim\limits_{n\rightarrow\infty}\mathcal{I}_n(x) = e^x$
+
+% Use the Python code below to see values of $\mathcal{I}_n(x)$ for $n=1,10,100,1000,...,10^{19}$.
+
+% (type this code in or find it on Canvas/github/FAS On Demand)
+
+% \begin{verbatim}
+% n = 1
+% x = 0.05
+% interest_of_x = []
+% for val in range(0, 20):
+%     interest_of_x.append(['{:.3e}'.format(n), (1+x/n)**n])
+%     n = 10*n
+% # print formatting help from
+% # https://stackoverflow.com/questions/58722579/python-print-list-of-numbers-in-scientific-notation#58722625
+
+% print(*interest_of_x, sep='\n')
+% # more print formatting help from
+% # https://www.geeksforgeeks.org/print-lists-in-python-4-different-ways/
+% \end{verbatim}
+% \vspace{0.1in}
+
+% Compare these values to
+% \begin{verbatim}
+% import numpy as np
+
+% np.exp(x)
+% \end{verbatim}
+
+% For which $n$ are $\mathcal{I}_n(x)$ and $e^x$ closest?
+
+% Does your calculation converge to $e^x$ as $n$ increases?
+
+% \item For the value of $n$ you chose as yielding the closest value to $e^x$, treat $\left(1+\dfrac{x}{n}\right)^n$ as an approximation to $e^x$.  
+
+% \emph{Your value of $n$ will be of the form $10^k$.}
+
+% For this $n$, compute the condition number from your values: 
+
+% $x = 0.05$, 
+
+% $y = e^x$, 
+
+% $\hat{y} = \left(1+\dfrac{x}{n}\right)^n$, 
+
+% and $e^{\hat{x}}=\hat{y}$.  
+
+
+%  Compare this to your condition number from part (a).
+
+% For $n = 10^{18}$ or $n = 10^{19}$, what happens to the calculation in part(b)?  Can this error be explained by the condition number?  If not, provide an alternate explanation.
+
+% \end{parts}
+
+\question (more floating point) (from Ciocanel Spring 2022)
+\begin{parts}
+\item 
+ Working in Python, write a \texttt{determine\_number\_bits} function to find the machine error of either a \texttt{float16}, \texttt{float32}, or \texttt{float64}.
+
+To do this, set \texttt{epsilon = np.float16(1.0)}.  (Or use \texttt{float32} or \texttt{float64} for all math if you prefer).
+
+Create a loop, and each time through the loop assign \texttt{x = np.float64(1.0) + epsilon}.  Then divide \texttt{epsilon} by $2$ (\texttt{epsilon = epsilon/np.float64(2)}).
+
+Continue looping until the value of  \texttt{np.float64(1.0)+epsilon} is no longer greater than $1$.
+
+\emph{You might use a \texttt{while} loop for this}.
+
+Use your results to determine the number of bits in the mantissa of the data type.
+
+\emph{Each division by $2$ is shifting the decimal/binary/radix point of your binary number, so counting these divisions could help.  \texttt{np.log2} could also help.}
+
+\part Write a \texttt{determine\_overflow} function to determine the overflow of a float of your choice.
+
+ Initialize a variable \texttt{r = np.float32(1.0)} (or \texttt{float16} or \texttt{float64}).
+ 
+ Create a loop that prints out a value for \texttt{r = np.float32(1.0)} and for \texttt{np.log2(r)} and then doubles \texttt{r} each time through the loop (be sure \texttt{r} remains the correct type of float when you double it).  Repeat until the value of \texttt{r} becomes infinite.  Find the value \texttt{k}, where \texttt{r = 2**k} for the largest \texttt{r} before overflow.
+\item To check your work, compare your results to information about the data type in Python.  Do you calculations agree with the info in the data type?
+
+You can find that info using following commands
+
+\begin{verbatim}
+print(np.finfo(np.float16()))
+print(np.finfo(np.float32()))
+print(np.finfo(np.float64()))    
+\end{verbatim}
+\end{parts}
+
+\question (Sauer \S0.4)
+Read section 0.4 on loss of significance
+\begin{parts}
+\item For Example 0.6, calculate the roots in Python using the quadratic formula.
+\item For Example 0.6, calculate the roots in Python using the restructuring that is given in the text.
+\item In your own words, explain how loss of significance arises and how the alternate formula fixes it in this case.
+\end{parts}
+
+% \question (Calculus review) (Sauer \S0.5) Review the Fundamentals of Calculus section in Sauer 2017. 
+
+% \emph{Find a copy on Canvas.} 
+% \begin{parts}
+% \item Complete Sauer \S0.5: 3ab
+% \item Complete Sauer \S0.5: 5ab
+% \end{parts}
+
+
+
+\question (Numerical error in a stock index) \emph{(Thomas Fai, AM 111 Spring 2017.  See example in Greenbaum and Chartier) }
+
+A famous example of roundoff error was a short-lived index devised at the Vancouver stock exchange\cite{quinn1983}. The index contained 1400 stocks listed on the exchange, and each stock was weighted equally in determining the value of the index (most other indexes are weighted so that large companies count more than small ones). At the time the index was started in January 1982, the sum of the initial selling prices of all 1400 stocks (the baseline sum) was rescaled to give the index an initial value of 1000.
+
+Taken together, the stocks in this index underwent changes in price a total of 2800 times per day. Each time one of the stocks changed its price, the index was updated as follows:
+
+\[\text{New Index} = \text{Old Index} + (\text{Change in Stock Price})\dfrac{1000}{\text{Baseline Sum}}\]
+
+Then, after each change, the index was truncated after the third decimal place. For example, if after a change in stock price the index stood at 735.32567, the computer simply dropped the last two digits, making it 735.325.
+You will create a simulation of this exchange.  You'll run your simulation for 22 months.  In your simulation, you can make your own choices about how to price stocks initially and how to generate their change in price.
+
+\emph{If you have spent more than 8 hours on this problem set, write a note to that effect and skip this problem or parts of this problem.}
+
+\begin{parts}
+\part Describe what assumptions you will make in order to simulate the exchange.
+
+\part Given the truncation procedure used in updating the index, by how many points, on average, would you expect the index to drop, compared to its true value, due to one change of stock price?  What about in 1 day's worth of changes? Or 22 months?
+
+\part After 22 months, the actual index stood at 524.881. What can you infer about the evolution of the market during this time: was it a bull market or a bear market? Explain your thinking.
+
+
+\part Write two functions:
+\begin{itemize}
+\itemsep0pt
+
+    \item function \texttt{truncate(x)} that returns \texttt{trunc\_x}, a truncation of the number $x$ after the third decimal place.
+    
+    
+% \href{https://numpy.org/doc/stable/reference/generated/numpy.floor.html}{Link: You may choose to use the floor function in numpy - there are other ways to do this as well}
+
+    \item function \texttt{update\_index(old\_index, delta, baseline\_sum)} that returns \texttt{new\_index}, as defined above.  \texttt{delta} is the change in stock price of a single stock, \texttt{old\_index} is the previous value of the index, and \texttt{baseline\_sum} is the original sum of the stock prices
+\end{itemize}
+
+Find commenting conventions for Python \href{https://peps.python.org/pep-0257/}{here}.
+
+
+\part Write a function \texttt{simulate\_index\_over\_time(trading\_days, trades\_per\_day)} that simulates the evolution of this index over time.
+
+%\emph{Submit a pdf on Gradescope.}
+
+\part Call your simulation function and plot the evolution of the index over the first day, and over a $22$ month period (you can assume all months have the same number of trading days).
+
+Add a markdown cell with a brief description of what you see in your plot.
+
+
+\item In a markdown cell, make a suggestion for a way to fix the procedure used to update the index. 
+
+Implement your modification by writing \texttt{better\_update\_rule} to replace the function \texttt{truncate}. Plot the evolution of your modified index over 1 day and over 22 months.  
+
+Compare your modified index to the evolution of the ``actual'' index (compare the indices using identical values of the change in stock price at all time points).
+
+\item What do you observe?
+
+
+
+\end{parts}
+
+
+This problem is provided without information about the Python functions you might use to complete it, and without guidance for some of the assumptions you'll need to make about the index.  
+
+If you'd like more information/guidance, ask us on the Ed discussion board
+
+\question Reflection
+\begin{parts}
+\item When you worked on the problem set where did you get stuck or become confused?
+\item What aspects of the course challenged you this week?  What did you do to address those challenges?  What topics/ideas/procedures do you not yet understand?
+\item What did you understand the best this week?  What, if anything, do you understand better this week than you did in the past?
+\item List the people that you worked with or consulted on the problem set problems.  This might include other students in the course, course instructors, or people who have previously taken the course.
+\item Below, indicate how much of your time for this class has been doing the following activities:
+	\begin{enumerate}
+	\item Working on the problem set (including time in Python)
+	\item Reviewing course materials, including the course textbooks
+	\item Working through supplementary materials
+	\item Going to office hours or lab
+	\item Other (please specify)
+	\end{enumerate}
+\item If you used chatGPT or other AI tools, attach that information as part of this question.
+\end{parts}
+
+\end{questions}
+
+
+
+\bibliographystyle{plain}
+\bibliography{references.bib}
+\end{document}

@@ -1,0 +1,616 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 01}{}{Math in computers, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+%\usepackage{tcolorbox}
+% % Python environment
+% \lstnewenvironment{python}[1][]
+% {
+% \pythonstyle
+% \lstset{#1}
+% }
+% {}
+
+% % Python for external files
+% \newcommand\pythonexternal[2][]{{
+% \pythonstyle
+% \lstinputlisting[#1]{#2}}}
+
+% % Python for inline
+% \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+% \newcommand{\vc}[1]{\underline{#1}}
+
+
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{light_gray}{rgb}{0.97,0.97,0.97}
+\definecolor{mykey}{rgb}{0.117,0.403,0.713}
+
+\tcbuselibrary{listings}
+\newlength\inwd
+\setlength\inwd{1.3cm}
+% https://tex.stackexchange.com/questions/340700/ipython-notebook-input-and-output-cells-with-listings
+\newcounter{ipythcntr}
+\renewcommand{\theipythcntr}{\texttt{[\arabic{ipythcntr}]}}
+
+\newtcblisting{pyin}[1][]{%
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=light_gray,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\refstepcounter{ipythcntr}\label{#1}In \theipythcntr:};
+  }
+  listing engine=listing,
+  listing options={
+    aboveskip=1pt,
+    belowskip=1pt,
+    basicstyle=\footnotesize\ttfamily,
+    language=Python,
+    keywordstyle=\color{mykey},
+    showstringspaces=false,
+    stringstyle=\color{mygreen}
+  },
+}
+\newtcblisting{pyprint}{
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=white,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {};
+  }
+  listing engine=listing,
+  listing options={
+      aboveskip=1pt,
+      belowskip=1pt,
+      basicstyle=\footnotesize\ttfamily,
+      language=Python,
+      keywordstyle=\color{mykey},
+      showstringspaces=false,
+      stringstyle=\color{mygreen}
+    },
+}
+\newtcblisting{pyout}[1][\theipythcntr]{
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=white,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\setcounter{ipythcntr}{\value{ipythcntr}}Out#1:};
+  }
+  listing engine=listing,
+  listing options={
+      aboveskip=1pt,
+      belowskip=1pt,
+      basicstyle=\footnotesize\ttfamily,
+      language=Python,
+      keywordstyle=\color{mykey},
+      showstringspaces=false,
+      stringstyle=\color{mygreen}
+    },
+}
+
+
+
+
+
+%\newcommand{\note}[1]{\textcolor{red}{[#1]}} % show notes in red
+ \newcommand{\note}[1]{} % don't display notes
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent 
+
+\note{calendar:
+\begin{enumerate}
+    \item Tu intro PS01
+    \item Th binary PS01
+    \item Tu condition number PS01/2
+    \item Th least sq PS02
+    \item Tu lin alg PS02/3
+    \item Th lin alg PS03
+    \item Tu least sq PS03/4
+    \item Th ?? PS04
+    \item Tu root finding PS04/5
+    \item Th root finding PS05 (early)
+    \item Tu integration PS06
+    \item Th quiz
+    \item Tu interpolation PS06
+    \item Th interpolation PS06
+    \item Tu integration PS07
+    \item Th Monte Carlo PS07
+    \item Tu differentiation PS08
+    \item Th differentiation PS08
+    \item Tu diff eq
+    \item Th application of diff eq
+    \item Tu ODEs
+    \item Th ODEs
+    \item Tu neural nets
+    \item Tu neural nets
+    \item Th quiz
+    \item Tu presentations
+\end{enumerate}}
+
+\note{
+\begin{itemize}
+    \item what is a floating point system
+    \item example
+    \item IDing info about a floating point system
+    \item 
+\end{itemize}
+}
+\setcounter{section}{-1}
+\section{Preliminaries}
+\begin{itemize}
+\itemsep0pt
+\item There will be a skill check in class during the next class.  The problem info is below.
+\item Problem set 01 will be assigned Friday and due the following Friday.
+\item OH this week: Thursday from 1-2pm in Pierce 316 (Sarah's office)
+\end{itemize}
+
+\hrule
+\vspace{0.2cm}
+
+
+\noindent\textbf{Big picture}
+\begin{itemize}
+    \itemsep0pt
+\item What is scientific computing (and numerical analysis)?  What makes it important?
+
+\item How are numbers represented in computers?  What implications does this have for solving problems?
+\end{itemize}
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check practice}
+Write a binary number in base $10$.  
+
+\noindent Example:
+
+Write $(1011010.101)_2$ in base $10$.
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+
+Working from the radix point (decimal point) to the right to tackle the fraction: $1/2 + 1/8$.
+
+Working from the radix point to the left to tackle the integer part: $2 + 8 + 16 + 64$.
+
+Now some arithmetic: $0.5 + 0.125 = 0.625$.  $2+8 = 10$.  $16 + 64 = 80$.  $10 + 80 = 90$.
+
+$90.625$ in base $10$.
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\section{Math with computers}
+\subsection{Math, science, and data problems}
+\begin{enumerate}
+\item What have you used computers to calculate?
+\end{enumerate}
+\noindent \emph{Make a list for yourself, and then work with others to make a list at the boards.}
+\vspace{1in}
+
+\subsection{Challenges of doing math with computers: error}
+\begin{enumerate}[resume]
+\item How many numbers are there in the interval $[0,1)$?  
+\end{enumerate}
+\vspace{0.2in}
+
+\noindent In a computer, we assign finite memory to store each number.  
+\begin{itemize}
+\itemsep0pt
+    \item Only some numbers can be exactly represented: there is no continuity.  Every number has a neighborhood about it with no other numbers.
+    \item Numbers for which the representation would be infinite are always shortened (ex: $\pi$, $\sqrt{2}$, $0.\bar{3}$).
+\end{itemize}
+
+\vspace{1in}
+
+\section{Question formulation technique}
+Question generation is an important skill and is not one we always approach in a formal way.
+
+We will use a structured question formulation technique to generate questions about doing math with computers.
+
+This technique is from The Right Question Institute, \url{rightquestion.org}.
+
+\subsection{Technique steps}
+\begin{enumerate}
+    \item Produce questions
+    \begin{enumerate}
+        \item Ask as many questions as you can
+        \item Do not stop to discuss, judge, or answer
+        \item Record \textbf{exactly} as stated
+        \item Change statements into questions
+    \end{enumerate}
+    \item Expand questions
+    \begin{enumerate}
+    \item Classify questions as open/closed
+    \item Change from one type to the other
+    \end{enumerate}
+    \item Prioritize
+    \item Reflect
+\end{enumerate}
+
+\subsection{Generating questions}
+\subsubsection{Question focus}
+\begin{pyin}
+print(3/2 - 1/2 - 1)
+\end{pyin}
+
+\begin{pyprint}
+0.0
+\end{pyprint}
+
+\begin{pyin}
+print(7/3 - 4/3 - 1)
+\end{pyin}
+
+\begin{pyprint}
+2.220446049250313e-16
+\end{pyprint}
+
+\subsubsection{Record priority questions}
+\vspace{1in}
+
+\subsubsection{Fill out reflection}
+\url{PollEv.com/apmth111}
+
+\section{Representing numbers in a computer}
+\subsection{Binary (Sauer \S 0.2)}
+
+In a base 10 number system, each digit takes on values from \{0,1,2,3,4,5,6,7,8,9\}.  In a binary number system, each binary digit (\textbf{bit}) is 0 or 1.
+
+\vspace{0.5in}
+
+%\href{https://watermark-silverchair-com.ezp-prod1.hul.harvard.edu/9780262334426_cab.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAAz4wggM6BgkqhkiG9w0BBwagggMrMIIDJwIBADCCAyAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMv0aSsM8wsEnAbh4oAgEQgIIC8WLUspKb1WQLo_-Lp-zgfBYXEy_o-UeljoCmwqa6uyrVyq-VCq7G0J3ubwjlyiXo3Kt34PfZ-MweoTV4dpn9D16FH9ymoCX6MXN6mXqTwn3pPnD3Q04DDgWu7zzP_qxf5TQ7XhpW7PHkUOygwaFHCFYsCCxYhB3hYKZza2f8v_Ieh6XebCUm-S4riV2E4PXybApX6g89lliplm_BdJ54M4L6Gu4cWiuEhAX23v-DZVJNjt8CipGfgwLAp8OodgJfsWaZPqZ7QDrn2UpjxTIVFeCEYZV_NTsi73oGpnOzDjfA2gh_05bZJ-5aImkv67mL2o4zanJcg1-rmbRGHxsF68VBto_oXYGdiy6n5__F6PieIufsndzw0_sXxN2ceG-9D6TQbmBGJxTx_eeZlpaUa6f09ZYTMO0egcp63xiboRnQ4qaF1Z-QnaYBGpfxdwV8RS-iF292dsEWkpiUjLnfMbNwoqyQz4n4eJbubGHGjXnNJZrzy4rAgf8X3Btfvlo6ozXHAezyALyRG6pRfin_qpSZZs3LWZL1-Mj4CGqMRK4S5NgHlTv_yPJXbU3sAIo-pjfY5272U8lDkTPEzEptJUxos4A_5j9_ttdfLcUwP5EB6wLqL5jbFeXVNEQOA5YHgdD1OymFsFRAlFzM-2MT92JC9FznoIC3ReQ7oXJoAdTa3aK2b7sVnAaJPPhCakHdWG4rHDYfhzjaqXxYdVoZkuqyu89hMA5oF6M6cskrzyblT93gdzMLCQPYK7FbCSqRbsSOvmBKxo70SzBJ4rxlBw0SxaKwjOu7BvBda4wOcM1fcvO2OX_ngbUAWUeKhndoimOZaIFiUntb2TzewPjgWrkYtguFeTqbiHYond6Z8bM-6SNYoo5qIcREXLLdZilQupSERwK-NpuRUvjV7r1no6QmqriSAPmeq8ayRCBENdY50SlH7Vew3tBZIYnvofVz7vzn0pWnEwDptojlzbMbCNgqVVEa3Icip0f8JY1fIhDqpw}{Storing numbers in ENIAC}
+\begin{enumerate}[resume]
+\item In the 1940s, ENIAC was an early computer that stored decimal numbers.  A number of early computers used decimal.  Assume you have stored a single decimal digit using $5$ bits.  How many numbers can be stored using binary with five bits?
+\vspace{1in}
+\end{enumerate}
+
+\subsection{Converting between bases}
+
+
+\begin{enumerate}[resume]
+\itemsep40pt
+    \item Converting from binary to decimal 
+    \begin{enumerate}
+    \itemsep40pt
+        \item $(11)_{10}$ (eleven in base ten) can be thought of as $1*10^1+1*10^0$.  If we are instead in base $2$, $(11)_2 = 1*2^1+1*2^0$. What does $(11)_2$ convert to in base 10?
+        \item Write $(101)_2$ in base $10$.
+        \item Write $(101.1)_2$ in base $10$.
+    \end{enumerate}
+    \item Converting integers from decimal to binary
+    \begin{enumerate}
+    \itemsep40pt
+        \item $(16)_{10}$ = $(\_ \_ \_ \_ \_)_2$.  Find the base $2$ representation of $16$.
+        \item Find the base $2$ representation for $17$.
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{0.5in}
+
+\textbf{Algorithm for base 10 integer to binary:}
+\begin{tcolorbox}
+
+
+In base $10$ when you divide an integer by $10$, the remainder is the right most digit of the integer: $17/10 = 1\ R7$ where $7$ is the right most digit.
+
+We can continue to divide by $10$ and read off the remainder as the next digit.  For a decimal number, we would do that until we have a single digit and a remainder
+
+By listing the digit and then the remainders in the right order, you can reconstruct the number. \\
+
+
+Something similar works in binary.
+
+When you divide an integer by $2$ the remainder is a $0$ or a $1$:
+$17/2 = 8 R1$ where $1$ will be the right most bit of the binary representation.
+
+
+\end{tcolorbox}
+
+
+$17/2 = 8 R1$.  $(17)_{10} = (\_ \_ \_ \_ 1)_2$.
+
+$8/2 = 4 R0$.  $(17)_{10} = (\_ \_ \_ 0 1)_2$.
+
+$4/2 = 2 R0$.  $(17)_{10} = (\_ \_ 0 0 1)_2$.
+
+$2/2 = 1 R0$.  $(17)_{10} = (1 0 0 0 1)_2$.
+
+\begin{enumerate}[resume]
+    \item Use division by $2$ and keep the remainders to find $27$ in binary.
+\end{enumerate}
+\vspace{1.2in}
+
+\textbf{Algorithm for base 10 fractional or decimal part to binary:}
+
+\begin{tcolorbox}
+    To convert an integer to binary, we divided by $2$ and used the remainder.  To convert a decimal or fractional part to binary, we will multiply by $2$ and read off the first digit.
+\end{tcolorbox}
+
+Find $\dfrac{1}{3}$ in binary.
+
+$\dfrac{1}{3} = (0. \_ \_ \_ \_)_2$.
+
+$\dfrac{1}{3}*2 = \dfrac{2}{3}$.    $\dfrac{1}{3} = (0.0 \_ \_ \_)_2$.
+
+$2/3 * 2 = 4/3 = 1 + 1/3$.  $\dfrac{1}{3} = (0.01\_ \_)_2$. 
+
+The fractional part is now $\dfrac{1}{3}$. 
+
+Wait... we've already done $1/3$ so we know what happens from here.  This is a repeating binary expansion.  
+
+$\dfrac{1}{3} = (0.\overline{01})_2$
+
+
+% \begin{enumerate}[resume]
+%     \item Use multiplication by $2$ and keep the integer parts to find $0.3$ in binary.
+%     \item Express $27.3$ as a floating point number using double precision and rounding to nearest.
+%     \begin{parts}
+%     \item First, convert $27.3$ to binary.
+%     \item Example notation for expressing the floating point number (have 52 bits in the box):
+% \[\text{fl}(\frac{1}{3}) = +1.\ \framebox[11cm][l]{0101010101010101010101010101010101010101010101010101}\times 2^{-2}\]
+
+% Follow this notation (and use the round to nearest rule) to write $27.3$.
+%     \end{parts}
+    
+    
+%     \item 
+
+% Use this notation to write $27.3$ as a floating point number (with $\beta = 2$, $p = 53$)
+% \end{enumerate}
+
+% \eject
+
+% \noindent\textbf{Some answers}
+% \begin{enumerate}
+%     \item a) $+9999\times 10^5$.  b) $+9.999\times 10^5$.  c) $243$.  d) $-3.400\times 10^{-3}$.  e) $+1.000\times 10^0$.  f) $1.001\times 10^0$ 
+%     \item a) $1.001\times 10^0$ is the next number, so $\epsilon = 1.000\times10^{-3}$.  b) $\pi = 3.141592...$ so $3.142$ (round) or $3.141$ (truncate) c) $+1.000\times10^{-5}$ so $0.00001$. d) $0 = 0.0000$ but there has to be a nonzero number to the left, so not clear how to, no.
+%     \item a) $+2.000\times10^{-5}$ b) $1.000 + 0.00001 = 1.00001$ but we stop at $4$ digits so $+1.000\times 10^0$.  c) $-1.000 + 0.00001$ is $-1.000$ so $0$.
+%     \item \begin{tabular}{c|c|c}
+%      & chop & nearest \\
+%      \hline
+%   2.394   & 2.3& 2.4\\
+% 2.251 & 2.2& 2.3 \\
+% 2.250 & 2.2 & 2.2 \\
+% \end{tabular}
+% $2.25$ was between $2.2$ and $2.3$ so look to the $3$ to decide which way to round.
+% \item chop: $\vert(2.394-2.3)/2.394\vert = 0.94/2.394$.  round: $\vert(2.394-2.4)/2.394\vert = 0.006/2.394$.  chopping is worse (something like 40\% !?)
+% \item a) $(11)_2 = 1+2 = 3$. b) 4+0+1 = 5.  c) $5+ 1*2^{-1} 5.5$.
+% \item a) $16 = 2^4$ so $(10000)_2$. b) $17 = 16+1$ so $(10001)_2$.
+% \item $27/2 = 13 R1$.  $13/2 = 6 R1$.  $6/2 = 3 R0$.  $3/2 = 1 R1$.  $(11011)_2$.  Check: $16+8+0+2+1 = 27.$
+% \item $0.3*2 = 0.6$ so $(0.0...)_2$.  $0.6*2 = 1.2$ so $(0.01...)_2$.  $0.2*2 = 0.4$ so $(0.010...)_2$.  $0.4*2 = 0.8$ so $(0.0100...)_2$.  $0.8*2 =1.6$ so $(0.01001...)_2$.  We have seen $0.6$ onward before so $1001$ will repeat.  $(0.0\overline{1001})_2$.  Check: $x = (0.0\overline{1001})_2$.  $2x = (0.\overline{1001})_2$.  $2*2^4x = (1001.\overline{1001})_2$.  $(1001)_2 = 9$ so $2x + 9 = 32x$.  $30x = 9 \Rightarrow x = 3/10 = 0.3$
+% \item a) $27.3 = 27+0.3 = (11011.0\overline{1001})_2$  b) $+1.1011010011001100\times 2^4$ <-- 12 bits after the radix point. $12+8*5 = 52$ so make 5 copies of the last 8:
+
+% $+1.10110100110011001100110011001100110011001100110011001100\times 2^4$.  For rounding, the next bits are $11$ so round up
+
+% $+1.\framebox[11.7cm][l]{10110100110011001100110011001100110011001100110011001101}\times 2^4$
+% \end{enumerate}
+
+
+
+% \subsection{Floating point (Sauer \S 0.3)}
+% \begin{tcolorbox}
+% \begin{itemize}
+% \itemsep0pt
+%     \item A \textbf{floating point number} consists of three parts: the \textbf{sign} of the number, the string of bits (\textbf{mantissa}), and an \textbf{exponent}.  \cite{sauer2018numerical}
+%     \item These parts are stored together.
+%     \item A floating point system can be characterized by four numbers:
+% \begin{itemize}
+% \itemsep0pt
+%     \item $\beta$ (base)
+%     \item $p$ (precision)
+%     \item $[L,U]$ (range for exponents)
+% \end{itemize}
+
+% \item A floating point number is of the form \[ \pm \left(d_0 + d_1\beta^{-1} + d_2 \beta^{-2} + ... + d_{p-1}\beta^{-(p-1)}\right) \beta^E\] where $0\leq d_i\leq \beta-1$ and $L\leq E \leq U$ are integers.
+
+% In base $10$ you would write $d_0.d_1d_2...d_{p-1} \times 10^E$.
+% \item $\pm$ is the sign, $d_0d_1d_2...d_{p-1}$ is the mantissa, $E$ is the exponent, and $p$ is the precision.
+% \item In a \textbf{normalized} system we require $d_0\neq 0$.
+% \end{itemize}
+
+% \end{tcolorbox}
+
+% \noindent\textbf{Example} 
+
+% THIS LED TO LOTS OF CONFUSION - FORGOT TO PRESENT NORMALIZED...
+
+% Consider a normalized floating point system with $\beta = 10$, $p = 4$, $-5\leq E \leq 5$.
+% \begin{itemize}
+%     \item For numbers in this system, find the smallest number $\epsilon$ such that $1+\epsilon > 1$.  This number is referred to as machine epsilon, $\epsilon_{\text{mach}}$
+%     \vspace{0.7in}
+    
+%     \item How would you represent $\pi$ in this system?  \emph{If there are multiple options, explain your choice.}
+%     \vspace{1in}
+% \end{itemize}
+
+
+% \begin{itemize}
+% \item Find the smallest number represented in the system.  This is the underflow level (UFL).
+% \vspace{0.5in}
+
+% \item Find the largest number represented in the system.  This is the overflow level (OFL).
+% \vspace{0.5in}
+
+% \item Compute $1.0\times 10^{-5}+ 1$ within this system.
+% \vspace{0.5in}
+% \end{itemize}
+
+% Note: $1.0\times 10^{-5} + 1.0\times 10^{-5} = 2\times 10^{-5}$ 
+
+% but $(\num{1.0e-5} + 1) + (\num{1.0e-5}-1) = 0$.  This is called \textbf{catastrophic cancellation}.
+
+% \vspace{0.2cm}
+% \hrule
+% \vspace{0.2cm}
+
+% \noindent\textbf{Rounding}
+% \begin{tcolorbox}
+% \begin{itemize}
+% \itemsep0pt
+%     \item Let $\text{fl}(x)$ denote the floating point approximation to $x$.
+%     \item To convert from $x$ to $\text{fl}(x)$ one option is to \textbf{chop}, taking the first $p$ digits.  
+    
+%     Dropping the $p+1$st digit leads to a relative error of $\left\vert\dfrac{\text{fl}(x) - x}{x}\right\vert\leq \beta^{-(p-1)}$
+%     \item Another option is \textbf{rounding to nearest} by taking the floating point number nearest to $x$.  
+    
+%     This leads to a relative error of $\left\vert\dfrac{\text{fl}(x) - x}{x}\right\vert\leq \frac{1}{2}\beta^{-(p-1)}$
+    
+%     Note: If $x$ is equidistant between two floating point numbers (think of $1.5$ when rounding to the nearest integer), then the value of $d_{p-1}$ is used to determine whether to round up or down.  
+%     \item The maximum relative error gives the accuracy of the floating point system.  It is \[\epsilon_{\text{mach}} = \max\limits_{x\in[\text{UFL,OFL}]} \left\vert\dfrac{\text{fl}(x) - x}{x}\right\vert.\]
+% \end{itemize}
+% \end{tcolorbox}
+
+% \noindent\textbf{Example}.
+
+% Let $\beta = 10$, $p =2$.
+
+% \begin{tabular}{c|c|c}
+%      & chop & nearest \\
+%      \hline
+%   2.344   & & \\
+% 2.351 & & \\
+% 2.389 & & \\
+% 2.350 & & \\
+% \end{tabular}
+
+
+% \vspace{0.2cm}
+% \hrule
+% \vspace{0.2cm}
+% \noindent\textbf{Binary}
+
+% \begin{tcolorbox}
+% \begin{itemize}
+% \itemsep0pt
+%     \item The floating point systems used in computers typically have $\beta = 2$ (binary), so the digits of the floating point numbers, $d_i = 0$ or $1$.  We will use $b_i$ interchangeably with $d_i$ when we are working in binary.
+%     \item A single binary digit is called a \textbf{bit}.
+%     \item In double precision, a floating point number has $64$ bits.  \[s e_1e_2...e_{11}b_1b_2...b_{52}\] where $s$ is the sign, followed by $11$ bits for the exponent, and then the $52$ bits following the decimal point (also called the \textbf{binary point} or \textbf{radix point}).
+%     \item A few exceptional numbers also need to be represented: NaN (not a number, i.e. 0/0), Inf (infinity, i.e. $1/0$), 0 (note that $d_0 = 1$ so $0$ needs a special representation)
+% \end{itemize}
+% \end{tcolorbox}
+
+% \vspace{0.2cm}
+% \hrule
+% \vspace{0.2cm}
+
+% % \noindent\textbf{Converting between binary and decimal}
+
+% % One method for decimal integer to binary: 
+% % \begin{itemize}
+% % \itemsep0pt
+% %     \item To read off the digits of $548$, divide by $10$ (shift the decimal place to the left) and keep the remainder.  
+    
+% %     $548/10 = 54.8 = 54$ R$8$ 
+    
+% %     $54/10 = 5.4 = 5$ R$4$
+    
+% %     Reconstruct the number: $548$.
+% %     \item To find the bits, divide by $2$ (shift the binary place to the left) and keep the remainder.
+    
+% %     $548/2 = 274$ R$0$ 
+    
+% %     $274/2 = 137$ R$0$
+    
+% %     $137/2 = 68$ R$1$
+    
+% %     $68/2 = 34$ R$0$
+    
+% %     $34/2 = 17$ R$0$
+    
+% %     $17/2 = 8$ R$1$
+    
+% %     $8/2 = 4$ R$0$
+    
+% %     $4/2 = 2$ R$0$
+    
+% %     $2/2 = 1$ R$0$
+    
+% %     Now reconstruct: $1000100100 = 2^2+2^5+2^{9} = 4 + 32 + 512 = 548$.
+    
+% % \end{itemize}
+
+% % \noindent\textbf{Examples}
+
+
+% % Convert $3$ to binary.
+% % \vspace{0.5in}
+
+% % Convert $700$ to binary.
+% % % \vspace{1in}
+
+
+
+% \bibliographystyle{plain}
+% \bibliography{AM111references.bib}
+
+
+\end{document}

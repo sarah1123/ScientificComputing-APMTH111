@@ -1,0 +1,330 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 02}{}{Floating point, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+%\usepackage{tcolorbox}
+% % Python environment
+% \lstnewenvironment{python}[1][]
+% {
+% \pythonstyle
+% \lstset{#1}
+% }
+% {}
+
+% % Python for external files
+% \newcommand\pythonexternal[2][]{{
+% \pythonstyle
+% \lstinputlisting[#1]{#2}}}
+
+% % Python for inline
+% \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+% \newcommand{\vc}[1]{\underline{#1}}
+
+
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{light_gray}{rgb}{0.97,0.97,0.97}
+\definecolor{mykey}{rgb}{0.117,0.403,0.713}
+
+\tcbuselibrary{listings}
+\newlength\inwd
+\setlength\inwd{1.3cm}
+% https://tex.stackexchange.com/questions/340700/ipython-notebook-input-and-output-cells-with-listings
+\newcounter{ipythcntr}
+\renewcommand{\theipythcntr}{\texttt{[\arabic{ipythcntr}]}}
+
+\newtcblisting{pyin}[1][]{%
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=light_gray,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\refstepcounter{ipythcntr}\label{#1}In \theipythcntr:};
+  }
+  listing engine=listing,
+  listing options={
+    aboveskip=1pt,
+    belowskip=1pt,
+    basicstyle=\footnotesize\ttfamily,
+    language=Python,
+    keywordstyle=\color{mykey},
+    showstringspaces=false,
+    stringstyle=\color{mygreen}
+  },
+}
+\newtcblisting{pyprint}{
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=white,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {};
+  }
+  listing engine=listing,
+  listing options={
+      aboveskip=1pt,
+      belowskip=1pt,
+      basicstyle=\footnotesize\ttfamily,
+      language=Python,
+      keywordstyle=\color{mykey},
+      showstringspaces=false,
+      stringstyle=\color{mygreen}
+    },
+}
+\newtcblisting{pyout}[1][\theipythcntr]{
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=white,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\setcounter{ipythcntr}{\value{ipythcntr}}Out#1:};
+  }
+  listing engine=listing,
+  listing options={
+      aboveskip=1pt,
+      belowskip=1pt,
+      basicstyle=\footnotesize\ttfamily,
+      language=Python,
+      keywordstyle=\color{mykey},
+      showstringspaces=false,
+      stringstyle=\color{mygreen}
+    },
+}
+
+
+
+
+
+%\newcommand{\note}[1]{\textcolor{red}{[#1]}} % show notes in red
+ \newcommand{\note}[1]{} % don't display notes
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent 
+
+\note{calendar:
+\begin{enumerate}
+    \item Tu intro PS01
+    \item Th binary PS01
+    \item Tu condition number PS01/2
+    \item Th least sq PS02
+    \item Tu lin alg PS02/3
+    \item Th lin alg PS03
+    \item Tu least sq PS03/4
+    \item Th ?? PS04
+    \item Tu root finding PS04/5
+    \item Th root finding PS05 (early)
+    \item Tu integration PS06
+    \item Th quiz
+    \item Tu interpolation PS06
+    \item Th interpolation PS06
+    \item Tu integration PS07
+    \item Th Monte Carlo PS07
+    \item Tu differentiation PS08
+    \item Th differentiation PS08
+    \item Tu diff eq
+    \item Th application of diff eq
+    \item Tu ODEs
+    \item Th ODEs
+    \item Tu neural nets
+    \item Tu neural nets
+    \item Th quiz
+    \item Tu presentations
+\end{enumerate}}
+
+\note{
+\begin{itemize}
+    \item what is a floating point system
+    \item example
+    \item IDing info about a floating point system
+    \item 
+\end{itemize}
+}
+\setcounter{section}{-1}
+\section{Preliminaries}
+\begin{itemize}
+\itemsep0pt
+\item There will be a skill check in class during the next class.  The problem info is below.
+\item Problem set 01 will be assigned Friday and due the following Friday.
+\item OH this week: Thursday from 1-2pm in Pierce 316 (Sarah's office)
+\end{itemize}
+
+\hrule
+\vspace{0.2cm}
+
+
+\noindent\textbf{Big picture}
+\begin{itemize}
+    \itemsep0pt
+\item What is scientific computing (and numerical analysis)?  What makes it important?
+
+\item How are numbers represented in computers?  What implications does this have for solving problems?
+\end{itemize}
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check practice}
+Given a binary number, round it to nearest, keeping 4 bits after the radix point.  The skill check will avoid the special case where the truncated part is exactly $0.00001$.
+
+\noindent Example:
+
+Round $(+1.00111001)_2$ to nearest, keeping 4 bits after the radix point. 
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+
+We check the 5th bit after the radix point to decide whether to round down or up.  Bit 5 is a $1$ so we round up.  
+
+To round up, add $0.0001$ to the chopped value.
+
+$1 + 1 = 10$ in binary, and $11 + 1 = 100$, so 
+\begin{align*}
+    &+1.0011 \\
+    &+0.0001 \\
+    \cline{1-2}
+     &+1.0100
+\end{align*}
+\section{Representing numbers in a computer}
+
+\subsection{Converting to binary, Sauer \S 0.2}
+\begin{enumerate}[resume]
+\itemsep60pt
+    \item Use division by $2$ and tracking the remainders to find $27$ in binary.
+    \item Use multiplication by $2$ and tracking the integer parts to find $0.3$ in binary.
+    \item Convert $27.3$ to binary.
+
+    \end{enumerate}
+
+\subsection{Floating point, Sauer \S 0.3}
+\begin{enumerate}[resume]
+\itemsep50pt
+\item Write the following numbers in a normalized way.
+\begin{itemize}
+\item $(0.05618)_{10}$
+\item $(1001.01)_2$
+\item $(0.0001101)_2$
+\item $(9241.2)_{10}$
+\end{itemize}
+
+\item Is it always possible to write a number in a normalized way?  For what number(s) does it fail (if any)?
+\end{enumerate}
+\vspace{1in}
+
+Consider a normalized floating point system in base $10$ with precision three digits are kept after the decimal point, and the exponent in the range $-5\leq p \leq 5$
+
+\begin{enumerate}[resume]
+\itemsep40pt
+\item How would you represent $\pi$ in this system?  \emph{If there are multiple options, explain your choice.}
+
+\item Find the smallest number represented in the system.  This is the underflow level (UFL).
+
+\item Find the largest number represented in the system.  This is the overflow level (OFL).
+
+\item Find an $\epsilon$ small enough that $1+\epsilon = 1$ in this floating point system.
+
+\item Find the smallest $\epsilon$ so that $1+\epsilon > 1$ in this floating point system.
+
+This number is referred to as machine epsilon, $\epsilon_{\text{mach}}$
+
+\item In this system $1.0\times 10^{-5} + 1.0\times 10^{-5} = 2\times 10^{-5}$ 
+
+What about $(\num{1.0e-5} + 1) + (\num{1.0e-5}-1)$?  \emph{Do the calculations within the parentheses first.}
+
+This is called \textbf{catastrophic cancellation}.
+\end{enumerate}
+
+\vspace{1in}
+
+\subsection{Shortening the numbers: rounding vs chopping}
+
+\begin{enumerate}[resume]
+\item Use base $10$ and keep $1$ digit after the decimal place.
+
+\begin{tabular}{c|c|c}
+     & chop & nearest \\
+     \hline
+  2.344   & & \\
+2.351 & & \\
+2.389 & & \\
+2.35 & & \\
+\end{tabular}
+\end{enumerate}
+
+\subsection{Floating point in the computer}
+
+\begin{enumerate}[resume]
+\item Express $27.3$ as a floating point number using double precision and rounding to nearest.
+    
+     Example notation for expressing the floating point number (have 52 bits in the box):
+\[\text{fl}(\frac{1}{3}) = +1.\ \framebox[11cm][l]{0101010101010101010101010101010101010101010101010101}\times 2^{-2}\]
+
+Follow this notation (and use the round to nearest rule) to write $27.3$ as a floating point number (with base $2$, $N = 52$).
+
+Include the sign, the 52 bits after the radix point, and the exponent.
+
+\end{enumerate}
+\end{document}

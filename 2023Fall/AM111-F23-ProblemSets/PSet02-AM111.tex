@@ -1,0 +1,356 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\mathbf}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 02}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Sept 22}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\makeatletter
+\newcommand{\pyf}{%
+  \begingroup\catcode`_=12
+  \pyf@
+}
+\newcommand{\pyf@}[1]{\texttt{#1}\endgroup}
+\makeatother
+
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+  
+% NOTE FOR 2023: students need a lot of linear algebra review.  span, column space, eigenvalues.  introduce quadratic form.
+
+\begin{itemize}
+    \itemsep0pt
+    \item Find the \href{https://github.com/sarah1123/ScientificComputing-APMTH111/tree/main/2023Fall/PythonFiles/02_linearleastsquares}{ProblemSet02 Python template} via this link.
+    \item Use this python notebook for all programming work on the problem set.  Submit the notebook to the PSet02 Python assignment on Gradescope.
+    \item Submit the other problems to the PSet02 pdf assignment on Gradescope.
+    \item Late work: Problem sets are due at noon on Fridays.  They are accepted until 5pm for all students without penalty.  In addition, you have three 29-hour late days that allow you to submit until 5pm on Saturday.  You don't need to ask to use your late days, just keep track of them for yourself.
+\end{itemize}
+ 
+ \vspace{0.2cm}
+\hrule
+ \vspace{0.2cm}
+\begin{questions}
+\question (Lay 6.5 Q1). Let $A\mathbf{c} = \mathbf{y}$.
+
+Set $A = \left[\begin{array}{r r} -1 & 2 \\ 2 & -3 \\ -1 & 3\end{array}  \right]$, $\mathbf{y}= \left[\begin{array}{r} 4 \\ 1 \\ 2 \end{array} \right]$.  Construct (and simplify) the normal equations for $\overline{\mathbf{c}}$, where $\overline{\mathbf{c}}$ is the least squares solution to the system.
+
+\emph{Do not solve.}
+
+\question (Lay 6.5 Q13) Let $A = \left[\begin{array}{r r} 3 & 4 \\ -2 & 1 \\ 3 & 4\end{array}  \right]$, $\mathbf{y}= \left[\begin{array}{r} 11 \\ -9 \\ 5 \end{array} \right]$, $\mathbf{u}= \left[\begin{array}{r} 5 \\ -1 \end{array} \right]$, $\mathbf{v}= \left[\begin{array}{r} 5 \\ -2 \end{array} \right]$.
+
+
+
+If you do the mathematical work for this problem in Python, submit it as part of your Python code and provide answers to the following questions within your pdf write-up.
+
+\begin{parts}
+    \item Compute $A\mathbf{u}$ and $A\mathbf{v}$ and compare them with $\mathbf{y}$.
+    \item Could $\mathbf{u}$ possibly be a least squares solution of $A\mathbf{c} = \mathbf{y}$?  Provide your reasoning.
+    \item Is $\mathbf{y} - A\mathbf{u}$ orthogonal to the $\text{col} A$, the column space of the matrix $A$?  What about $\mathbf{y} - A\mathbf{v}$?
+
+    Based on this, could $\mathbf{u}$ or $\mathbf{v}$ possibly be a least squares solution of $A\mathbf{c} = \mathbf{y}$?  Provide your reasoning.
+    \end{parts}  
+
+\emph{Answer without computing a least-squares solution.}
+
+
+\question (Lay 6.5 Q17)
+Mark each statement as true or false and justify or explain your answer.
+
+Consider the system $A\mathbf{x} = \mathbf{b}$ with $A$ an $m\times n$ matrix and $\mathbf{b}\in\mathbb{R}^m$
+\begin{parts}
+    \item The least squares problem is to find an $\mathbf{x}$ that makes $A\mathbf{x}$ as close as possible to $\mathbf{b}$.
+    \item A least-squares solution is a vector $\hat{\mathbf{x}}$ that satisfies  $A\hat{\mathbf{x}} = \hat{\mathbf{b}}$ where $\hat{\mathbf{b}}$ is the orthogonal projection of $\mathbf{b}$ onto $A$
+    \item  A least-squares solution is a vector $\hat{\mathbf{x}}$ that satisfies  $\Vert \mathbf{b}-A{\mathbf{x}}\Vert \leq\Vert \mathbf{b}-A\hat{\mathbf{x}}\Vert$for all $\mathbf{x}\in\mathbb{R}^n$
+    \item If the columns of $A$ are linearly independent then the system has exactly one least squares solution.
+    \item The least squares solution is the point in the column space of $A$ closest to $\mathbf{b}$.
+
+\end{parts}
+
+\emph{The orthogonal projection of $\mathbf{y}$ onto $A$, where $\text{col} A = \text{span}(\mathbf{u}_1,...\mathbf{u}_n))$ and $\mathbf{u_j}$ form an orthogonal basis, is $\hat{\mathbf{y}} = \dfrac{\mathbf{y}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot\mathbf{u}_1}\mathbf{u}_1+...+\dfrac{\mathbf{y}\cdot\mathbf{u}_n}{\mathbf{u}_n\cdot\mathbf{u}_n}\mathbf{u}_n$}
+
+\question (Applying linear least squares to data) 
+
+(Problem content from Sauer 4.2: Q10; problem workflow from ETH Notebook 1.1) 
+
+For presidential election years from 1952 to 2008, Sauer combines the year-over-year percent change in mean disposable personal income (collected by the U.S. Bureau of Economic Analysis) with the proportion of the U.S. electorate that voted for the incumbent party's candidate.  
+
+Find the data (from Sauer) in the python notebook for this problem set.
+
+% \begin{verbatim}
+% import numpy as np
+% year = np.arange(1952,2009,4)
+% income_change = [1.49, 3.03, 0.57, 5.74, 3.51, 3.73, 2.98, \
+%                  -0.18, 6.23, 3.38, 2.15, 2.10, 3.93, 2.47, -0.41]
+% incumbent_vote = [44.6, 57.8, 49.9, 61.3, 49.6, 61.8, 49.0, \
+%                   44.7, 59.2, 53.9, 46.5, 54.7, 50.3, 51.2, 45.7]
+% \end{verbatim}
+
+For example, from 1951 to 1952, income increased by 1.49\% and 44.6\% of the electorate voted for Adlai Stevenson (incumbent Democratic party candidate).
+
+Follow the steps below.  You'll use a linear model, $V = c_1 + c_2 I$ for incumbent party vote as a function of income change, where $V$ is \% incumbent vote and $I$ is \% income change.
+
+
+
+\begin{parts}
+\item Make some plots to explore the data:
+
+(1) \% income change and \% incumbent vote vs time and (2) \% incumbent vote vs \% income change.  
+
+Include axis labels.  If there is more than one curve on the plot, include a legend.
+
+
+\emph{For the second plot, use the \texttt{'.'} option in \texttt{plt.plot} to plot points and not lines, or make a scatter plot.}
+
+\item Write a function, \pyf{fit_line_via_normal_equations}, that takes in the data vectors \texttt{xv} and \texttt{yv}, creates $A$, constructs the normal equations, uses matrix inversion to compute the least squares solution, and returns the solution vector, $\overline{\mathbf{c}}_n$.
+
+\emph{See \texttt{Week02.ipynb} for examples of matrix multiplication, matrix transpose, and matrix inversion.}
+
+\item Write a function, \pyf{use_built_in}, that takes in the data vectors \pyf{xv} and \pyf{yv}, creates $A$, uses a built-in least squares method to compute the solution, and returns the solution vector, $\overline{\mathbf{c}}_b$.
+
+\emph{See \texttt{Week02.ipynb} for an example using a built-in method.}
+
+\item Use subtraction to compare your two solutions.  Assume $\overline{\mathbf{c}}_b$ is closer to the real solution.
+
+To how many digits do the solutions agree?
+
+As a rule of thumb, if the condition number is approximately $10^k$ ($k\in\mathbb{Z}^+)$, and the entries in the matrix are accurate to $r$ digits, then the computed solution will usually be accurate to at least $r-k$ digits.
+
+Assume the entries in your matrix were accurate to machine epsilon, $\epsilon_{\text{mach}}$.  To what extent does the accuracy of $\overline{\mathbf{c}}_n$ match this rule of thumb?
+
+\item Under this linear model, for each additional percent of change in personal income, how many percentage points of vote can the incumbent party expect?
+\end{parts}
+
+
+
+\question (Sensitivity of fit to data quality / noise: synthetic data)
+
+(from ETH Notebook 2.1)
+
+We'll examine the sensitivity of a least squares fit to noise, and to introducing an outlier.  We'll use synthetic data for this, so that you know the exact parameter set that generated the data.
+
+ 
+\begin{parts}
+\item Let $F = c_1 + c_2 \cos(2\pi t)$ with $c_1 = 55$ and $c_2 = -15$. 
+
+Let $t = 0, 0.1, 0.2, ..., 0.9$ (ten data points).
+
+Write a function, \pyf{model(basis_functions, c, t_list)} that takes in the list of basis functions, a vector of weights, \texttt{c}, and a vector of times and returns the model evaluated at the list of times.
+
+\emph{See \pyf{Week02.ipynb} for an example.}
+
+Write a second function \pyf{lst_sq_fit(basis_functions, t, y)} that takes in the list of basis functions, the list of times, and the $F$ values (\texttt{y}) and returns a least squares solution.
+
+Use your functions to perform a least squares fit to your synthetic data and plot the results.
+
+\emph{The fit should be perfect because the 'data' is truly generated by the model.}
+
+\item Add random noise to the output values.  Write a function \pyf{add_noise(y,noise_size)} that returns $F_i = c_1 + c_2 \cos(2\pi t) + kU_{[-1,1]}$ where $k$ is \pyf{noise_size} and 
+$U_{[-1,1]}$ is a number generated uniformly at random (\texttt{rng.uniform(-1,1,N)} where $N$ is the number of values you'd like to generate).
+
+For $k = 1, 2, 3$, generate noisy data, use your function to find a least squares fit and get a sense of the fit.
+
+\emph{Because the random numbers are different on each evaluation, for each $k$ you'll see different values of $c_1$, $c_2$ if you do multiple runs.}
+
+\item Next, instead of exploring the impact of noise, examine the impact of an outlier.  Change one of the data points: $F[7] = 0.8*F[7]$.  
+
+Estimate the least squares solution and visualize the line of fit and the data.  How is this fit?
+
+\item How did noise impact your estimates of the parameters?  How did the outlier impact them?  Which seemed to have a bigger impact?
+\end{parts}
+
+
+% \question (variation on Health 3.8)
+
+% In this problem you'll compare the results of a least squares calculation using the normal equations with using $QR$ factorization.
+
+% %where you find the inverse of $A^TA$ in the normal equations either directly or via Cholesky factorization, with using $QR$ factorization.
+
+% The data, $\{(t_i,y_i)\}_{i=1}^21$ will be constructed so that the least-squares problem is ill-conditioned (so is sensitive to small changes in input), and with only a small residual left after fitting.
+
+% We'll use the polynomial \[p_{11}(t) = w_1+w_2t+w_3t^2 + ... + w_{12}t^{11} \] with time points $t_i$ evenly spaced from $0$ to $1$.  To generate your data, set $w_i = 1$ for all $w_i$.
+
+% \begin{parts}
+% \item Identify the basis functions, $\varphi_k$, for this model architecture.
+
+% \emph{There are $12$.}
+
+% \item Create your 'data'.  Use $21$ time points (including the endpoints).
+
+% Let $y_i = p_{11}(t_i) + (2u_i-1)*\epsilon$ where $u_i$ is a random number uniformly distributed on $[0,1)$.  Set $\epsilon = 10^{-10}$.
+
+% \item 
+% Create the $A$ matrix
+% \[
+%     \left[\begin{array}{c c c}
+%     \varphi_1(\mathbf{t}) & \hdots & \varphi_M(\mathbf{t})
+%     \end{array}\right].
+% \]
+
+% This kind of matrix, where the columns are successive powers of an input vector, is called a \textbf{Vandermonde matrix}.  It can be generated using $\texttt{np.vander}$.
+
+% Find the condition number of matrix $A$ using $\texttt{np.linalg.cond}$.  Write it in scientific notation (using base $10$).  
+
+% It should be large: Vandermonde matrices are typically ill conditioned.
+
+% \url{https://numpy.org/doc/stable/reference/generated/numpy.ma.vander.html?highlight=vander%20monde}
+
+% For more on Vandermonde matrices, Nick Higham has a \href{https://nhigham.com/2021/06/15/what-is-a-vandermonde-matrix/}{`What is' post}.
+% \item Find the coefficients $\mathbf{w}$ four ways.  
+
+% For each method, find the error function for your fit to the data.
+
+% Use the $2$-norm to find the distance between the values $\mathbf{w}$ you used to generate your data and the coefficients returned by the algorithm.
+
+% \begin{subparts}
+% \item First use the built-in: \texttt{np.linalg.lstsq}.
+
+% \item Next use the normal equations, $A^TA\mathbf{w} = A^T\mathbf{y}$ and direct inversion with \texttt{np.linalg.inv} so that $\hat{\mathbf{w}} = \left(A^TA\right)^{-1}A^T\mathbf{y}$.
+
+% \end{subparts}
+
+% Briefly summarize your results.  Which methods had more/less error?
+
+
+% \end{parts}
+
+
+% \item \emph{[Time permitting]} (Lay 2.3 Q 43)
+
+% % Let \[M = \left[\begin{array}{r r r r}
+% % 4 & 0 & -3 & -7 \\
+% % -6 & 9 & 9 & 9 \\
+% % 7 & -5 & 10 & 19 \\
+% % -1 & 2 & 4 & -1
+% % \end{array}\right]\]
+
+% Let \[M = \left[\begin{array}{r r r r r }
+% 5 &3& 1& 7& 9 \\
+% 6 &4 &2 &8 &-8 \\
+% 7&5&3&10&9 \\
+% 9&6&4&-9&-5 \\
+% 8&5&2&11&4
+% \end{array}\right]\]
+% \begin{parts}
+% \item Find the condition number of $M$.
+
+% \item % The matrix condition number is the condition number associated with the problem of matrix inversion.  It is $\dfrac{\Vert\Delta \mathbf{x}\Vert/\Vert \mathbf{x}\Vert}{\Vert\Delta \mathbf{b}\Vert/\Vert \mathbf{b}\Vert} \leq \text{cond \#}(A)$.
+
+% As a rule of thumb, if the entries in $A$ and $\mathbf{b}$ are accurate to about $r$ digits, and the condition number is approximately $10^k$ ($k\in\mathbb{Z}^+$), then the computed solution to $A\mathbf{x} = \mathbf{b}$ will usually be accurate to at least $r-k$ digits.
+
+% Based on your condition number, and $\epsilon_{\text{mach}}$, approximately how many digits of accuracy do you expect for $\mathbf{x}$?
+
+% %\emph{Use \texttt{np.float32} for this.}
+
+% \item Construct a random vector $\mathbf{x}$ in $\mathbb{R}^5$ and let $\mathbf{b} = A\mathbf{x}$.  Then use Python to compute the solution, $\mathbf{x_1}$, of $A\mathbf{x} = \mathbf{b}$ (see \texttt{np.linalg.solve}).
+
+% To how many digits do $\mathbf{x}$ and $\mathbf{x_1}$ agree?
+
+% %\emph{You might use \texttt{np.float32} for this.}
+
+% \item Use $\mathbf{x_1}$ in place of $\mathbf{x}$ to compute $A\mathbf{x}$.  To how many digits does it agree with $\mathbf{b}$?
+
+% %\emph{You might use \texttt{np.float32} for this.}
+
+% \end{parts}
+
+
+
+
+
+\emph{Cleve Moler has a blog post on matrix condition number} \url{https://blogs.mathworks.com/cleve/2017/07/17/what-is-the-condition-number-of-a-matrix/}
+
+
+\question \emph{[Time Permitting: if you've spend more than 8 hours on your problem set, skip this problem]} (Greenbaum and Chartier 7.7: 16)
+
+
+Consider a least squares approach for ranking sports teams.  Suppose you have four teams that play with the following outcomes:
+\begin{itemize}
+\itemsep0pt
+    \item $T1$ beats $T2$ by $4$ points ($21$ to $17$)
+    \item $T1$ beats $T4$ by $6$ points ($16$ to $10$)
+    \item $T2$ beats $T4$ by $7$ points ($17$ to $10$)
+    \item $T3$ beats $T1$ by $9$ points ($27$ to $18$)
+    \item $T3$ beats $T4$ by $3$ points ($10$ to $7$)
+\end{itemize}
+
+Treat this as an overdetermined system:
+\[\begin{array}{c}
+r1-r_2=4 \\
+r1    -r4  = 6 \\
+ r2   -r4 =7\\
+r3-r1=9\\
+  r3 -r4 =3
+\end{array}
+\]
+\begin{parts}
+\item 
+There's not a unique least squares solution.  Show that if $\hat{\mathbf{c}}$ solves the least squares problem then so does $\hat{\mathbf{c}} + (a,a,a,a)^T$.
+
+Make the solution unique by fixing $r1+r2+r3+r4 = 20$, so there are $20$ ranking points in the system.
+%PSet 06
+\item Write a function \pyf{rank_teams()} that returns an array listing the ranks of the four teams in order (T1, T2, T3, T4)  Use linear least squares and the constraint above to create the ranking.
+\end{parts}
+\emph{This method is a simplification of one introduced by Ken Massey in 1997.  According to Greenbaum and Chartier, it is part of the Bowl Championship Series model for ranking college football teams.}
+%7: 11, 13, 14, 16, 17
+
+\question \emph{[Time Permitting: if you've spend more than 8 hours on your problem set, skip this problem]} (Lay Chapter 6 supplementary exercises Q12)
+
+Consider the problem of finding an eigenvalue of an $n\times n$ matrix $A$ when an approximate eigenvector $\mathbf{v}$ is known.  The equation $A\mathbf{v} = \lambda\mathbf{v}$ will not have an exact solution $\lambda$.
+
+Reformulate this as a least squares problem for the unknown value $\lambda$.  Set $\mathbf{b} = A\mathbf{v}$, let $V = \mathbf{v}$.  The least squares problem is $V\lambda = \mathbf{b}$.
+
+    Construct the normal equations.  Identify the dimensions of $V^TV$, simplify to isolate $\lambda$, and write the solution using the original symbols.
+
+    \emph{The estimate of $\lambda$ from this process is called a Rayleigh quotient.}
+
+
+\question Reflection
+\begin{parts}
+\item When you worked on the problem set where did you get stuck or become confused?
+\item What aspects of the course challenged you this week?  What did you do to address those challenges?  What topics/ideas/procedures do you not yet understand?
+\item What did you understand the best this week?  What, if anything, do you understand better this week than you did in the past?
+\item List the people that you worked with or consulted on the problem set problems.  This might include other students in the course, course instructors, or people who have previously taken the course.
+\item Below, indicate how much of your time for this class has been doing the following activities:
+	\begin{enumerate}
+	\item Working on the problem set (including time in Python)
+	\item Reviewing course materials, including the course textbooks
+	\item Working through supplementary materials
+	\item Going to office hours or lab
+	\item Other (please specify)
+	\end{enumerate}
+\item If you used chatGPT or other AI tools, attach that information as part of this question.
+\end{parts}
+
+
+\end{questions}
+
+
+
+
+
+% \bibliographystyle{plain}
+% \bibliography{references.bib}
+\end{document}

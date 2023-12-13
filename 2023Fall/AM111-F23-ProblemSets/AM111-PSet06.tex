@@ -1,0 +1,203 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{natbib}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 06}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Oct 21}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Extensions beyond 5am on Saturday require contacting Danyun \textbf{in advance} of 5pm on Friday. \\
+
+\begin{itemize}
+\item Submit your work on this problem set via Gradescope (find the link on Canvas).
+\item Individual written work for this class (including any programming) should be your own.  
+\item Post to Ed for advice and information about any aspect of the assignment.
+\item You are encouraged to discuss the mathematics or pseudocode, working on the problem together.  \textbf{Put away or erase any joint work before writing up your solution yourself.}
+
+If you believe your work is incorrect, please do show it to your classmates and the teaching staff.  If you believe your work to be correct (or substantially correct), I encourage you to discuss or describe your solution.  However, do not show your work to others.
+
+\item As part of completing the assignment, fill out the online cover sheet on Canvas to name your collaborators, list resources you consulted, and estimate the time you spent on the assignment.
+
+For coding related resources (looking up Python commands, or syntax, etc), include the references as comments within your code instead of adding them to the cover sheet.
+
+You may copy snippets of code from other sources so long as there is a comment indicating the source of the code.
+\end{itemize}
+
+\begin{questions}
+\item Given a function $f$, five equally spaced points $x_0, x_1, x_2, x_3, x_4$, and a three-point centered difference formula for the second derivative:
+\[f''(x) = \dfrac{f(x-h)-2f(x)+f(x+h)}{h^2}-\frac{1}{12}h^2f^{(iv)}(c),\]
+\begin{parts}
+\item Write down a second order approximation for the second derivative evaluated at $x_2$, based on the given points.
+
+\emph{Plug in $x_2$ for $x$ and other $x_i$ as appropriate.}
+\item Use Richardson extrapolation to derive a higher order derivative estimate for $f''$.  Show your mathematical work.
+
+Write this new approximation down for evaluation at the point $x_2$.
+
+\item Show that your higher order formula is fourth order.
+
+\end{parts}
+\question (Sauer \S 5.1 Q9) Consider a forward-difference approximation for the first derivative of the form $f'(x) \approx A f(x) + Bf(x+h) + Cf(x+2h)$.
+
+Use Taylor expansion to determine the coefficients $A$, $B$, and $C$ that give the maximal order of accuracy.  
+
+Determine what this order is.
+
+\emph{Provide your mathematical reasoning.}
+
+
+
+\question (minimum error)
+
+For centered differences, $f'(x) \approx \dfrac{f(x+h)-f(x-h)}{2h}$ and the error in the approximation is bounded above by $E(h) = \frac{1}{6}h^2f'''(c) + \frac{1}{h}\epsilon_{\text{mach}}$, with $x-h < c < x+h$.  Find an expression for the value of $h$ at which the minimum error occurs.
+
+Assuming $f'''(c)\approx 1$, and using $\epsilon_{\text{mach}}$ for \texttt{float64}, find the value of $h$ associated with minimum error.
+
+Describe what happens to the error when $h$ becomes smaller than this value.
+
+
+\question (Sauer \S 5.1)
+\begin{parts}
+\item Write a function for each of the finite difference quotients you worked with above (there are three, two from Q1 and one from Q2).  Each function should accept a function handle $f$, an single point $x$, and an array of values of $\vc{h}$.  Each should return an array of the difference quotients evaluated at $x$ for each value in $\vc{h}$.
+
+Avoid \texttt{loops} in your functions, vectorizing your calculations to the extent possible.
+
+\href{https://www.mathworks.com/help/matlab/matlab_prog/vectorization.html}{Info on using vectorization from Mathworks.}
+
+
+\item Let $f(x) = \sin x - \cos x$.  
+
+
+Use \texttt{sympy} to find derivatives symbolically within Python.
+
+\begin{verbatim}
+# Example.
+import sympy as sy
+import numpy as np
+x = sy.symbols('x')
+diff = sy.diff(sy.exp(x)-sy.log(x), x)
+diffx = sy.lambdify(x, diff, "numpy")
+diffx(1)
+\end{verbatim}
+
+
+For each of the difference quotients, use your difference quotient function to create an error vector (the difference between the value from \texttt{sympy} and the value from the finite difference quotient).  Evaluate the derivatives at $x = 0$ for $\vc{h} = [0.1,0.01,0.001,...,10^{-12}]^T$
+
+\emph{Again avoid any loops if possible.}
+
+\item Plot your error results on a log-log plot.
+
+Identify where the minimum error occurs for each method.  Does this match what you would expect? 
+
+% When val < 10**-8 we're working with val^2 < machine error.
+\end{parts}
+
+\question (numerical derivative of data)
+\begin{parts}
+\item Write a function to approximate a first derivative from data points.  The function should accept an array of values $\vc{x}$ and a second array of the same length $\vc{y}$.  It should return an array of estimated derivatives.  
+
+Use forward or backward differences for the two edge points and central differences for all other data points.
+
+Vectorize your code to the extent possible.
+
+
+\item Load the pendulum data file \texttt{pend30.npy}.  This data was collected from a swinging pendulum with a weight at 30cm along the pendulum arm.
+\begin{verbatim}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# load the data
+t,x = np.load("pend30.npy").T
+plt.plot(t,x)
+\end{verbatim}
+
+Use the function you wrote above to approximate the first derivative.
+
+Comment on the reasonableness of this derivative estimate.
+
+\emph{Pendulum motion is sinusoidal, so we expect a sinusoidal function for the derivative.  You should see a noisy sinusoid.}
+
+\item There are many ways to estimate the amount of noise in the data.  
+
+Here's one way: a sinusoidal function is approximately linear near its average value and approximately quadratic at the extremes.  
+
+Use linear least squares to fit a quadratic curve to the data between index $90$ and index $145$.  Use the difference between this fitted curve and the data as an estimate for the error in $x$.
+
+Once you have your error estimate, divide by $h$ to generate an estimate of the error in your least squares derivative.
+
+What percent of the derivative is this maximum error? (this can be approximate; use the largest values of the derivative for this)
+
+
+
+\item Interpolate the data with cubic B-splines.
+
+Use \texttt{scipy.interpolate.splrep} to generate the spline and \texttt{scipy.interpolate.splev} to evaluate it at a set of input values.
+
+Evaluate the derivative using
+\begin{verbatim}
+splinefit = scipy.interpolate.splrep(...)
+# the 1 indicates first derivative.
+deriv = scipy.interpolate.splev(tvalues, splinefit, 1)
+\end{verbatim}
+
+Comment on the reasonableness of this derivative estimate.
+
+\item Repeat the derivative estimate via spline interpolation, this time using a smoothing parameter.
+
+You are no longer interpolating the data, but instead using a smoothing spline.  The smoothing parameter balances generating a smooth curve with passing close to the data points.
+
+\begin{verbatim}
+# s is the smoothing parameter.
+# 0 is no smoothing
+smoothsplinefit = interpolate.splrep(...,s=0.000001)
+\end{verbatim}
+
+Experiment with various levels of smoothing by adjusting $s$ (use powers of $10$ for $s$).
+
+Comment on the reasonableness of this derivative estimate, with whatever you think is the 'best' value you find for $s$.
+
+\end{parts}
+
+% \question Now consider approximating the second derivative at $x_0$ instead of $x_2$.  Find a second order approximation for the 2nd derivative at $x_0$, using $x_1, x_2, x_3$.
+% \begin{parts}
+% \item Set $h = x_k-x_{k-1}$.  Taylor expand $f(x_0 + \delta)$ to fifth order about $x_0$.  Substitute $x_1 = x_0 + h$, $x_2 = x_0 + 2h$, $x_3 = x_0 + 3h$ to 
+% \end{parts}
+
+\question \emph{Time permitting} 
+
+Consider the formula \[\frac{-f(x-2h) + 2f(x-h) -2f(x+h) + f(x+2h)}{2h^3}.\]  Use Taylor expansion to identify what derivative this is a formula for, and to identify the order of the method.
+\end{questions}
+
+\end{document}

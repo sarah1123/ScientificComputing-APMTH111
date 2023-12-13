@@ -1,0 +1,415 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 05}{}{Linear least squares: $QR$, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{light_gray}{rgb}{0.97,0.97,0.97}
+\definecolor{mykey}{rgb}{0.117,0.403,0.713}
+
+\tcbuselibrary{listings}
+\newlength\inwd
+\setlength\inwd{1.3cm}
+% https://tex.stackexchange.com/questions/340700/ipython-notebook-input-and-output-cells-with-listings
+\newcounter{ipythcntr}
+\renewcommand{\theipythcntr}{\texttt{[\arabic{ipythcntr}]}}
+
+\newtcblisting{pyin}[1][]{%
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=light_gray,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\refstepcounter{ipythcntr}\label{#1}In \theipythcntr:};
+  }
+  listing engine=listing,
+  listing options={
+    aboveskip=1pt,
+    belowskip=1pt,
+    basicstyle=\footnotesize\ttfamily,
+    language=Python,
+    keywordstyle=\color{mykey},
+    showstringspaces=false,
+    stringstyle=\color{mygreen}
+  },
+}
+\newtcblisting{pyprint}{
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=white,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {};
+  }
+  listing engine=listing,
+  listing options={
+      aboveskip=1pt,
+      belowskip=1pt,
+      basicstyle=\footnotesize\ttfamily,
+      language=Python,
+      keywordstyle=\color{mykey},
+      showstringspaces=false,
+      stringstyle=\color{mygreen}
+    },
+}
+\newtcblisting{pyout}[1][\theipythcntr]{
+  sharp corners,
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  colback=white,
+  listing only,
+  top=0pt,
+  bottom=0pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{mykey},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\setcounter{ipythcntr}{\value{ipythcntr}}Out#1:};
+  }
+  listing engine=listing,
+  listing options={
+      aboveskip=1pt,
+      belowskip=1pt,
+      basicstyle=\footnotesize\ttfamily,
+      language=Python,
+      keywordstyle=\color{mykey},
+      showstringspaces=false,
+      stringstyle=\color{mygreen}
+    },
+}
+
+
+
+
+
+\newcommand{\note}[1]{\textcolor{red}{#1}} % show notes in red
+\renewcommand{\note}[1]{} % don't display notes
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+
+  
+\section{Preliminaries}
+\begin{itemize}
+\itemsep0pt
+\item Problem set 02 is due on Friday at noon.
+\item Problem set 02 includes some ``time permitting'' problems.  If your time spent on the problem set reaches 8 hours in the week then you are encouraged to skip these problems.  If you are not in that situation, you are expected to complete the problems.
+\item There will be a skill check in class during Class 06.  The problem info is below.
+\end{itemize}
+
+
+
+\noindent\textbf{Big picture}
+
+Using linear least squares data fitting leads to a matrix equation.  Once that is set up, we can construct the normal equations or can use matrix decomposition to solve.
+
+Today: solving via $QR$ decomposition.
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+\noindent \textbf{Skill check practice}
+\begin{questions}
+\item Given $A\mathbf{c} = \mathbf{y}$, with the system overdetermined, construct the normal equations for this system.
+
+Let $A = \left[\begin{array}{r r}
+1 & 3 \\
+-2 & 1 \\
+0 & 4
+\end{array}\right]$ and $\mathbf{y} =  \left[\begin{array}{r}
+4 \\ 2 \\ 5 \end{array}\right]$.  
+
+Complete the matrix multiplications.
+\end{questions}
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+\begin{questions}
+\item The normal equations are $A^TA\overline{\mathbf{c}} = A^T\mathbf{y}$.  The solution, $\overline{\mathbf{c}}$, will be the closest solution to the original system under a least-squares error measurement.
+
+The equations are
+
+\[\left[\begin{array}{c c c}
+1 & -2 & 0 \\
+3 & 1 & 4
+\end{array}\right]\left[\begin{array}{r r}
+1 & 3 \\
+-2 & 1 \\
+0 & 4
+\end{array}\right] \overline{\mathbf{c}}= \left[\begin{array}{c c c}
+1 & -2 & 0 \\
+3 & 1 & 4
+\end{array}\right] \left[\begin{array}{ r}
+4 \\ 2 \\ 5\end{array}\right]\]
+
+Multiplying we have
+
+\[\left[\begin{array}{c c}
+5 & 1 \\
+1 & 26
+\end{array}\right]\overline{\mathbf{c}}= \left[\begin{array}{ r}
+0 \\ 34\end{array}\right]\]
+
+\end{questions}
+
+\section{Solving the least squares problem}
+
+\subsection{Normal equations}
+
+
+\subsection{QR decomposition}
+
+
+
+Let $A = QR$ where $R$ is square and $Q$ is not (reduced $QR$).
+
+\begin{enumerate}
+\itemsep60pt
+  \item  Given the columns of $Q$, $\mathbf{q}_j$, are orthonormal, what is $\mathbf{q}_j\cdot \mathbf{q}_j$?
+    \item  Given the columns of $Q$, $\mathbf{q}_j$, are orthonormal, what is $\mathbf{q}_j\cdot \mathbf{q}_i$ for $j\neq i$?
+    \item Notice that $\mathbf{q}_j\cdot \mathbf{q}_i = \mathbf{q}_j^T\mathbf{q}_i$.  Find $Q^TQ$.
+    \item Using $A = QR$ and your result for $Q^TQ$, simplify $Q^TA\mathbf{c} = Q^T \mathbf{y}$.
+
+\item $\mathbf{q}_i \in \mathbb{R}^m$ and $\mathbf{y}\in\mathbb{R}^m$.  
+\begin{parts}
+\itemsep40pt
+\item Is it guaranteed that $\mathbf{y} \in \text{Span}\{\mathbf{q}_1, ..., \mathbf{q}_n\}$?  Explain your thinking.
+\item Does $\mathbf{y} = (\mathbf{y}\cdot\mathbf{q}_1) \mathbf{q}_1 + ... + (\mathbf{y}\cdot\mathbf{q}_n) \mathbf{q}_n$?
+
+\item Consider $Q^T\mathbf{y} = \left[\begin{array}{c} \mathbf{q}_1^T\mathbf{y} \\ \vdots \\ \mathbf{q}_n^T\mathbf{y}\end{array}\right]$.  What are the dimensions of this vector?  What information does this encode?
+\end{parts}
+    
+    \item Let $A =\left[ \begin{array}{r r} 5 & 9 \\ 1 & 7 \\ -3 & -5 \\ 1 & 5\end{array}\right]$.  $Q =\frac{1}{6}\left[ \begin{array}{r r} 5 & -1 \\ 1 & 5 \\ -3 & 1 \\ 1 & 3\end{array}\right]$.  Find $R$.
+    
+    \item $R$ is upper triangular so $R\overline{\mathbf{c}} = Q^T\mathbf{y}$ can be solved by back substitution.  For $\mathbf{y} = \left[\begin{array}{r} -4 \\ -6 \\ 2 \\ 4  \end{array}\right]$, find $Q^T\mathbf{y}$ and use back substitution to find $\overline{\mathbf{c}}$.
+\end{enumerate}
+\vspace{2in}
+
+
+
+\begin{tcolorbox}
+    $QR$ factorization is a solution method that avoids forming the normal equations.
+\end{tcolorbox}
+
+\subsection{Cholesky factorization}
+
+
+\begin{enumerate}[resume]
+\item Let $M = A^TA$.  A square matrix $B$ is symmetric if $B = B^T$.  Show $M$ is a symmetric matrix.
+
+\emph{Note that $(AB)^T = B^TA^T$.}
+
+\end{enumerate}
+
+\vspace{0.8in}
+
+
+
+\begin{enumerate}[resume]
+\item Let $M = A^TA$. Consider $\mathbf{x}^TM\mathbf{x}$.  Show that $\mathbf{x}^TM\mathbf{x} = \Vert A\mathbf{x}\Vert_2^2$.  
+
+Is $M$ positive definite?
+\end{enumerate}
+\vspace{0.8in}
+
+
+A Cholesky decomposition allows us to write $A^TA = LL^T$ where $L$ is lower triangular and $L^T$ is upper triangular.  
+
+
+\begin{enumerate}[resume]
+\item (Lay 2.5 Q1) Let $A = \left[\begin{array}{r r r}
+1 & 0 & 0 \\
+-1 & 1 & 0 \\
+2 & -1 & 1
+\end{array}\right]
+\left[\begin{array}{r r r}
+1 & -1 & 2 \\
+0 & 1 & -1 \\
+0 & 0 & 1
+\end{array}\right] = LL^T$ and $A^T\mathbf{y} = \left[\begin{array}{r} 3 \\ -2\\ 6\end{array}\right]$. 
+
+$L$ is a lower triangular matrix and $L^T$ is an upper triangular one.  
+\begin{parts}
+\itemsep60pt
+\item Solve $L\overline{\mathbf{c}} = A^T\mathbf{y}$ for $\mathbf{x}$.  This is $\left[\begin{array}{r r r}
+1 & 0 & 0 \\
+-1 & 1 & 0 \\
+2 & -1 & 1
+\end{array}\right]\mathbf{x} = \left[\begin{array}{r} 3 \\ -2\\ 6\end{array}\right]$
+\item Solve $L^T\overline{\mathbf{c}} = \mathbf{x}$.
+
+\end{parts}
+\end{enumerate}
+\vspace{1in}
+
+
+
+\section{Computing}
+
+\subsection{Why have multiple methods?}
+
+\subsection{Error}
+
+Use example 4.5 from \S 4.1 of Sauer.  Let $x_1 = 2.0, x_2 = 2.2, ..., x_{11} = 4.0$ be equally spaced points.  Set $y_i = 1+x_i + x_i^2+...+x_i^7$.
+
+The coefficient matrix $A$ is called a Van der Monde matrix.
+
+We have $A\mathbf{c} = \mathbf{y}$ and we know $\mathbf{c} = [1 1 1 1 1 1 1 1]^T$
+
+\begin{pyin}
+import numpy as np
+from scipy import linalg
+import timeit
+\end{pyin}
+
+\begin{pyin}
+rows = 8
+c = np.ones(rows)
+x = np.arange(2,4.1,0.2)
+A = np.vander(x,rows)
+y = np.matmul(A,c)
+print(np.linalg.cond(A.T@A))
+\end{pyin}
+
+\begin{pyout}
+2.8888381436329173e+19
+\end{pyout}
+
+\begin{enumerate}[resume]
+
+\item There are four slightly different ways of solving the least squares problem in the code below.
+
+\begin{itemize}
+\itemsep40pt
+    \item Identify which of (a), (b), (c), (d) use the normal equations.
+    \item Identify which use $QR$.
+    \item What is the difference between the two versions of $QR$?  Which is faster?
+    \item Which methods give solutions that are closer to correct?  Further from correct?  About how many digits are correct for each method?
+\end{itemize}
+
+\begin{parts}
+
+\item 
+\begin{pyin}
+\## 8.83 microseconds
+A2 = A.T @ A
+y2 = A.T @ y
+ch, low = linalg.cho_factor(A2)
+c_over = linalg.cho_solve((ch, low), y2)
+print("coefficients:", [c for c in c_over])
+\end{pyin}
+\begin{pyout}
+coefficients: [1.33203125, -3.8125, 26.0, -76.0, 
+176.0,-256.0, 224.0, -92.0]
+\end{pyout}
+
+
+\item 
+\begin{pyin}
+\## 17.9 microseconds
+Q, R = np.linalg.qr(A, mode='reduced')
+Q_T = np.transpose(Q)
+R_inv = np.linalg.inv(R)
+product1 = np.dot(R_inv,Q_T)
+c_over = np.dot(product1,y)
+print("coefficients:", c_over)
+\end{pyin}
+\begin{pyout}
+coefficients: [1.         1.         1.         0.99999999 1.00000012 0.99999991
+ 1.00000015 0.99999994]
+\end{pyout}
+
+
+\item 
+\begin{pyin}
+\## 8.62 microseconds
+A2 = A.T @ A
+y2 = A.T @ y
+c_over = np.linalg.inv(A2)@(y2)
+print("coefficients:", c_over)
+\end{pyin}
+\begin{pyout}
+coefficients: [   1.33203125   -3.8125       26.          -76.          176.
+ -256.          224.          -92.        ]
+\end{pyout}
+
+
+\item 
+\begin{pyin}
+\## 12.6 microseconds
+Q, R = np.linalg.qr(A, mode='reduced')
+Q_T = np.transpose(Q)
+product1 = np.dot(Q_T,y)
+# default for solve_triangular is an upper triangular
+c_over = linalg.solve_triangular(R, product1)
+print("coefficients:", [c for c in c_over])
+\end{pyin}
+\begin{pyout}
+coefficients: [1.000000000018532, 0.9999999996288799, 
+1.0000000031435226, 0.9999999854257074, 1.0000000398546254,
+0.9999999359076287, 1.000000055899682, 0.9999999797170683]
+\end{pyout}
+\end{parts}
+
+\end{enumerate}
+
+
+
+\end{document}

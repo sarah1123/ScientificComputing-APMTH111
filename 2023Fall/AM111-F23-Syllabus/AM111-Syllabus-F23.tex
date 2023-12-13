@@ -1,0 +1,399 @@
+\documentclass[12pt,letterpaper]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=1in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\definecolor{c01}{HTML}{FFBBDD}
+\header{AM 111 Syllabus }{Introduction to Scientific Computing}{p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} 
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{syllabus.bib}
+
+%\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
+\usepackage{sectsty}  % Make section fonts 12 point
+% make a task list:
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+% Adds a vertical column separator.
+\setlength{\columnseprule}{1pt}
+\def\columnseprulecolor{\color{black}}
+
+\sectionfont{\fontsize{12}{15}\selectfont}
+\usepackage{tcolorbox} % Nice boxes
+
+\begin{document}
+\pdfpageheight 11in 
+\pdfpagewidth 8.5in
+\begin{center}
+    Tuesday, Thursday 10:30-11:45am ET \\
+    Meetings in Pierce 301 \\ 
+\end{center}
+
+\vspace{0.5cm}
+
+\hrule
+\vspace{0.5cm}
+
+\noindent \textbf{Instructor:} Sarah Iams, siams+am111@g.harvard.edu \\
+\textbf{Office:} 316 Pierce Hall (at the side of Pierce near MD) \\
+\textbf{Phone:} 617-495-5935 (I check my office voicemail regularly) \\
+\textbf{Contact:} Message me via Ed or email\\
+\textbf{Office hours:} To be scheduled.  Office hours will be scheduled within 9am-5pm on weekdays.\\
+\textbf{Course Team:} Elle Weeks, elleweeks@g.harvard.edu.  David Bombara, davidbombara@g.harvard.edu
+
+
+\vspace{0.5cm}
+
+\hrule
+\vspace{0.5cm}
+
+\noindent \textbf{Prerequisites}.  Multivariable calculus and linear algebra.  Exposure to differential equations at the level of Math 1b + Math 21b.  Basic experience with programming (CS 32, AM 10, CS 50, or equivalent).
+\vspace{0.1cm}
+
+
+
+
+\noindent \textbf{Other courses to consider}. AM 205: a more advanced course with similar themes.  CS 107: focused on developing software for scientific computing/data science
+
+
+\vspace{0.5cm}
+
+\hrule
+\vspace{0.5cm}
+
+\noindent \textbf{What will you gain from this course?}
+
+
+\begin{itemize}
+\setlength\itemsep{0.1em}
+    \item We will study algorithms for tackling a variety of math problems via computational methods.  This will reinforce prior mathematical knowledge while exposing you to algorithms and methods used in this area of math.
+    \item Using computational tools to approach problems in the course will provide additional exposure to, and practice with, computer programming.
+    \item Explicating your ideas for your peers, advocating for your own understanding, writing solutions to problem sets, developing your final project, and writing a project report contribute to the development of collaboration and communication skills within a technical context.
+    \item This course will contribute to your knowledge of the discipline of mathematics, including your understanding of the power of mathematics, computation, and approximation.
+    \item Learning to learn the material in the course creates an opportunity to develop new skills, as needed, to progress towards mastery of the material, and to engage in mathematical inquiry.
+\end{itemize}
+\textbf{Learning objectives:} \\
+During the semester you will be asked to
+\begin{enumerate}
+\setlength\itemsep{0.1em}
+\item describe how numerical methods are used to approximate solutions (solving problems that involve continuous numbers on computers that represent numbers discretely).
+\item analyze the approximations used in these methods, including tradeoffs between computation time and accuracy.
+%\item justify the use of these methods as a valuable way to approach problems
+\item visualize functions, implement algorithms, and find numerical solutions using Python
+\item explore a computational method, or a course-related topic of interest via a final project
+\item communicate mathematical reasoning in an organized, clear, and detailed way
+\end{enumerate}
+
+\noindent \emph{Some learning objectives are sourced from Prof. Veronica Ciocanel's Math 361S course at Duke University.}
+
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Topic list:} 
+\begin{itemize}
+\itemsep0pt
+    \item introduction to math in computers
+    \item least squares model fitting / linear algebra
+    \item root finding / nonlinear equations
+    \item interpolation
+    \item numerical differentiation
+    \item numerical integration
+    \item ordinary differential equations
+    \item introduction to neural nets
+    \item finding eigenvalues (if time permits)
+\end{itemize}
+
+
+%\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Course Materials:} 
+\begin{itemize}
+\setlength\itemsep{0.08em}
+% \item Information about all of the materials related to the course, including this syllabus, can be accessed via the course \textbf{Canvas site}.
+\item Course \textbf{text}: Readings will be assigned from \fullcite{sauer2018numerical}.  The text is on reserve at the library (where you can access it to scan or photocopy sections of interest).  It can also be borrowed via BorrowDirect, purchased at the Coop, or from secondhand sellers online.  Any edition of the text will be sufficient for the course.
+
+Other texts you might find useful to consult include
+\begin{itemize}
+\itemsep0pt
+    \item \fullcite{greenbaum2012numerical}
+    \item \fullcite{heath2018scientific}
+\end{itemize}
+
+These are available via library reserves (but are a shared resource between all members of the course) and can be borrowed from the library via BorrowDirect/Interlibrary Loan.
+
+\item A calculator app that can perform basic operations is helpful to have.  Consider downloading Desmos to a phone or tablet for graphing and simple calculations.
+
+\item Access Python via the ``FAS On Demand'' link in the menu on the AM 111 Canvas site.  You can use Google Colab or a local installation on your own computer if you prefer.
+\end{itemize}
+%\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Course Components}
+
+\begin{itemize}
+\itemsep0pt
+    \item Pre-class preparation:  There will be pre-class readings due most Tuesdays before the Tuesday class meeting.
+    \item Skill checks: Complete a skill check during each class meeting to support you in building factual knowledge and procedural skills.  There is one retake for each skill check.  (Retakes also occur during class).
+    \item Problem sets: Eight or nine weekly problem sets will be posted on our course website and are due on Fridays at noon.
+    \item Active participation:  course meetings include collaborative activities.
+    \item Quizzes: there will be two quizzes, each accompanied by a revision assignment. 
+    \item Final project: 
+    \begin{itemize}
+    \itemsep0pt
+        \item topic: investigation of a numerical method not discussed in class, or application of numerical methods to a topic of interest
+        \item components: project proposal, project timeline, project work logs, progress presentation, draft report, final report
+        \item The project will be completed in teams but will be assessed based on individual deliverables.
+    \end{itemize}
+\end{itemize}
+
+%\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Participation}
+
+I expect you to be present at course meetings, to participate in discussions and group work, and to make contributions that forward the learning of our whole class community. If your participation falls below acceptable standards (either through absence, silence, or counterproductive activity),  reserve the right to reduce your final course grade.  
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Inclusion.}
+
+This class has participatory components, and different students bring different perspectives, experiences, areas of expertise, and mathematical and subject area backgrounds.  Every voice in our course community is important.  I ask you to work to purposefully maintain a respectful environment during all interactions with your classmates.
+
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Course Accessibility}
+
+I am committed to promoting your success in this course.  If you have particular circumstances that might impact your work in this class, please contact me early in the term so that we can work to adapt assignments to meet your needs, within the context of the course requirements.  Letters from the Accessible Education Office may be needed for this process.
+
+
+% \vspace{0.5cm}
+% \hrule
+% \vspace{0.5cm}
+
+% \noindent\textbf{Collaborative Learning and Cooperation.}
+
+% Our course will often be a collaborative learning environment.  As a member of a collaborative team, you are responsible not only for your own learning, but for the learning of the other members of your team.
+
+% \begin{itemize}
+% \itemsep0pt
+% \item Be prepared. Prior to meeting, do the readings, watch the lectures, and think about the problems.
+% \item Contribute to assignment solutions.
+% \item Listen carefully with respect to each other.
+% \item Ask for help when you need it.
+% \item Give help when it is requested.
+% \item Criticize ideas, not people. Be tolerant, respectful, and caring.
+% \item Never agree to something you don't understand when working in a group.
+% \item Periodically during the semester, you will complete an evaluation of your and your teammates’ participation.
+% \end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Assessment Schedule.}
+Our course has two quizzes and a final project.  The dates for these are:
+\begin{itemize}
+\itemsep0pt
+\item Quiz:	Thursday Oct 12th
+\item Quiz:	Thursday Nov 30th.
+\item Final Project Deadline: Dec 12th at noon.  The final deliverable does not require you to be on campus after the last day of classes.
+\end{itemize}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Late Work Policy.}  
+
+Each problem sets can be submitted up to 8 hours late without penalty.  In addition, all students have access to a late day of up to 24 hours for use on up to two of the problem sets.
+
+Other late work may be accepted by prior arrangement in exceptional circumstances.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Generative Artificial Intelligence Policy.}  
+
+We will set a policy for the extent of generative AI tool use together early in the semester.
+
+This course has a citation policy for the use of AI tools on problem sets and the final project.  If AI tools are used, the assignment needs to include an appendix acknowledging their use. The appendix has three components: a transcript of the exchange (if available) or a detailed description (if unavailable); highlighting of the relevant part of the exchange; an explanation of how and why the generative tool was used.
+
+\noindent\emph{This policy is informed work at \href{https://www.bu.edu/cds-faculty/2023/03/28/academic-unit-at-bu-adopts-guidelines-for-use-of-generative-ai/}{Boston University}}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Course Grade.}
+
+\noindent The standards for different grade categories are below.
+\vspace{0.2cm}
+
+
+\begin{tabular}{p{5cm}|c| c|c|c}
+%\hline
+  Course component & A  & B+, A- & B-, B & C-, C, C+ \\
+  \hline\hline
+   Skill checks & $\geq90\%$ sat & $\geq75$\% sat & $\geq60$\% sat & $\geq40$\% sat \\
+   Problem sets (\% complete) & $\geq 95$\% & $\geq 80$\%  & $\geq 70$\%  & $\geq 50$\%  \\
+   Quiz 1 & $\geq 75$\% & $\geq 60$\% & $\geq 50$\% & $\geq 40$\% \\
+   Quiz 2 & $\geq 75$\% & $\geq 65$\% & $\geq 60$\% & $\geq 50$\% \\
+   Quiz revisions & \multicolumn{2}{c|}{satisfactory} & \multicolumn{2}{c}{complete} \\
+   Pre-class & \multicolumn{2}{c|}{complete + $\geq 80$\% on time} & \multicolumn{2}{c}{$\geq60$\% complete + $\geq 50$\% on time} \\ 
+   In-class work & \multicolumn{4}{c}{satisfactory participation} \\
+   Final project & \multicolumn{4}{c}{satisfactory work} \\
+   
+%   \hline
+\end{tabular}
+\vspace{0.2cm}
+
+\noindent When there is more than one grade in the category, the highest grade will be awarded when the student's work falls into the categories above on all but one metric.
+\vspace{0.2cm}
+
+\noindent For your reference, the course activities are listed below:
+
+\begin{itemize}
+\itemsep0pt
+\item Skill Checks ($\approx 20$ skill checks, each with one retake)
+\item Problem sets (including reflection questions)
+\item Preclass work (readings, discussion posts, and reflections)
+\item In-class work 
+\item Quizzes (and revision assignments)	
+\item Final Project	(including project logs, a progress presentation, a final report, and a team evaluation)
+\end{itemize}
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+
+
+\noindent\textbf{Academic Integrity.}
+
+I support and adhere to the principles of academic integrity described in Harvard’s honor code.  “We - the academic community of Harvard College, including the faculty and students - view integrity as the basis for intellectual discovery, artistic creation, independent scholarship, and meaningful collaboration. We thus hold honesty in the representation of our work and in our interactions with teachers, advisers, peers, and students - as the foundation of our community.”  
+
+At its core is an expectation that you will not take unfair advantage of your fellow community members. 
+I will assume your trustworthiness in interactions with me, and with your fellow students.  In the interest of fairness of those who adhere to this code of conduct, if a violation of this trust is discovered, it will be reported to the Honor Council.
+Your work for this class should be your own.  You may not consult outside solutions, read the completed solutions of your classmates, or copy your solutions from common work.
+
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent\textbf{Resources.}
+
+Using additional resources at Harvard can be important to your academic success. 
+\begin{itemize}
+    \item The Accessible Education Office offers services related to course accessibility, including around mental health (this can include accommodations for test anxiety), illness, or unexpected disruptions to the semester.
+    \item The Academic Resource Center (ARC) offers access to academic coaching and other academic development resources.
+    \item HU Counseling and Mental Health (CAMS) is a resource for stress, anxiety, procrastination, and other challenges.  
+    \item The Office of Sexual Assault Prevention and Response and student groups such as Response or Room 13 offer information and support around sexual or relationship violence.  
+\end{itemize}  
+If it would be helpful to you, we are available to support you in your efforts to access campus resources.  
+
+\printbibliography[title={Course References}]
+\eject
+
+
+% Schedule of class meetings.  The exact timing of topics, particularly for the last third of the semester, is subject to revision.
+
+% \vspace{0.2cm}
+
+% 1d maps: intro
+
+% \begin{tabular}{| l | l | p{8cm} | l  |}
+% \hline
+% Date & Due &  Class & Text \\
+% \hline
+% \hline
+%   Mon 01/24 & & C01: Dynamical system, maps and flows & \S1 \\
+%   Wed 01/26 & pre-class 02 &  C02: 1d flows: phase portraits, stability  & \S2.0-6 \\
+%   Fri 01/28  &  pre-class 03 &  C03: 1d flows: bifurcations & \S3.0-4 \\
+%   \hline
+%   Mon 01/31  & pre-class 04 & C04: dimension, multiple parameters & \S3.5-6 \\
+%   Wed 02/02 & pre-class 05 & C05:  flow on a circle  & \S4.0-3, 4.5  \\
+%   Fri 02/04 & PSet 01 & no class & \\
+%     \hline
+%     Mon 02/07 & pre-class 06 & C06:   \\
+%   Wed 02/09  & pre-class 06 &  C06:  \\
+%   Fri 02/11 & PSet 02 & C07: cusp catastrophe example& \S3.7 \\
+%       \hline
+%     Mon 02/14 & pre-class 08 & C08: 2d linear flows: phase portraits & \S5.0-2 \\
+%   Wed 02/16  & pre-class 09 &  C09: 2d nonlinear flows  & \S6.0-3 \\
+%   Fri 02/18 & PSet 03 & C10: practice with 2d systems & \S5.2-6.3 \\
+%         \hline
+%     Mon 02/21 &  & no class & \\
+%      &  & \textbf{C11: Quiz} on Chapters 2-4 + Map intro & \\
+%   Wed 02/23  & pre-class 12 &  C12: Population mass action models & \S6.4 \\
+%   Fri 02/25 & PSet 04& C13: Conservative systems & \S6.5 \\
+%           \hline
+%     Mon 02/28 & pre-class 14 & C14: Poincar\'e index & \S6.8 \\
+%   Wed 03/02  & pre-class 15 &  C15: isolated closed trajectories  & \S7.0-3 \\
+%   Fri 03/04 & PSet 05 & no class & \\
+%   & PSet 05 & C16: pendulum + two oscillators & \S6.7, 8.6 \\
+%             \hline
+%   Mon 03/07  & pre-class 17 &  C17: van der Pol oscillator & \S7.5-6 \\            
+%   Wed 03/09  & pre-class 17 &  C17: van der Pol oscillator & \S7.5-6 \\
+%   Fri 03/11 & PSet 06 & no class & \\
+%   & PSet 06 & C18: Poincar\'e maps & \S8.7 \\
+%             \hline
+%  Mon 03/14 &  & no class & \\
+%  Wed 03/16 &  & no class & \\
+%  Fri 03/18 &  & no class & \\
+  
+%             \hline
+%     Mon 03/21 &  & \textbf{C19: Quiz} on 2.0-7.3 &  \\
+%   Wed 03/23  & pre-class 20 &  C20: 2d flows: Bifurcations & \S8.0-3 \\
+%   Fri 03/25 & PSet 07 & C21: bifurcation with a limit cycle (Hopf) and oscillation & \S8.2-3 \\
+% \hline
+% Mon 03/28 & pre-class 22 & C22: global bifurcations of limit cycles & \S8.4 \\
+% Wed 03/30 & pre-class 23 & C23: introduction to Lorenz '63 model & \S9.2-3 \\
+% Fri 04/01 & PSet 08 & C24: analyzing Lorenz '63, Lorenz map & \S9.4 \\
+% \hline
+% Mon 04/04 & ? & C25: Logistic map & \S10.2-3 \\
+% Wed 04/06 & ? & C26: Logistic map orbit diagram & \S10.3-4 \\
+% Fri 04/08 & System analysis & C27: more maps & \S \\
+% \hline
+% Mon 04/11 & pre-class 28 & C28: Geometry of an attractor & \S11.0-3 \\
+% Wed 04/13 & pre-class 29 & C29: Universal aspects of period doubling & \S10.6-7 \\
+% Fri 04/15 & PSet 09, Work log & C30: Peer feedback (projects) & \S \\
+% \hline
+% Mon 04/18 & & C31: Project presentations & \S \\
+% Wed 04/20 & & C32: Project presentations & \S \\
+% Fri 04/22 & Work log & C33: back to Lorenz 63 + Rossler & \S12.3 \\
+% \hline
+% Mon 04/25 & pre-class 34 & C34: H\'enon map & \S \\
+% Wed 04/27 & & C35: pendulum data & \S \\
+% %Fri 12/02 & & C36: more data & \S \\
+% %Fri 12/04 & Work log & & \\
+% \hline
+% \end{tabular}
+
+
+\end{document}

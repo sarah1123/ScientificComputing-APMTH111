@@ -1,0 +1,205 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\pagestyle{head}
+\header{AM 111 Class 07}{}{Solving equations, p.\thepage}
+\runningheadrule
+\headrule
+\usepackage{siunitx}
+\usepackage{graphicx} % more modern
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\def\mbf{\mathbf}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits underneath in displays
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent 
+
+\section*{Preliminaries}
+
+\begin{itemize}
+\itemsep0pt
+\item Problem set 03 is due on Friday at noon.
+\item Problem set 03 includes some ``time permitting'' problems.  If your total time spent on the problem set reaches 8 hours in the week then you are encouraged to skip problems.  If you are not in that situation, you are expected to complete the problems.
+\item There will be a skill check in class during Class 08.  The problem info is below.
+\item Find all OH on Canvas.
+\end{itemize}
+
+
+
+\noindent\textbf{Big picture}
+
+Today: Algorithms for approximating solutions to nonlinear equations.
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check practice}
+\begin{questions}
+\item Let $f(x) = x^2 -x -1$ and $x_0 = 0$.  Apply one step of Newton's method.
+\end{questions}
+
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+
+\noindent \textbf{Skill check solution}
+\begin{questions}
+\item $x_1 = x_0 - f(x_0)/f'(x_0)$.  
+
+$f'(x) = 2x - 1$.
+
+$f(0) = -1$, $f'(0) = -1$.  $x_1 = 0 - -1/(-1) = -1$
+
+\end{questions}
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+\noindent\textbf{Teams}
+\begin{multicols}{2}
+1. Zhecheng, Kinara, Emma
+
+2. Ada, Trey, Paul
+
+3. Sara, Davin, Isha
+
+4. Kyumin, Brooke
+\end{multicols}
+
+\section*{Root finding}
+\subsection*{Introduction}
+
+
+\subsection*{The bisection method}
+
+\begin{enumerate}
+\itemsep50pt
+\item Find the roots of $x^2-x-6$ exactly (i.e. using tools you already know for solving quadratic equations / factoring etc)
+\item Use the bisection method to produce successive approximations, $x_0, x_1, ...$ to a root of $x^2-x-6$ in $[0,8]$.
+
+\end{enumerate}
+\vspace{1in}
+
+\begin{enumerate}[resume]
+    \item How many steps would be needed to find the root of $x^2-x-6$ in the interval $[0,10]$ to guarantee accuracy to $3$ decimal places?  
+    
+
+
+\emph{Consider a solution correct to within $q$ decimal places if the error $\vert x_i - x^*\vert < 0.5*10^{-q}$}
+\vspace{1in}
+
+
+    \item Let $e_i = x_i - x^*$.  Assuming $\vert e_i \vert \approx\dfrac{b-a}{2^{i+1}}$, find an approximation for $\dfrac{ \vert e_{i+1} \vert}{ \vert e_i \vert}.$
+        \vspace{1in}
+        
+    \item When $\lim\limits_{i\rightarrow\infty} \dfrac{ \vert e_{i+1} \vert}{ \vert e_i \vert} = C$ with $0<C<1$, the convergence is said to be linear (order 1) with rate $C$.  
+    
+    \emph{The error is going down by a constant factor at each step.}
+    
+    When $C = 0$ it is superlinear (faster than linear) and when $C = 1$ it is sublinear (slower than linear).  
+
+Is the order of convergence linear for the bisection method?  If so, what is the convergence rate?
+
+
+\vspace{0.5in}
+
+\end{enumerate}
+
+
+\subsection*{Important considerations}
+
+\begin{enumerate}[resume]
+\itemsep0pt
+    \item Is the bisection method guaranteed to converge?  
+\end{enumerate}
+\vspace{0.5in}
+
+\subsection*{Iterated methods}
+
+
+\begin{enumerate}[resume]
+\itemsep0pt
+    \item Let $g(x) = x - \frac{1}{10}(x^2-x-6)$.
+    \begin{parts}
+    \item Show that $g(x) = x$ at the root of $f(x) = x^2-x-6$.
+    \vspace{1in}
+    
+    \item Choose a starting point of $x_0 = 0$ or $x_0 = 8$.  Use a calculator, and iterate the map to produce the sequence $x_0, x_1, ...$
+    \vspace{1in}
+    
+    \item Use a Taylor expansion to first order, and simplify, to provide an approximation for $\dfrac{\vert \Delta x_{i+1}\vert}{\vert \Delta x_{i}\vert}$, where $x_{i+1} = x^* + \Delta x_{i+1}$.  Use the $g(x)$ above and let $x^* =3$.
+    
+    
+    \[x_{i+1} = x^* + \Delta x_{i+1}= g(x_{i}) \approx \text{Taylor expansion of } g(x^*+\Delta x_{i}) \text{ about }x^*\]
+\vspace{1in}
+
+\part Let $g(x) = x - a(x^2-x-6)$.  Assuming $X^* = 3$, for what range of $a$ is $\dfrac{\vert \Delta x_{i+1}\vert}{\vert \Delta x_{i}\vert} < 1$?  If possible, find a value of $a$ so that it is $0$.
+\vspace{0.5in}
+
+    \end{parts}
+\end{enumerate}
+\subsection*{Newton's method}
+
+\begin{enumerate}[resume]
+    \item (Sauer \S1.4 1a) Apply two steps of Newton's method with initial guess $x_0 = 0$ for $f(x) = x^3+x-2$
+    \vspace{1in}
+    
+    \item (Heath \S 5.4) Match the error sequence with convergence information.
+    
+    \begin{enumerate}
+    \item quadratic convergence
+    \item linear convergence with $C = 10^{-1}$
+    \item linear convergence with $C = 10^{-2}$
+    \item superlinear ($<$ quadratic)
+    \end{enumerate}
+    
+    \begin{enumerate}
+    \item[(i)] $10^{-2},10^{-4},10^{-6},10^{-8},...$
+    \item[(ii)] $10^{-2},10^{-4},10^{-8},10^{-16},...$
+    \item[(iii)] $10^{-2},10^{-4},10^{-7},10^{-12},...$
+    \item[(iv)] $10^{-2},10^{-3},10^{-4},10^{-5},...$
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Secant method}
+
+
+\subsection*{Summary}
+\begin{tabular}{p{0.3\linewidth} p{0.3\linewidth} p{0.3\linewidth}}
+bisection & Newton's & secant \\
+\hline
+always converges & may not converge & may not converge\\
+sign of $f$  & needs $f$ and $f'$ & just needs $f$ \\
+$f$ continuous & $f$ differentiable & $f$ continuous\\
+linear convergence & quadratic convergence & superlinear ($<$ quadratic) \\
+needs initial interval & one initial value& two initial values\\
+no higher-dim'l version & higher dim'l version & \\
+\end{tabular}
+
+\begin{enumerate}[resume=classQ]
+\item (Health \S5 5.24)
+
+List one advantage and one disadvantage of the secant method compared with Newton's method for solving a nonlinear equation in one dimension.
+\vspace{0.5in}
+
+\item (Heath \S5 5.32) 
+
+Think about how you might combine the idea of  a bracket around the solution from the bisection method with the secant method so that the method will still converge even if it starts far from a root.
+
+\emph{This is called a safeguarded method}
+
+\vspace{0.5in}
+\end{enumerate}
+\end{document}

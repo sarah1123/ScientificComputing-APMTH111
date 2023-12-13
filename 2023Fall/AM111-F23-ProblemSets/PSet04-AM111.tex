@@ -1,0 +1,243 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+%\newcommand{\mathbf}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 04}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Oct 6}}}\\at 12pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+\makeatletter
+\newcommand{\pyf}{%
+  \begingroup\catcode`_=12
+  \pyf@
+}
+\newcommand{\pyf@}[1]{\texttt{#1}\endgroup}
+\makeatother
+
+\newcommand{\note}[1]{\textcolor{red}{#1}} % show notes in red
+%\renewcommand{\note}[1]{} % don't display notes
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\begin{itemize}
+    \itemsep0pt
+    \item Find the \href{https://github.com/sarah1123/ScientificComputing-APMTH111/blob/main/2023Fall/PythonFiles/04_solvingnonlinear/ProblemSet04.ipynb}{ProblemSet04 Python template} via this link.
+    \item Use this python notebook for all programming work on the problem set.  Submit the notebook to the Python assignment on Gradescope.
+    \item Submit the other problems to the pdf assignment on Gradescope.
+    \item Late work: Problem sets are due at noon on Fridays.  They are accepted until 5pm for all students without penalty.  In addition, you have three 29-hour late days that allow you to submit until 5pm on Saturday.  You don't need to ask to use your late days, just keep track of them for yourself.
+\end{itemize}
+
+ 
+
+\begin{questions}
+\item (Greenbaum and Chartier \S 4.7 1)
+
+\begin{parts}
+\item Write down the equation for the tangent line to $y = f(x)$ at the point $x = p$.
+
+Then solve for the $x$-intercept of your line.  What formula have you derived, with what roles for $p$ and $x$?
+
+For $f(x) = \sin x$ and $p = \pi/4$, sketch the curve and the tangent line, and mark the $x$-intercept on your plot.
+
+\item Construct the equation of a line that intersects the curve $y = f(x)$ at $x = p$ and $x = q$.  Solve for the $x$-intercept of the line.  What formula have you derived, with what roles for $p$, $q$, and $x$?
+
+For $f(x) = \sin x$ and $p = \pi/4$, $q=0$, sketch the curve and the tangent line, and mark the $x$-intercept on your plot.
+
+\end{parts}
+
+\item (Sauer \S1.5 4) (approximation from limited data)
+
+A commercial fisher wants to set the net at a water depth where the temperature is 10 C. By dropping a line with a thermometer attached, she finds that the temperature is 8 C at a depth of 9 m, and 15 C at a depth of 5 m. Estimate the depth at which the temperature is 10 C.  Provide your reasoning and setup.
+
+\item  (Greenbaum and Chartier \S14.7 3) (reciprocals without division)
+
+Newton's method can be used to compute reciprocals, $1/R$, while avoiding division.  To compute $1/R$, let $f(x) = ? -R$.  
+
+\begin{parts}
+\item Find an $f(x)$ that works.
+\item Write down and simplify the Newton iteration based on this $f(x)$, $x_{k+1} = g(x_k)$.  Does the Newton iteration avoid division?
+
+\item Working by hand, compute the first few Newton iterates for approximating $1/3$ starting from $x_0 = 0.5$.
+
+\item Identify the set of starting values $x_0$ such that $\vert x_1 - x^*\vert < \vert x_0 - x^*\vert$ (i.e. the error decreases between the first and second step).
+
+Will Newton iteration converge to $1/3$ for all of the $x_0$ you've identified?  Provide a brief explanation.
+\end{parts}
+
+
+\item (Koumoutsakos et al Notebook 3.1). 
+
+You'll estimate $\sqrt{34}$ using Newton's method and compare your results with the secant method.
+\begin{parts}
+\item Construct a function $f(x)$ such that $f(x) = 0$ at the square-root of $34$.  $f(x) = x - \sqrt{34}$ is one such function.  Create an $f(x)$ that avoids using the $\sqrt{.}$ function within $f(x)$.
+
+Find $f'(x)$ for your function.
+
+\item In Python, define \pyf{f1(x)} to return $f(x)$ and \pyf{df1(x)} to return its derivative.  
+
+Plot the two functions (choosing an appropriate $x$ interval).
+
+\item Implement Newton's method in a function \pyf{newton(x0,f,df,tol=1e-15)} that takes in $x_0$, $f(x)$, $\frac{df}{dx}$ and a tolerance and returns an array $x_0, x_1, ..., x_k$ of approximations to the root.
+
+\item Run your Newton's method routine (with inputs $\pyf{(6,f1,df1,1e-15)}$) to estimate $\sqrt{34}$ until the accuracy reaches $10^{-15}$.  
+
+Make a plot in the $xy$-plane of $(x_k,f(x_k))$ for your successive estimates of the root.
+
+Also make a plot of $(k,x_k)$ to show your successive estimates.
+
+\item Write a new Python function \pyf{df_approx(x0,x1,f)} that creates an approximation to the slope $f'(x_0)$ based on the points $(x_0,f(x_0))$ and $(x_1,f(x_1))$.
+
+\item Write a new Python function \pyf{secant(x0,x1,f)} that implements the secant method.  Use it to estimate $\sqrt{34}$.
+
+
+Plot your results.
+
+\item Compare the results between your two methods.  How many steps does it take to reach similar accuracy?
+
+\item Make a numerical estimate of the order of convergence.  To do this, use the last value of your iterations as  your $x^*$, and let $e_k = x_k-x^*$.
+
+For both methods compute an estimate of the order $r$ for each step $k$. 
+
+\item How do your estimates of $r$ compare to the actual order for Newton's method?  How does $r$ compare between the methods?
+\end{parts}
+\item (Koumoutsakos et al Notebook 3.2 and \citep{burden2010numerical} \S10.2 12)
+
+For a single equation in one unknown, $f(x) = 0$, Newton's method is given by \[x_{k+1} = x_k - \frac{1}{f'(x_k)}f(x_k).\]
+
+For a system of equations and a vector of unknowns, $\mathbf{f}(\mathbf{x})= \mathbf{0}$, Newton's method can be given by
+\[\mathbf{x}_{k+1} = \mathbf{x}_k - \left[\text{D}\mathbf{f}\right]^{-1}\mathbf{f}(\mathbf{x}_k)\] where the inverse of the Jacobian matrix replaces $\frac{1}{f'(x_k)}$ from the 1D case.
+
+In practice, the matrix inversion is avoided:
+\[\left\{\begin{array}{c}
+\left[\text{D}\mathbf{f}\right]\mathbf{z}_k = \mathbf{f}(\mathbf{x}_k) \\
+\mathbf{x}_{k+1} = \mathbf{x}_k - \mathbf{z}_k
+\end{array}\right.\]
+
+The goal in this problem is to formulate and solve a system of nonlinear equations to estimate the size of the bridge-foundations such that, under a given load, the bridge will not sink more than a certain depth.
+
+According to \cite{burden2010numerical}, the amount of pressure, $p$, needed to sink a circular plate of radius $r$ a distance $d$ into soft soil (where there is a hard base of soil a distance $D>d$ below the surface) is approximated by $p = x_1 e^{x_2 r} + x_3 r$.  The constants $x_j$ depend on $d$ and soil properties.
+
+\begin{parts}
+\item 
+
+A plate of radius $0.1$ m requires a pressure of $100$ N/m$^2$ to sink $1$ m, while a plate of radius $0.2$ m requires a pressure of $120$ N/m$^2$ to sink the same distance, and a plate of radius $0.3$ m requires a pressure of $150$ N/m$^2$ to sink the distance.
+
+\emph{Note: these pressures are below the actual values by a couple of orders of magnitude but are chosen for ease of the problem.}
+
+Use these values to formulate the system of three equations with unknowns $x_1, x_2, x_3$ and find $[\text{D}\mathbf{f}]$, the Jacobian.
+\part In Python, create three functions: 
+\pyf{fbridge(x)}, \pyf{Dfbridge(x)}, and 
+
+\pyf{newton_multi(x0,f,Df,tol=1e-5)}.
+
+In \pyf{fbridge}, take in a vector of values $x_1,x_2,x_3$ and return $\mathbf{f}(\mathbf{x})$.
+
+In \pyf{Dfbridge}, take in a vector of values $x_1, x_2, x_3$ and return the Jacobian matrix evaluated at those values.
+
+In \pyf{newton_multi}, implement Newton's method for this problem.  Use \pyf{scipy.linalg.solve} to solve for $z_k$.
+
+Set a convergence tolerance for $\Vert \mathbf{x}_{k+1}-\mathbf{x}_k \Vert = \Vert \mathbf{z}_{k} \Vert < 10^{-5}.$
+
+
+\part Use your code to solve the system and find coefficients.
+
+You will find the coefficients in the pressure equation, $p = x_1e^{x_2 r} + x_3 r$ for sinking $1$ m in this soil
+
+\item Assume the foundations of your bridge need to each support a load of $50000$ N.
+
+Based on the coefficients you found, set up a nonlinear equation for identifying the radius of foundation that should prevent the bridge from sinking more than $1$ m.
+
+
+
+\emph{The load is $50000$ N.  The pressure is load per m$^2$.  Use the cross-sectional area of your foundation, $\pi r^2$, to convert from load to pressure.}
+
+\item Approximate a solution to your equation using either Newton's method or the secant method.
+
+\item Check your work solving for the radius graphically: plot the pressure due to a load of $50000$ N as a function of $r$.  Also plot the pressure to sink a circular plate $1$ m as a function of $r$.
+
+\emph{Include a legend labeling your two curves.}
+\end{parts}
+
+
+
+
+
+
+\item \emph{Time Permitting} (from Sauer) (root finding practice)
+\begin{parts}
+\item (\S1.5 computer 1) Use the secant method to approximate a solution to 
+
+(i) $x^3=2x+2$
+
+(ii) $e^x +\sin x=4$
+
+Try initial guesses of $x_0=1$ and $x_1=2$.
+
+\emph{Each equation has one root.}
+
+\item (\S1.4 computer 2) Use Newton's method to approximate the root to eight correct decimal places.
+
+(i) $x^5 + x = 1$
+
+(ii) $\ln x + x^2 = 3$
+
+\emph{Each equation has one real root.}
+
+\item (\S 1.1 computer 1) Use the bisection method to find the root to six correct decimal places.
+
+(i) $x^3 = 9$
+
+(ii) $\cos^2 x + 6 = x$
+\end{parts}
+
+
+\question Reflection
+\begin{parts}
+\item When you worked on the problem set where did you get stuck or become confused?
+\item What aspects of the course challenged you this week?  What did you do to address those challenges?  What topics/ideas/procedures do you not yet understand?
+\item What did you understand the best this week?  What, if anything, do you understand better this week than you did in the past?
+\item List the people that you worked with or consulted on the problem set problems.  This might include other students in the course, course instructors, or people who have previously taken the course.
+\item Below, indicate how much of your time for this class has been doing the following activities:
+	\begin{enumerate}
+	\item Working on the problem set (including time in Python)
+	\item Reviewing course materials, including the course textbooks
+	\item Working through supplementary materials
+	\item Going to office hours or lab
+	\item Other (please specify)
+	\end{enumerate}
+\item If you used chatGPT or other AI tools, attach that information as part of this question.
+\end{parts}
+\end{questions}
+
+\bibliographystyle{plain}
+\bibliography{references.bib}
+\end{document}

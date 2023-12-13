@@ -1,0 +1,330 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+%\newcommand{\mathbf}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 03}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Sept 29}}}\\at 12pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+\makeatletter
+\newcommand{\pyf}{%
+  \begingroup\catcode`_=12
+  \pyf@
+}
+\newcommand{\pyf@}[1]{\texttt{#1}\endgroup}
+\makeatother
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\begin{itemize}
+    \itemsep0pt
+    \item Find the \href{https://github.com/sarah1123/ScientificComputing-APMTH111/blob/main/2023Fall/PythonFiles/03_moreleastsquares/ProblemSet03.ipynb}{ProblemSet03 Python template} via this link.
+    \item Use this python notebook for all programming work on the problem set.  Submit the notebook to the PSet03 Python assignment on Gradescope.
+    \item Submit the other problems to the pdf assignment on Gradescope.
+    \item Late work: Problem sets are due at noon on Fridays.  They are accepted until 5pm for all students without penalty.  In addition, you have three 29-hour late days that allow you to submit until 5pm on Saturday.  You don't need to ask to use your late days, just keep track of them for yourself.
+\end{itemize}
+
+
+\begin{questions}
+\item (linear algebra) (from Lay)
+\begin{parts}
+\part (Lay \S 6.5 19)
+  
+  Let $A$ be an $m\times n$ matrix.  Show that $\text{Nul } A$ (the space of vectors, $\mathbf{x}$, such that $A\mathbf{x} = \mathbf{0}$) is equal to $\text{Nul } A^TA$.  To do this:
+    
+  \begin{subparts}
+  \item Show that if $A\mathbf{x} = \mathbf{0}$ then $A^TA\mathbf{x} = \mathbf{0}$.
+  \item Suppose that $A^TA\mathbf{x} = \mathbf{0}$.  Explain why $\mathbf{x}^TA^TA\mathbf{x} = \mathbf{0}$ and use this to show that $A\mathbf{x} = \mathbf{0}$.
+  \end{subparts}
+  
+  \part (Lay \S 6.5 22)
+  
+  Use the fact that $\text{Nul } A = \text{Nul } A^TA$ to show that $\text{rank } A^TA = \text{rank } A$.
+  
+  \emph{How many columns does $A^TA$ have?} 
+  
+\begin{tcolorbox}
+The \textbf{rank} of $A$ is the dimension of the column space of $A$.
+
+For an $n \times m$ matrix, $A$, the rank theorem or \textbf{rank-nullity theorem} states that $\text{rank } A + \text{dim Nul } A = m$.
+\end{tcolorbox}
+
+\item (Lay \S 6.5 23)
+
+Suppose $A$ is $m\times n$ with linearly independent columns and $\mathbf{y}\in\mathbb{R}^n$.  Let $A\mathbf{c} = \mathbf{y}$ be the equations for a least squares problem.  Use the normal equations to produce a formula for $\hat{\mathbf{y}}$, the projection of $\mathbf{y}$ onto $\text{Col }A$.  To do this, find $\overline{\mathbf{c}}$ first.
+
+
+Note: the formula will not require an orthogonal basis for $\text{Col }A$.
+
+
+\part (SVD decomposition) Let $A = \left[\begin{array}{r r}
+-3 & 1 \\
+1 & 3 \\
+0 & 2
+\end{array}\right]$.  Find the reduced SVD for $A$ via the following steps: Find $A^TA$ and its eigenvalues and eigenvectors.  Use those to construct $V =[\mathbf{v}_1 ... \mathbf{v}_n]$ and $S_1$.  Use the $\mathbf{v}_k$ to find the $\mathbf{u}_k$ and construct $U_1$.
+
+Check that $A = U_1S_1V^T$ for your decomposition.
+
+  \part (Lay \S 6.4 19)
+  
+  Suppose $A = QR$ where $Q$ is $m\times n$ and $R$ is $n\times n$.  Show that if the columns of $A$ are linearly independent, then $R$ must be invertible.
+  
+  To do this, consider the equation $R\mathbf{x} = \mathbf{0}$ and use the fact that $A = QR$.
+  
+  Specifically consider the set of $\mathbf{x}$ such that $R\mathbf{x} = \mathbf{0}$.
+
+  \emph{It may be helpful to revisit the invertible matrix theorem.}
+ % \emph{Two pages of Lay on the invertible matrix theorem are posted in the additional materials folder of the Files on Canvas.}
+
+\end{parts}
+\question (least squares facts) (from Heath)
+\begin{parts}
+\part (Heath \S 3 3.2)
+
+Mark the following statement true or false and provide a brief explanation
+
+Fitting a straight line to a set of data points is a linear least squares problem, whereas fitting a quadratic polynomial to the data is a nonlinear least squares problem
+
+\part (Heath \S 3 3.3)
+
+Mark the following statement true or false and provide a brief explanation
+
+At the solution to a linear least squares problem $A
+\mathbf{c} = \mathbf{y}$, the residual vector $\mathbf{e} = \mathbf{y}-A\overline{\mathbf{c}}$ is orthogonal to span$(A)$.
+
+\part (Heath \S 3 3.5)
+
+Mark the following statement true or false and provide a brief explanation
+
+In solving a linear least squares problem $A\mathbf{c} = \mathbf{y}$, if the vector $\mathbf{y}$ lies in span$(A)$, then the residual is $\mathbf{0}$.
+
+
+
+% \part (Heath \S 3 3.17)
+
+% Which of the following properties of an $m\times n$ matrix $A$ with $m>n$ indicate that the minimum residual solution of the least squares problem $A\mathbf{c}=\mathbf{y}$ is \emph{not} unique?
+
+% (i) The columns of $A$ are linearly dependent.
+
+% (ii) The rows of $A$ are linearly dependent.
+
+% (iii) The matrix $A^TA$ is singular.
+
+
+
+
+\end{parts}
+
+\question (conditioning) (Heath 3.13)
+
+\begin{parts}
+\item 
+Find the exact solution $\overline{\mathbf{c}}_\text{exact}$ to the linear least squares problem 
+\[\left[\begin{array}{c c c} 
+1 & 1& 1\\
+\epsilon & 0 & 0 \\
+ 0 & \epsilon &0 \\
+ 0 & 0 & \epsilon \\
+\end{array}\right]
+\left[\begin{array}{c} 
+c_1 \\ c_2 \\ c_3
+\end{array}\right] = \left[\begin{array}{c} 
+1 \\ 0 \\ 0 \\ 0
+\end{array}\right]\]
+
+as a function of $\epsilon$.
+
+\emph{Show your calculation steps.  Use symmetry to simplify the problem.}
+
+\item For your solution, work by hand to find $\hat{\mathbf{y}}_{\text{exact}} = A\overline{\mathbf{c}}_\text{exact}$ as a function of $\epsilon$.
+
+\item Create a function \pyf{c_exact(eps)} that takes in an $\epsilon$ value and returns the solution vector that you found in part (a).  For $\epsilon = 10^{-3}, 10^{-5},...,10^{-16}$ use your function to identify the values of $\epsilon$ for which the elements of $\overline{\mathbf{c}}_\text{exact}$ are $< 1/3$.
+
+
+\end{parts}
+
+You'll solve the least squares problem above using each of the following methods.
+
+\begin{parts}
+\setcounter{partno}{3}
+\item For the function templates given in the Python file, fill in the calculation steps for each of the following methods
+\begin{itemize}
+    \item normal equations and the matrix inverse
+    \item normal equations and the Cholesky factorization
+    \item $QR$ factorization via a built-in routine (use the reduced or economic mode)
+    \item $SVD$ factorization via a built-in routine (use the reduced or economic mode)
+\end{itemize}
+
+\emph{Code that can compute each of these was provided on handouts C05 and C06.}
+
+\item Write a function \pyf{compare_to_exact(eps_list, f_lst_sq)} that takes in an array of $\epsilon$ values and a function for solving least squares, and returns an array of values $\Vert A\overline{\mathbf{c}} - \hat{\mathbf{y}}_{\text{exact}}\Vert$ (one for each $\epsilon$), where $\overline{\mathbf{c}}$ is calculated using the \pyf{f_lst_sq} function.
+
+Note that $A, \overline{\mathbf{c}}, \hat{\mathbf{y}}_{\text{exact}}$ each depends on $\epsilon$.
+
+
+\item 
+Restricting yourself to a list of values of $\epsilon$ above where the elements of $\overline{\mathbf{c}}_\text{exact}$ were different from $1/3$, plot the log of the error vector (generated using \pyf{compare_to_exact}) vs the log of $\epsilon$.
+
+\item How did the error behave for each least squares solution method?  Compare how well the methods did.
+
+\end{parts}
+
+
+
+\question Find the HumpherysJarvisBYU-ACME-LabsVolume1.pdf in the Problem Sets folder in the Files on Canvas.
+
+In the Least Squares and Computing Eigenvalues section, find `Fitting a Circle' (p. 46).  Complete problem 4 (fitting an ellipse to data) by filling in the function \pyf{calculate_ellipse_parameters} in the problem set template.
+
+\texttt{circle.npy}, \texttt{ellipse.npy}, \texttt{housing.npy} (that last one included only in case you are curious) are available in the Problem Sets folder on Canvas
+
+
+
+
+
+
+
+% \question (Cleve Moler condition number example)
+
+% In a \href{https://blogs.mathworks.com/cleve/2017/07/17/what-is-the-condition-number-of-a-matrix/}{blog post} on condition number, \href{https://en.wikipedia.org/wiki/Cleve_Moler}{Cleve Moler} provides a $2\times 2$ example where the solution is sensitive to a perturbation $\mathbf{b}$.
+
+% \begin{parts}
+% \item Following his work, implement this example in \textbf{Python} (not Matlab), using code that is exactly analogous to his.  Compare the percent change in $\mathbf{x}$ divided by the percent change in $\mathbf{b}$ to the condition number.  \emph{Use matrix norms as needed to compute these changes}.
+
+% You might use \texttt{numpy.ndarray.copy} when creating \texttt{b} from a column of \texttt{A}.  Note that the indexing is slightly different in Python and Matlab.
+
+% \emph{The example ends when the section ``close to singular'' begins.}
+
+% \item Instead of using the value of $\mathbf{b}$ he provided, generate an arbitrary $\mathbf{b}$.  How does the percent change in $\mathbf{x}$ divided by the percent change in $\mathbf{b}$ compare to your work in part a?
+
+% \item Let $\mathbf{a}_1$ and $\mathbf{a}_2$ denote the columns of $A$.  What is the angle between these vectors?  Provide a geometric explanation for why letting $\mathbf{b} = \mathbf{a}_1$ and then perturbing slightly caused a large change in $\mathbf{x}$.  Also provide an explanation for the degree of change you saw in $\mathbf{x}$ when you perturbed an arbitrary $\mathbf{b}$.
+
+% \emph{Recall that $\mathbf{a}_1\cdot\mathbf{a}_2 = \Vert \mathbf{a}_1\Vert\Vert\mathbf{a}_2\Vert\cos\theta$.}
+% \end{parts}
+
+
+
+% This is not a least squares example, but rather a matrix equation $A\mathbf{x} = \mathbf{b}$ where an exact solution exists.
+
+% %try to add impact of closeness of $\mathbf{y}$ to span$(A)$ as well...
+
+\question \emph{Time permitting} 
+
+(Sauer \S4.2 7)
+
+Load the windmill data, \texttt{windmill.txt}.  It is the monthly megawatt-hours generated from Jan 2005 to Dec 2009 by a wind turbine near Valley City, ND (owned by the Minnkota Power Cooperative).  The data used to be available on their website, \url{http://www.minnkota.com}.  For reference, a typical home uses around 1 MWh per month.
+\begin{parts}
+\item Write a function \pyf{rough_model(t,y)} that takes in the time since January 2005 ($t$) and the megawatt-hour data ($y$) and fits a rough model of power output as a yearly periodic function using the built-in least squares solver.  Use your function to fit the data to $f(t) = c_1 + c_2\cos 2\pi t + c_3 \sin 2\pi t + c_4 \cos 4 \pi t$ where the units of $t$ are years, $0\leq t\leq 5$.
+
+\emph{Use \texttt{numpy.loadtxt}} to load the data.
+
+\item Plot the data and the model function for $0\leq t\leq 5$.  
+
+\item What features of the data are captured by the model?
+\end{parts}
+
+
+\question \emph{Time permitting}
+
+(rank deficient example) 
+
+Consider an overdetermined linear least squares problem with model function $f(x,\mathbf{c}) = c_1\varphi_1(x) + c_2\varphi_2(x) + c_3\varphi_3(x)$, where $\varphi_1(x) = 1$, $\varphi_2(x) = x^2$, and $\varphi_3(x) = 1-x^2$.
+
+\begin{parts}
+\item If you were to create a vector $x$ with $20$ random points to use with this model, what will be the rank of the resulting least squares matrix, $A$?  Include your reasoning.
+\item Create $x$ and use weights $\mathbf{c} = [1,2,1]^T$ to produce synthetic data, $\mathbf{y}$.  
+\item Create solutions via the five methods listed in the Python file.
+\item Check the rank of $A$, and the rank of $A^TA$.  Is $A^TA$ invertible?  Does Python notice?
+
+Compare the solutions that were produced.  How did the methods do?
+\end{parts}
+
+
+% \question \emph{Time permitting}
+
+% (3D data) 
+
+% (from ETH Notebook 2.1)
+
+% Perform a least squares fit using 3D data, $\{(x_i,y_i,z_i)\}_{i=1}^N$.  Think of $z$ as the output and $(x,y)$ as the input.  Choose a model architecture of $f(x,y) = c_1 x + c_2 y + c_3$.
+
+% We will look at the impact of noise, and of the amount of data, on the fit.
+
+% \begin{parts}
+% \item Generate synthetic data by choosing your three parameters.  Create $100$ datapoints, using a $10\times 10$ grid of $(x,y)$ values.  Add noise to the 3D data as in 2b, and solve the least squares problem using the normal equation.
+
+% \emph{Note: you'll want your $x$ values and $y$ values to be vectors of length $100$ rather than shaped into a $10\times 10$ grid.  You might use \texttt{np.meshgrid} and \texttt{np.reshape} to generate those vectors, but there are other options}  % could instead use a pair of nested for loops.}
+
+% \url{https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html}
+
+% \url{https://numpy.org/doc/stable/reference/generated/numpy.reshape.html}
+
+% \item For this 3D data you used $100$ data points, while for the 2D data on PSet 02 you used $10$.
+
+% Now use just $10$ points for the 3D estimation.  Randomly generate ten pairs of $(x,y)$ values within the range $0$ to $1$.
+
+% How does the reduction in the amount of data appear to impact your parameter estimation?
+% \end{parts}
+
+
+
+% \question \emph{Time permitting}
+
+% (Greenbaum and Chartier \S 7.7 10)
+
+% Show that for all $n$-vectors, $\mathbf{v}$: 
+
+% (i) $\Vert\mathbf{v}\Vert_{\infty}| \leq \Vert \mathbf{v}\Vert_2 \leq \sqrt{n}\Vert\mathbf{v}\Vert_{\infty}$, 
+
+% (ii) $\Vert \mathbf{v}\Vert_2 \leq \Vert \mathbf{v}\Vert_1$. 
+
+% (ii) $\Vert \mathbf{v}\Vert_1 \leq n \Vert \mathbf{v}\Vert_{\infty}$
+
+\question Reflection
+\begin{parts}
+\item When you worked on the problem set where did you get stuck or become confused?
+\item What aspects of the course challenged you this week?  What did you do to address those challenges?  What topics/ideas/procedures do you not yet understand?
+\item What did you understand the best this week?  What, if anything, do you understand better this week than you did in the past?
+\item List the people that you worked with or consulted on the problem set problems.  This might include other students in the course, course instructors, or people who have previously taken the course.
+\item Below, indicate how much of your time for this class has been doing the following activities:
+	\begin{enumerate}
+	\item Working on the problem set (including time in Python)
+	\item Reviewing course materials, including the course textbooks
+	\item Working through supplementary materials
+	\item Going to office hours or lab
+	\item Other (please specify)
+	\end{enumerate}
+\item If you used chatGPT or other AI tools, attach that information as part of this question.
+\end{parts}
+
+
+\end{questions}
+  \end{document}

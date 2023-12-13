@@ -1,0 +1,171 @@
+\documentclass[12pt,letterpaper,noanswers]{exam}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{natbib}
+\usepackage[margin=0.9in]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multicol}
+\newcommand{\vc}[1]{\boldsymbol{#1}}
+\pagestyle{head}
+\definecolor{c02}{HTML}{FFBBBB}
+\definecolor{c03}{HTML}{FFDDDD}
+\header{AM 111 Problem Set 08}{}{{\colorbox{c02}{\makebox[2.8cm][l]{Due Fri Nov 4th}}}\\at 5pm}
+\runningheadrule
+\headrule
+\usepackage{diagbox}
+\usepackage{graphicx} % more modern
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+
+\usepackage{hyperref}
+
+\usepackage{tcolorbox}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\def\been{\begin{enumerate}}
+\def\enen{\end{enumerate}}
+\def\beit{\begin{itemize}}
+\def\enit{\end{itemize}}
+\def\dsst{\displaystyle}
+\def\dx{\Delta x}
+\hyphenation{}
+\newcommand{\blank}[1]{\underline{\hspace{#1}}}
+
+
+\begin{document}
+ \pdfpageheight 11in 
+  \pdfpagewidth 8.5in
+
+\noindent Extensions beyond 5am on Saturday require contacting Danyun \textbf{in advance} of 5pm on Friday.
+
+\begin{itemize}
+\item Submit your work on this problems 2-4 via Gradescope (find the link on Canvas).
+\item Individual written work for this class (including any programming) should be your own.  
+\item Post to Ed for advice and information about any aspect of the assignment.
+\item You are encouraged to discuss the mathematics or pseudocode, working on the problem together.  \textbf{Put away or erase any joint work before writing up your solution yourself.}
+
+If you believe your work is incorrect, please do show it to your classmates and the teaching staff.  If you believe your work to be correct (or substantially correct), I encourage you to discuss or describe your solution.  However, do not show your work to others.
+
+\item As part of completing the assignment, fill out the online cover sheet on Canvas to name your collaborators, list resources you consulted, and estimate the time you spent on the assignment.
+
+For coding related resources (looking up Python commands, or syntax, etc), include the references as comments within your code instead of adding them to the cover sheet.
+
+You may copy snippets of code from other sources so long as there is a comment indicating the source of the code.
+\end{itemize}
+
+\begin{questions}
+
+\item (Submit on Canvas as a team submission) 
+
+Project proposal
+
+Your team had one (or more) short project proposals approved via Gradescope/Canvas.  As a team, choose one of the approved projects.  Write a full project proposal.  As part of your proposal, submit all of the information that is requested below.
+
+\begin{parts}
+    \item Aim: What will be the purpose of the project?  Create a defined question.  Go beyond generalities to include one or more specific goals.
+    \item Components: Identify the tasks that your team will need to accomplish in order to satisfy your project goals.
+    \item Knowledge building: Provide detailed information about how the team will engage in knowledge building.  What tools and methods do you need to understand?  What resources will you use?
+    \item Computational methods: What computational method(s) does your team plan to implement yourselves?  What method(s) will you incorporate by using built-in options in Python?
+    \item Division of responsibility: How will your team apportion work to team members?  What will be the responsibilities of each team member?
+%    \item Weekly progress: Provide expectations of weekly progress.
+    \item Communication: How does your group plan to communicate with each other and exchange work or ideas?  When/where/how often will your group meet?
+    \item Scope: If this turns out to be more (or less) work than you expected, how can you adjust the project to take on more (or less)?
+
+\end{parts}
+
+\item (Submit on Canvas as an individual submission) 
+
+Timeline of project work and deliverables
+
+Read the project submissions (and deadlines) that are included at the end of the problem set.
+
+Once your team has generated the project components and division of responsibility, create a timeline for your work on the project.
+
+Include information about what you personally plan to work on each week.  
+
+\item (adaptive quadrature: Batman logo)
+
+On Problem Set 07, you found that \[S_{[a,b]}-\left(S_{[a,c]}+S_{[c,b]}\right) \approx k\vert E_{[a,c]+[c,b]}.\vert\]
+
+This enables you to estimate $\vert E_{[a,c]+[c,b]}.\vert$.
+
+\begin{parts}
+\item Modify the adaptive quadrature code from the class handout.  
+
+(1) Rewrite it in Python (where indices start at $0$ rather than $1$).  
+
+(2) Write it to use Simpson's rule rather than the trapezoid rule: $k=3$ for trapezoid rule.  Use your value from the previous problem set for Simpson's.  
+
+(3) Edit it to pass $f(a)$ and $f(b)$ to Simpson's, so as to avoid extra function evaluations (and keep track of those in variables \texttt{fa} and \texttt{fb}).
+
+\item Provide a reason why it is absolutely critical to find the area of the Batman logo in order to save Gotham from disaster.
+
+Using the \texttt{batman\_upper} and \texttt{batman\_lower} functions given (the logo extends from $x=-7$ to $x=7$), using a tolerance of $10^{-6}$, and a maximum depth of $100$, estimate the area of the Batman logo via adaptive quadrature.
+
+\item What was the maximum value of $n$ (a measure of the number of subintervals)?  What was the smallest subinterval?  If you were to use this smallest subinterval as your panel size for a composite method, how many panels would be needed?
+
+\item Ask WolframAlpha for ``area of batman equation'' (and use $a=1$ in the area formula that they return).  Compare this to your calculated value.  Did you actually meet the error tolerance that was specified?
+\end{parts}
+
+\item (Monte Carlo)
+
+For a $d$-dimensional ball, for $\vc{x} = (x_1, x_2, ..., x_d)^T$, $\Vert\vc{x}\Vert^2 < 1$ when $\vc{x}$ is inside of the ball.
+
+
+
+\begin{parts}
+\item Create a function \texttt{def chi(xd):} that takes a point $\vc{x}$ and returns $0$ if the point is outside of the unit ball and $1$ if it is inside.
+
+
+\item For the $3$-sphere of radius $1$ (denoted $\mathbb{S}^2$), use the trapezoid rule to estimate the volume.
+
+Use $11$ points along each dimension (and an interval of $0.2$).
+
+$\displaystyle\int_{-1}^1\left(\int_{-1}^1\left(\int_{-1}^1 \mathbb{I}_{\Vert \vc{x}\Vert <1} dz \right)dy\right)dx$
+
+To do this, you can think of the integral as an iterated integral: Let $g(x,y) = \displaystyle\int_{-1}^1 \mathbb{I}_{\Vert \vc{x}\Vert <1} dz$ and compute $g(x,y)$ at the $11\times 11$ pairs of $(x,y)$ values that you are using.
+
+Find the error by comparing to the volume, $\frac{4}{3}\pi$.
+
+\item Use Monte-Carlo integration to estimate the volume to the same error.  Run it multiple times, and report the average number of samples needed to meet the error bound.
+
+\item For the $10$-sphere of radius $1$, the volume enclosed is $\pi^5/120$.
+
+Use Monte-Carlo to estimate this, with the same percent error as your estimates had above and report the average number of samples needed.
+
+If you had kept using $11$ gridpoints along each direction, how many gridpoints would you need for trapezoid rule?
+
+
+\end{parts}
+
+\end{questions}
+
+\eject 
+\noindent Project submissions:
+\begin{itemize}
+    \item Friday Nov 4: Project proposal (group submission).  
+    
+    Timeline of project work and deliverables (individual submission).
+    \item Friday Nov 11: Weekly project update and work log (individual submission)
+    
+    Close read of project paper with notes (individual submission)
+
+    \item Friday Nov 18: Weekly project update and work log (individual submission).  
+    
+    Draft presentation slides.  Minimum of 1 slide per team member, maximum of 2 slides per team member.  (individual or group submission)
+    \item Due Friday Nov 25: Weekly project update and work log (individual submission).  
+    \item Tuesday Nov 29 or Thurs Dec 1: Presentation explaining your project topic to the class (group submission).  
+    
+    1 person team: 2 minutes.  2 person team: 3.5 minutes.  3 person team: 4.5 minutes.
+    \item Due Friday Dec 2: Weekly project update and work log (individual submission).  
+    
+    Draft final project summary (group submission).
+    \item Due Wednesday Dec 7: Peer review on final project summary (individual submission)
+    \item Due Friday Dec 9: Weekly project update and work log (individual submission).
+    \item Due Thursday Dec 15: Final project summary (group submission).  
+    
+    Individual project report (individual submission).
+\end{itemize}
+\end{document}
